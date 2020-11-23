@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { RecipeListItem } from '../../services/dataModel/recipeListItem';
+import { ListService } from '../../services/ListService';
 
 @Component({
   selector: 'app-home-page',
@@ -17,9 +20,12 @@ export class HomePageComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  public recipeList: Observable<RecipeListItem[]>;
+
+  constructor(private listService: ListService) { }
 
   ngOnInit(): void {
+    this.recipeList = this.listService.getAllListItems();
   }
 
 }

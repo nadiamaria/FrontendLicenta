@@ -5,6 +5,11 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomePageComponent } from './components/home-page/home-page.component';
 
 import { SharedModule } from '../shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
+import { ListService } from './services/ListService';
+import { ListResource } from './services/ListResource';
+import { MatCardModule } from '@angular/material/card';
+
 
 
 
@@ -13,7 +18,16 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule,
+    MatCardModule
+  ],
+  providers: [
+    ListService,
+    ListResource
+  ],
+  exports: [
+
   ]
 })
 export class HomeModule { }
