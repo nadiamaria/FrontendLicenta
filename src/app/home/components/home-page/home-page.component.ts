@@ -10,22 +10,24 @@ import { ListService } from '../../services/ListService';
 })
 export class HomePageComponent implements OnInit {
 
-  public recipes = [ {
-    name : "orez cu lapte",
-    description : "orez + lapte"
-    },
-    {
-    name : "clatite cu gem",
-    description : "clatite + gem"
-    }
-  ];
+  // public recipes = [ {
+  //   name : "orez cu lapte",
+  //   description : "orez + lapte"
+  //   },
+  //   {
+  //   name : "clatite cu gem",
+  //   description : "clatite + gem"
+  //   }
+  // ];
 
-  public recipeList: Observable<RecipeListItem[]>;
-
+  // public recipeList: Observable<RecipeListItem[]>;
+  public recipeList: RecipeListItem[];
   constructor(private listService: ListService) { }
 
   ngOnInit(): void {
-    this.recipeList = this.listService.getAllListItems();
+    this.listService.getAllListItems().subscribe(retete => {
+      this.recipeList = retete;
+    });
   }
 
 }

@@ -2,3 +2,14 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.login {
+  .mat-form-field-prefix {
+    padding-right: 5px;
+  }
+
+  .mat-input-element {
+    padding-bottom: 5px;
+    margin-left: 5px;
+  }
+}

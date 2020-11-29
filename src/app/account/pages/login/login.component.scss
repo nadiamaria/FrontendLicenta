@@ -1,0 +1,30 @@
+@import '~src/app/stylesheets/mixins';
+@import '~src/app/stylesheets/vars';
+
+.login {
+  @include display-flex(row, center, center, nowrap);
+  background-image: url('../../../../assets/img/login_cover.jpg');
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  color: white;
+
+  &__box {
+    @include display-flex(row, center, center, nowrap);
+    background-color: #435491;
+    border-radius: 10px;
+    height: 350px;
+    padding: 25px;
+    width: 500px;
+  }
+
+  &__box-img {
+    width: 200px;
+    height: 200px;
+  }
+
+  &__box-newaccount {
+    padding-top: 20px;
+  }
+}
