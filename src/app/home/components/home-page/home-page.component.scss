@@ -1,0 +1,19 @@
+@import '~src/app/stylesheets/mixins';
+
+.home {
+  @include display-flex(row, center, center, nowrap);
+  width: 100%;
+  margin-top: 20px;
+
+
+
+  &__list{
+  @include display-flex(row, center, center, wrap);
+  width: 1000px;
+
+  }
+  &__list-recipe {
+    margin-bottom: 20px;
+    margin-right: 20px;
+  }
+}

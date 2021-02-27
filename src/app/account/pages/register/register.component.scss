@@ -1,0 +1,48 @@
+@import '~src/app/stylesheets/mixins';
+@import '~src/app/stylesheets/vars';
+
+.register {
+  @include display-flex(column, center, center, nowrap);
+  background-image: url('../../../../assets/img/login_cover.jpg');
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  color: white;
+
+  &__logo {
+    position: absolute;
+    left: 140px;
+    top: 30px;
+      img {
+        width: 80px;
+        height: 100px;
+      }
+  }
+
+  &__box {
+    @include display-flex(row, space-around, center, nowrap);
+    background-color: #435491;
+    border-radius: 10px;
+    height: 400px;
+    padding: 5px;
+    width: 800px;
+  }
+
+  &__box-case {
+    width: 300px;
+  }
+
+  &__box-form {
+    @include display-flex(column, flex-start, flex-start, nowrap);
+  }
+
+  &__box-img {
+    width: 300px;
+    height: 300px;
+  }
+
+  &__box-newaccount {
+    padding-top: 20px;
+  }
+}

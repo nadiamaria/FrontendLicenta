@@ -12,4 +12,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     padding-bottom: 5px;
     margin-left: 5px;
   }
+
+  .mat-form-field-infix {
+    width: 250px;
+  }
+}
+
+.register {
+  .mat-form-field-prefix {
+    padding-right: 5px;
+  }
+
+  .mat-input-element {
+    padding-bottom: 5px;
+    margin-left: 5px;
+  }
+
+  .mat-form-field-infix {
+    width: 250px;
+  }
 }

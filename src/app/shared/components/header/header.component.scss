@@ -1,0 +1,7 @@
+@import '~src/app/stylesheets/mixins';
+
+
+.header {
+  @include display-flex(row, flex-end, center, nowrap);
+  background-color: pink;
+}
