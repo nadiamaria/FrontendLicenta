@@ -9,6 +9,10 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserListService } from './services/UserListService';
+import { UserResource } from './services/UserResource';
+
+import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],
@@ -18,7 +22,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
+  ],
+  providers: [
+    UserListService,
+    UserResource
   ]
 })
 export class AccountModule { }

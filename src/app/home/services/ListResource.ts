@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ApiConfig } from '../apiConfig';
+import { ApiConfig } from '../../shared/apiConfig';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs';
 import { RecipeListItem } from './dataModel/recipeListItem';
@@ -7,7 +7,7 @@ import { RecipeListItem } from './dataModel/recipeListItem';
 
 @Injectable()
 export class ListResource {
-  private readonly URL = ApiConfig.url + '/list';
+  private readonly URL = ApiConfig.url + '/recipeList';
   constructor(private httpClient: HttpClient) {
 
   }
