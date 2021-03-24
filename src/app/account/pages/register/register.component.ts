@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserListService } from '../../services/UserListService';
 
@@ -20,7 +21,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   });
 
   constructor(
-    private userListService: UserListService
+    private userListService: UserListService,
+    private router: Router
     ) { }
 
   public ngOnInit(): void {
@@ -34,6 +36,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     console.log(this.registerForm.value);
     // this.userListService.postUser(this.registerForm.value);
     this.subscription.add(this.userListService.postUser(this.registerForm.value).subscribe(x => console.log(x)))
+    this.router.navigateByUrl('/recipes/home');
   }
 
   public ngOnDestroy(): void {
