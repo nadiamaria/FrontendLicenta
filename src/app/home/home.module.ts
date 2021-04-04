@@ -6,8 +6,8 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 
 import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
-import { ListService } from './services/ListService';
-import { ListResource } from './services/ListResource';
+import { RecipesService } from './services/RecipesService';
+import { RecipesResource } from './services/resources/RecipesResource';
 import { MatCardModule } from '@angular/material/card';
 
 
@@ -23,8 +23,8 @@ import { MatCardModule } from '@angular/material/card';
     MatCardModule
   ],
   providers: [
-    ListService,
-    ListResource
+    RecipesService,
+    RecipesResource
   ],
   exports: [
 
