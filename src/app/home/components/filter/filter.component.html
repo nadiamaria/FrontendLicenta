@@ -13,3 +13,14 @@
     {{ingredient}}
   </mat-checkbox>
 </section> -->
+
+<span>
+  <p>{{content?.placeholder}}</p>
+  <section *ngFor="let check of content?.item?.option; let i = index;">
+    <label class="checkbox-label">
+      <mat-checkbox [formControl]='formCheckbox'  color="primary" (change)="getSelectedOptionsValue(formCheckbox, i)" required>
+        {{check}}
+      </mat-checkbox>
+    </label>
+  </section>
+</span>

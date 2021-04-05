@@ -1,11 +1,24 @@
-@import 'src/app/stylesheets/reset';
+@import '~src/app/stylesheets/general';
 
-::ng-deep .mat-checkbox-frame {
-  border-color: black;
+
+.checkbox-label {
+      @include font-set(
+            $form-checkbox-icon-color,
+            $source-sans,
+            14px,
+            normal,
+            24px
+          );
+      // margin-top: 4 * $secondary-size-base;
+      margin: 0 px 12;
 }
 
-::ng-deep .mat-accent.mat-checkbox-checked .mat-checkbox-background{
-  background-color: black;
+
+/* stylelint-disable */
+::ng-deep .mat-checkbox-frame {
+  border-color: $forms-input-border;
+  border-radius: 4px !important;
+  border-width: 1px !important;
 }
 
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
@@ -14,16 +27,27 @@
 .mat-accent .mat-pseudo-checkbox-indeterminate,
 .mat-pseudo-checkbox-checked,
 .mat-pseudo-checkbox-indeterminate {
-  background-color: pink !important;
+  background-color: $default-color !important;
 }
 
-::ng-deep .mat-checkbox-checkmark-path {
-  stroke: white !important;
+::ng-deep .mat-checkbox-frame {
+  border-color: $forms-input-border;
 }
 
-::ng-deep .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element, .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element {
-  background: pink;
+::ng-deep .mat-accent.mat-checkbox-checked .mat-checkbox-background{
+  background-color: $forms-checkbox-background-color !important;
 }
-// ::ng-deep .mat-checkbox .mat-checkbox-ripple {
-//   background-color: pink !important;
-// }
+
+
+::ng-deep .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background, .mat-checkbox-checked.mat-primary .mat-checkbox-background {
+  background-color: $forms-checkbox-background-color !important;
+}
+
+::ng-deep .mat-checkbox-checked.mat-primary .mat-checkbox-background {
+  background-color: $forms-checkbox-background-color !important;
+}
+
+::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+  background-color: $forms-checkbox-background-color !important;
+}
+
