@@ -6,8 +6,8 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 
 import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
-import { ListService } from './services/ListService';
-import { ListResource } from './services/ListResource';
+import { RecipesService } from './services/RecipesService';
+import { RecipesResource } from './services/resources/RecipesResource';
 import { MatCardModule } from '@angular/material/card';
 import { FilterComponent } from './components/filter/filter.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -28,8 +28,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatCheckboxModule
   ],
   providers: [
-    ListService,
-    ListResource
+    RecipesService,
+    RecipesResource
   ],
   exports: [
 
