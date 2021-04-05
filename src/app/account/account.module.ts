@@ -11,7 +11,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserListService } from './services/UserListService';
 import { UserResource } from './services/UserResource';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
@@ -23,7 +23,8 @@ import { HttpClientModule} from '@angular/common/http';
     MatIconModule,
     MatButtonModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCheckboxModule
   ],
   providers: [
     UserListService,

@@ -13,4 +13,8 @@ export class ListService {
   public getAllListItems(): Observable<RecipeListItem[]> {
     return this.listResource.findAll();
   }
+
+  public getfilteredItems(values : Array<string>): Observable<RecipeListItem[]> {
+    return this.listResource.findfiltered(values);
+  }
 }

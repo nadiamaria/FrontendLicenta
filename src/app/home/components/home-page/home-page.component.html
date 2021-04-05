@@ -1,5 +1,6 @@
 <div class="home">
   <div class="home__list">
+    <app-filter></app-filter>
     <div *ngFor="let recipe of recipeList">
       <app-recipe-card [recipe] = "recipe" class="home__list-recipe"></app-recipe-card>
     </div>
