@@ -11,7 +11,7 @@ import { RecipesResource } from './services/resources/RecipesResource';
 import { MatCardModule } from '@angular/material/card';
 import { FilterComponent } from './components/filter/filter.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 

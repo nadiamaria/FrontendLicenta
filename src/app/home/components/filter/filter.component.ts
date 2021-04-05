@@ -33,5 +33,5 @@ export class FilterComponent implements OnInit {
   }
 
   public getValues(): void {
-    this.filterForm.valueChanges.subscribe((value) => {
+    this.filterForm.valueChanges.subscribe((value) => {console.log(value)});}
 }
