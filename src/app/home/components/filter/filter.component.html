@@ -13,8 +13,8 @@
   </mat-checkbox>
 </section> -->
 
-<form [formControl]='formSelect'>
+<form [formGroup]="myFormGroup">
   <span *ngFor="let ingredient of ingredients">
-    <mat-checkbox>{{ingredient.name}}</mat-checkbox>
+    <mat-checkbox [formControlName]='ingredient.name' (change)="getIngredients()">{{ingredient.name}}</mat-checkbox>
   </span>
 </form>
