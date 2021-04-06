@@ -7,7 +7,7 @@ import { IngredientsItem } from "../dataModel/ingredientItem";
 
 @Injectable()
 export class IngredientsResource {
-  private readonly URL = ApiConfig.url + '/ingredients';
+  private URL = ApiConfig.url + '/ingredients';
   constructor(private httpClient: HttpClient) {
 
   }

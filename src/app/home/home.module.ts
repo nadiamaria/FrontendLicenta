@@ -9,9 +9,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { RecipesService } from './services/RecipesService';
 import { RecipesResource } from './services/resources/RecipesResource';
 import { MatCardModule } from '@angular/material/card';
-import { FilterComponent } from './components/filter/filter.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FilterComponent } from './components/filter/filter.component';
+import { IngredientsService } from './services/IngredientsService';
+import { IngredientsResource } from './services/resources/IngredientsResource';
 
 
 
@@ -29,7 +31,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   ],
   providers: [
     RecipesService,
-    RecipesResource
+    RecipesResource,
+    IngredientsService,
+    IngredientsResource
   ],
   exports: [
 

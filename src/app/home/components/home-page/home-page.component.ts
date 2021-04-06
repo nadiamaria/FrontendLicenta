@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { RecipeItem } from '../../services/dataModel/recipeItem';
 import { RecipesService } from '../../services/RecipesService';
 
@@ -9,12 +8,12 @@ import { RecipesService } from '../../services/RecipesService';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
-  public recipesList: RecipeItem[];
-  constructor(private listService: RecipesService) { }
+  public recipes: RecipeItem[];
+  constructor(private recipesService: RecipesService) { }
 
   ngOnInit(): void {
-    this.listService.getAllRecipes().subscribe(recipes => {
-      this.recipesList = recipes;
+    this.recipesService.getAllRecipes().subscribe(recipes => {
+      this.recipes = recipes;
     });
   }
 

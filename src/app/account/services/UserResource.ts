@@ -8,7 +8,7 @@ import { catchError } from "rxjs/operators";
 
 @Injectable()
 export class UserResource {
-  private readonly URL = ApiConfig.url + '/userList';
+  private readonly URL = ApiConfig.url + '/users';
 
 
   constructor(private httpClient: HttpClient) {
