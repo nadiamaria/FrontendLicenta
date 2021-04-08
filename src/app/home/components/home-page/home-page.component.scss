@@ -2,7 +2,7 @@
 
 .home {
 
-  @include display-flex(column, center, center, nowrap);
+  @include display-flex(column, flex-start, flex-start, wrap);
   background-color: #ebebeb;
   min-height: 100%;
   min-width: 100%;
@@ -37,8 +37,8 @@
     }
 
     &-recipe {
-      background-color: rgb(255, 255, 255);
-      border-radius: 5px;
+      // background-color: rgb(255, 255, 255);
+      // border-radius: 5px;
       height: 300px;
       margin: 5px;
       padding: 10px;

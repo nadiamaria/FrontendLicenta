@@ -1,4 +1,4 @@
-<div class="recipe">
+<!-- <div class="recipe">
   <div class="recipe__favorite">
     <mat-icon *ngIf= 'false'>favorite</mat-icon>
     <mat-icon *ngIf= 'true'>favorite_border</mat-icon>
@@ -17,4 +17,28 @@
       Calories: 428
     </div>
   </div>
-</div>
+</div> -->
+
+
+<mat-card class="card-recipe">
+  <!-- <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{ recipe.name }}</mat-card-title>
+    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+  </mat-card-header> -->
+  <mat-icon *ngIf= 'false' class="card-recipe__heart">favorite</mat-icon>
+  <mat-icon *ngIf= 'true' class="card-recipe__heart">favorite_border</mat-icon>
+  <div class="image">
+    <img mat-card-image src='{{ recipe.image }}'>
+  </div>
+  <mat-card-content>
+    <mat-card-title>{{ recipe.name }}</mat-card-title>
+  </mat-card-content>
+  <mat-card-actions>
+  </mat-card-actions>
+  <mat-card-footer>
+    <p>
+      {{ recipe.description }}
+    </p>
+  </mat-card-footer>
+</mat-card>

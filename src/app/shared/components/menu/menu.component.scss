@@ -1,0 +1,26 @@
+@import '~src/app/stylesheets/vars';
+
+.menu-list {
+  background-color: $menu-list-background;
+  box-shadow: 2px 2px 5px 0 $shadow;
+  height: 300px;
+  margin-left: -272px;
+  overflow-y: auto;
+  transition: margin-left 0.5s;
+  width: 270px;
+
+  &__item {
+    font-size: 17px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    width: inherit;
+  }
+}
+
+.menu-list--open {
+  box-shadow: 2px 2px 5px 0 $shadow;
+  height: 300px;
+  margin-left: 0;
+  overflow-y: auto;
+  width: 270px;
+}

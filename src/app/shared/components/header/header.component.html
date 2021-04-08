@@ -1,5 +1,54 @@
-<nav class="header">
-  <a
+<div class="header">
+  <div class="header__menu">
+    <button mat-icon-button (click)="onClickMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div class="header__barnd">
+      <a class="header__links" [routerLink]="'/products/list'">MySpaceArt</a>
+    </div>
+    <div class="header__pages">
+      <a
+        mat-button
+        href="https://www.google.com/"
+        target="_blank"
+        class="header__links header__pages-links"
+        >Link1</a
+      >
+      <a
+        mat-button
+        href="https://www.google.com/"
+        target="_blank"
+        class="header__links header__pages-links"
+        >Link2</a
+      >
+    </div>
+  </div>
+  <div class="header__icons">
+    <div class="header__icons-cart">
+      <a mat-icon-button [routerLink]="'/carts/list'">
+        <mat-icon class="header__icons-icon">shopping_cart</mat-icon>
+        {{ this.cartNumber }}
+      </a>
+    </div>
+    <div class="header__icons-profile">
+      <button mat-icon-button>
+        <mat-icon class="header__icons-icon">face</mat-icon>
+      </button>
+    </div>
+    <div class="header__icons-logout">
+      <!-- <button mat-icon-button> -->
+        <a
+        mat-icon-button
+        routerLink="/account/login"
+        routerLinkActive="active"
+        class="register__card-links"
+        >
+        <mat-icon class="header__icons-icon">exit_to_app</mat-icon></a
+        >
+      <!-- </button> -->
+    </div>
+  </div>
+  <!-- <a
   mat-button
   routerLink="/account/login"
   routerLinkActive="active"
@@ -12,5 +61,5 @@ routerLink="/account/register"
 routerLinkActive="active"
 class="register__card-links"
 >register</a
->
-</nav>
+> -->
+</div>

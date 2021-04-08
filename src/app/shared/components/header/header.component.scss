@@ -1,7 +1,83 @@
+// @import '~src/app/stylesheets/mixins';
+
+
+// .header {
+//   @include display-flex(row, flex-end, center, nowrap);
+//   background-color: pink;
+// }
+
+@import '~src/app/stylesheets/vars';
 @import '~src/app/stylesheets/mixins';
 
-
 .header {
-  @include display-flex(row, flex-end, center, nowrap);
-  background-color: pink;
+  @include display-flex(row, space-between, center, nowrap);
+  background-color: $header-background;
+  box-shadow: 0 0 8px 2px $shadow;
+
+  color: $header-font;
+  padding: 7px;
+  width: 100%;
+
+  @include respond(gt-xs) {
+    @include display-flex(row, space-between, center, nowrap);
+  }
+
+  &__menu {
+    @include display-flex(row, space-between, center, nowrap);
+    padding-left: 8px;
+  }
+
+  &__barnd {
+    color: $logo;
+    font-size: x-large;
+    padding: 9px;
+
+    @include respond(gt-xs) {
+      font-size: xx-large;
+    }
+  }
+
+  &__pages {
+    display: none;
+
+    @include respond(gt-xs) {
+      display: inline;
+      padding-top: 5px;
+
+      &__pages-links {
+        font-size: large;
+      }
+    }
+  }
+
+  &__links {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+  &__icons {
+    @include display-flex(row, center, center, nowrap);
+
+    &__icons-profile {
+      @include respond(gt-xs) {
+        margin: 2px;
+      }
+    }
+
+    &__icons-cart {
+      margin: 2px;
+    }
+
+    &__icons-logout {
+      @include respond(gt-xs) {
+        margin: 2px;
+      }
+    }
+
+    &__icons-icon {
+      @include respond(gt-xs) {
+        font-size: 30px;
+      }
+    }
+  }
 }

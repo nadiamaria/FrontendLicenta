@@ -9,12 +9,13 @@ import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import { MenuComponent } from './components/menu/menu.component';
 
 
 
 
 @NgModule({
-  declarations: [LayoutComponent, HeaderComponent, RecipeCardComponent],
+  declarations: [LayoutComponent, HeaderComponent, RecipeCardComponent, MenuComponent],
   imports: [
     CommonModule,
     RouterModule,

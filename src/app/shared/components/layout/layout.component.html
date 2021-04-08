@@ -1,4 +1,13 @@
-
-<app-header></app-header>
-
-<router-outlet></router-outlet>
+<div class="page">
+    <div class="page__header">
+      <app-header (menuToggleEmitter)="onMenuToggle($event)"></app-header>
+    </div>
+    <div class="page__content">
+      <div class="page__menu">
+        <app-menu [menuToggleObservable]="toggleMenuObservable"></app-menu>
+      </div>
+      <div class="page__list">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
