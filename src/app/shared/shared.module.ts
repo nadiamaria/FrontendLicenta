@@ -7,6 +7,7 @@ import { RecipeCardComponent } from './components/recipe-card/recipe-card.compon
 
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 
 
@@ -18,7 +19,8 @@ import {MatButtonModule} from '@angular/material/button';
     CommonModule,
     RouterModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   exports: [
     LayoutComponent,

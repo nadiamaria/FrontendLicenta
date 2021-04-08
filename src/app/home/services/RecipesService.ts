@@ -10,11 +10,11 @@ export class RecipesService {
 
   }
 
-  public getAllRecipes(): Observable<RecipeItem[]> {
-    return this.recipesResource.findAll();
+  public getAllRecipes(values? : Array<string>): Observable<RecipeItem[]> {
+    return this.recipesResource.findAll(values);
   }
 
-  public getfilteredItems(values : Array<string>): Observable<RecipeItem[]> {
-    return this.recipesResource.findfiltered(values);
-  }
+  // public getfilteredItems(values : Array<string>): Observable<RecipeItem[]> {
+  //   return this.recipesResource.findfiltered(values);
+  // }
 }

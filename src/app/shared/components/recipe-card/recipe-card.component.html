@@ -1,10 +1,20 @@
 <div class="recipe">
-  <mat-card class="recipe__card">
-    <mat-card-header>
-      <mat-card-title class="recipe__card-title">{{ recipe.name }}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <img src='{{ recipe.image }}' class="recipe__card-image">
-    </mat-card-content>
-  </mat-card>
+  <div class="recipe__favorite">
+    <mat-icon *ngIf= 'false'>favorite</mat-icon>
+    <mat-icon *ngIf= 'true'>favorite_border</mat-icon>
+  </div>
+  <div class="recipe__image">
+    <img src='{{ recipe.image }}' class="recipe__card-image" width="200px" height="200px">
+  </div>
+  <div class="recipe__title">
+    {{ recipe.name }}
+  </div>
+  <div class="recipe__informations">
+    <div class="recipe__information__time">
+      Total time: 30 min
+    </div>
+    <div class="recipe__information__calories">
+      Calories: 428
+    </div>
+  </div>
 </div>

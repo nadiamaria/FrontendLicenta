@@ -1,20 +1,7 @@
-<!-- <form class="login__box-form" [formGroup]="filterForm" (ngSubmit)="onSubmit()"> -->
-<!-- <form class="login__box-form" [formControl]='formSelect'>
-  <span *ngFor="let ingredient of ingredients; let i = index;">
-    <mat-checkbox>{{ingredient}}</mat-checkbox>
+<div class="filter">
+  <form [formGroup]="myFormGroup">
+    <span *ngFor="let ingredient of ingredients" class="filter__ingredient">
+      <mat-checkbox [formControlName]='ingredient.name' (change)="getIngredients()">{{ingredient.name}}</mat-checkbox>
     </span>
-</form> -->
-<!-- Form value: {{ filterForm.getRawValue() | json }} -->
-
-<!-- <p class="placeholder">{{ingredientCategory}}</p>
-<section *ngFor="let ingredient of ingredients; let i = index; ">
-  <mat-checkbox [formControl]='formCheckbox' class="section"  color="primary" (change)="getSelectedOptionsValue(formCheckbox, i)">
-    {{ingredient}}
-  </mat-checkbox>
-</section> -->
-
-<form [formGroup]="myFormGroup">
-  <span *ngFor="let ingredient of ingredients">
-    <mat-checkbox [formControlName]='ingredient.name' (change)="getIngredients()">{{ingredient.name}}</mat-checkbox>
-  </span>
-</form>
+  </form>
+</div>

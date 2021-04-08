@@ -1,18 +1,43 @@
+@import '~src/app/stylesheets/mixins';
+
 .recipe {
-  width: 450px;
-  margin-right: 20px;
 
+  @include display-flex(column, center, center, nowrap);
+  height: 100%;
+  padding: 10px;
 
-  &__card {
-    background-color: #dedede;
+  &__favorite {
+
   }
 
-  &__card-title {
-    color: black;
+  &__image {
+    @include display-flex(column, center, center, nowrap);
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
+    width: 100%;
+
+    img {
+      height: 180px;
+      width: 150px;
+    }
   }
 
-  &__card-image {
-    width: 400px;
-    height: 300px;
+  &__title {
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+
+  &__informations {
+
+    @include display-flex(row, space-between, baseline, nowrap);
+
+
+    &__time {
+
+    }
+
+    &__calories {
+
+    }
   }
 }

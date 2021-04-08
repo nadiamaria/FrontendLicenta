@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { EventBusService } from 'src/app/shared/services/event-bus.service';
 import { IngredientsItem } from '../../services/dataModel/ingredientItem';
 import { IngredientsService } from '../../services/IngredientsService';
 
@@ -17,7 +18,7 @@ export class FilterComponent implements OnInit {
   public myFormGroup: FormGroup;
 
 
-  constructor(private ingredientsService: IngredientsService) { }
+  constructor(private ingredientsService: IngredientsService, private eventBus: EventBusService) { }
 
   public ngOnInit() {
     // this.getValues();
@@ -41,6 +42,7 @@ export class FilterComponent implements OnInit {
 
   public getIngredients() {
     console.log(this.myFormGroup.value);
+    this.eventBus.emit({ name: 'filterChanged', value: this.myFormGroup.value });
   }
 
   // onSubmit(){

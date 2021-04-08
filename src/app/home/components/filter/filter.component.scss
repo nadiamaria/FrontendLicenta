@@ -1,3 +1,13 @@
+.filter {
+  height: 100%;
+  border: 1px solid black;
+
+  &__ingredient {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 // @import '~src/app/stylesheets/general';
 
 
