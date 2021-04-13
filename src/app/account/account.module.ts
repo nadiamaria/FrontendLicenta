@@ -5,14 +5,14 @@ import { AccountRoutingModule } from './account-routing.module';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 
-import {MatInputModule} from '@angular/material/input';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
-import { UserListService } from './services/UserListService';
-import { UserResource } from './services/UserResource';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import { HttpClientModule} from '@angular/common/http';
+import { UserListService } from '../shared/data/UserListService';
+import { UserResource } from '../shared/data/resources/UserResource';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],
@@ -24,11 +24,8 @@ import { HttpClientModule} from '@angular/common/http';
     MatButtonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
-  providers: [
-    UserListService,
-    UserResource
-  ]
+  providers: [UserListService, UserResource],
 })
-export class AccountModule { }
+export class AccountModule {}
