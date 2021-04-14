@@ -11,7 +11,21 @@ export class FavoritesService {
     return this.favoritesResource.findAllUserFavorites(values);
   }
 
-  public postUser(favorite: FavoriteItem): Observable<FavoriteItem> {
+  public postFavorite(favorite: FavoriteItem): Observable<FavoriteItem> {
     return this.favoritesResource.postFavorite(favorite);
+  }
+
+  public findFavoriteExist(
+    user: number,
+    recipe: number
+  ): Observable<FavoriteItem[]> {
+    return this.favoritesResource.findFavoriteExist(user, recipe);
+  }
+
+  public deleteFavorite(
+    user: number,
+    recipe: number
+  ): Observable<FavoriteItem> {
+    return this.favoritesResource.deleteFavorite(user, recipe);
   }
 }

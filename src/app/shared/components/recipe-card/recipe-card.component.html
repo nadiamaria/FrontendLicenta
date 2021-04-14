@@ -19,23 +19,36 @@
   </div>
 </div> -->
 
-
 <mat-card class="card-recipe">
   <!-- <mat-card-header>
     <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title>{{ recipe.name }}</mat-card-title>
     <mat-card-subtitle>Dog Breed</mat-card-subtitle>
   </mat-card-header> -->
-  <mat-icon *ngIf= 'false' class="card-recipe__heart">favorite</mat-icon>
-  <mat-icon *ngIf= 'true' class="card-recipe__heart">favorite_border</mat-icon>
+  <button
+    mat-icon-button
+    *ngIf="found"
+    (click)="unFavorite()"
+    class="card-recipe__heart"
+  >
+    <mat-icon class="card-recipe__color">favorite</mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    *ngIf="!found"
+    (click)="onFavorite()"
+    class="card-recipe__heart"
+  >
+    <mat-icon>favorite_border</mat-icon>
+  </button>
+
   <div class="image">
-    <img mat-card-image src='{{ recipe.image }}'>
+    <img mat-card-image src="{{ recipe.image }}" />
   </div>
   <mat-card-content>
     <mat-card-title>{{ recipe.name }}</mat-card-title>
   </mat-card-content>
-  <mat-card-actions>
-  </mat-card-actions>
+  <mat-card-actions> </mat-card-actions>
   <mat-card-footer>
     <p>
       {{ recipe.description }}
