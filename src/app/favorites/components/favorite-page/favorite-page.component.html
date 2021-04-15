@@ -1,1 +1,7 @@
-<p>favorite-page works!</p>
+<div class="home">
+  <div class="home__recipes">
+    <div class="home__recipes-recipe" *ngFor="let recipe of recipes">
+      <app-recipe-card [recipe]="recipe"></app-recipe-card>
+    </div>
+  </div>
+</div>

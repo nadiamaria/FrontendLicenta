@@ -5,16 +5,22 @@ const routes: Routes = [
   { path: '', redirectTo: 'account/login', pathMatch: 'full' },
   {
     path: 'account',
-    loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
+    loadChildren: () =>
+      import('./account/account.module').then((m) => m.AccountModule),
   },
   {
     path: 'recipes',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
+    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
+  },
+  {
+    path: 'list',
+    loadChildren: () =>
+      import('./favorites/favorites.module').then((m) => m.FavoritesModule),
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

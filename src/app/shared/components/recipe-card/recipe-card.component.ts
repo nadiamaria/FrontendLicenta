@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { FavoriteItem } from '../../data/dataModel/favoriteItem';
 import { FavoritesService } from '../../data/FavoritesService';
+import { EventBusService } from '../../services/event-bus.service';
 
 @Component({
   selector: 'app-recipe-card',
@@ -14,18 +15,26 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
   private foundSubs: Subscription = new Subscription();
   private favorite: FavoriteItem;
 
-  public found: boolean = false;
+  public found: boolean;
+  public userId: number = 1;
   public foundObservable: Subject<boolean> = new Subject<boolean>();
 
   @Input() recipe;
 
   constructor(
     private favoritesService: FavoritesService,
+    private eventBus: EventBusService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.verifyFavorite();
+
+    this.subscription.add(
+      this.eventBus.on('favoritePageEvent').subscribe((ev) => {
+        this.verifyFavorite();
+      })
+    );
   }
 
   public onFavorite() {
@@ -42,6 +51,7 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
       );
       this.found = true;
     } else this.unFavorite();
+    this.eventBus.emit({ name: 'favoritePageEvent', value: this.userId });
   }
 
   public unFavorite() {
@@ -52,10 +62,10 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
         .deleteFavorite(this.recipe.id, 1)
         .subscribe((x) => console.log(x))
     );
+    this.eventBus.emit({ name: 'favoritePageEvent', value: this.userId });
   }
 
   public verifyFavorite(): void {
-    let found = false;
     this.favoritesService
       .findFavoriteExist(this.recipe.id, 1)
       .subscribe((favorites) => {
@@ -65,6 +75,7 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
           this.found = false;
         }
       });
+    console.log(this.found);
   }
 
   public ngOnDestroy(): void {

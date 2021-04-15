@@ -16,8 +16,8 @@ export class FavoritesService {
   }
 
   public findFavoriteExist(
-    user: number,
-    recipe: number
+    recipe: number,
+    user: number
   ): Observable<FavoriteItem[]> {
     return this.favoritesResource.findFavoriteExist(user, recipe);
   }
