@@ -67,11 +67,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // }
 
   public onLogout() {
-    this.subLogOut.add(
-      this.authService
-        .logOut()
-        .subscribe((x) => this.router.navigateByUrl('/recipes/home'))
-    );
+    localStorage.clear();
+    // this.subLogOut.add(
+    //   this.authService
+    //     .logOut()
+    //     .subscribe((x) => {
+    //       this.router.navigateByUrl('/recipes/home');})
+    // );
     // this.router.navigateByUrl('/recipes/home');
   }
 

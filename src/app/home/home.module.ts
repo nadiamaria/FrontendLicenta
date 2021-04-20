@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FilterComponent } from './components/filter/filter.component';
+import { httpInterceptorProviders } from '../shared/http-interceptors';
 
 @NgModule({
   declarations: [HomePageComponent, FilterComponent],
@@ -22,6 +23,7 @@ import { FilterComponent } from './components/filter/filter.component';
     ReactiveFormsModule,
     MatCheckboxModule,
   ],
+  providers: [httpInterceptorProviders],
   exports: [],
 })
 export class HomeModule {}

@@ -23,6 +23,7 @@ export class LoginComponent implements OnDestroy {
     this.subscription.add(
       this.authService.logIn(this.loginForm.value).subscribe((x) => {
         console.log("login successful if there's a jwt token in the response");
+        localStorage.setItem('token', x.token);
         this.router.navigateByUrl('/recipes/home');
       })
     );

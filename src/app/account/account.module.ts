@@ -13,6 +13,7 @@ import { AuthService } from '../shared/data/AuthService';
 import { AuthResource } from '../shared/data/resources/AuthResource';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HttpClientModule } from '@angular/common/http';
+import { httpInterceptorProviders } from '../shared/http-interceptors';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],
@@ -26,6 +27,6 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     MatCheckboxModule,
   ],
-  providers: [AuthService, AuthResource],
+  providers: [AuthService, AuthResource, httpInterceptorProviders],
 })
 export class AccountModule {}
