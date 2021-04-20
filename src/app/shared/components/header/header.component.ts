@@ -5,7 +5,9 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../data/AuthService';
 
 import { EventBusService } from '../../services/event-bus.service';
 
@@ -24,18 +26,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public userId: number = 1;
 
   private subscription: Subscription = new Subscription();
+  private subLogOut: Subscription = new Subscription();
 
-  constructor(private eventBus: EventBusService) {}
+  constructor(
+    private eventBus: EventBusService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     //   this.updateCartLength();
     //   this.subscription.add(this.eventBus.on('cartNumberToggleEvent').subscribe(ev => {
     //     this.updateCartLength();
     //   }));
-  }
-
-  public ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 
   public onClickMenu(): void {
@@ -62,4 +65,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
   //     });
   //   }
   // }
+
+  public onLogout() {
+    this.subLogOut.add(
+      this.authService
+        .logOut()
+        .subscribe((x) => this.router.navigateByUrl('/recipes/home'))
+    );
+    // this.router.navigateByUrl('/recipes/home');
+  }
+
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    this.subLogOut.unsubscribe();
+  }
 }

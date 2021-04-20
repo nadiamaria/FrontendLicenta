@@ -25,7 +25,12 @@
   </div>
   <div class="header__icons">
     <div class="header__icons-cart">
-      <a mat-icon-button routerLink="/list/favorites" routerLinkActive="active" (click)="refreshFavorites()">
+      <a
+        mat-icon-button
+        routerLink="/list/favorites"
+        routerLinkActive="active"
+        (click)="refreshFavorites()"
+      >
         <mat-icon class="header__icons-icon">favorite</mat-icon>
         <!-- {{ this.cartNumber }} -->
       </a>
@@ -37,12 +42,9 @@
     </div>
     <div class="header__icons-logout">
       <!-- <button mat-icon-button> -->
-      <a
-        mat-icon-button
-        routerLink="/account/login"
-        routerLinkActive="active"
-        class="register__card-links"
-      >
+      <a mat-icon-button class="register__card-links" (click)="onLogout()">
+        <!-- routerLink="/account/login"
+        routerLinkActive="active" -->
         <mat-icon class="header__icons-icon">exit_to_app</mat-icon></a
       >
       <!-- </button> -->

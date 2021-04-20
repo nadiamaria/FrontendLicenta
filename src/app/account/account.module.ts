@@ -9,8 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
-import { UserListService } from '../shared/data/UserListService';
-import { UserResource } from '../shared/data/resources/UserResource';
+import { AuthService } from '../shared/data/AuthService';
+import { AuthResource } from '../shared/data/resources/AuthResource';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -26,6 +26,6 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     MatCheckboxModule,
   ],
-  providers: [UserListService, UserResource],
+  providers: [AuthService, AuthResource],
 })
 export class AccountModule {}

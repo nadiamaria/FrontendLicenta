@@ -1,6 +1,10 @@
 <div class="login">
   <div class="login__logo">
-    <img src='../../../../assets/img/logo.png' alt="Photo" class="login__box-img">
+    <img
+      src="../../../../assets/img/logo.png"
+      alt="Photo"
+      class="login__box-img"
+    />
     Logo
   </div>
   <div class="login__box">
@@ -8,37 +12,51 @@
       <h1>Login</h1>
       <form class="login__box-form" [formGroup]="loginForm">
         <mat-form-field>
-          <span matPrefix><mat-icon aria-hidden="false" aria-label="Example home icon">account_circle</mat-icon></span>
-          <input matInput placeholder="Username" type="text" formControlName="username">
+          <span matPrefix
+            ><mat-icon aria-hidden="false" aria-label="Example home icon"
+              >account_circle</mat-icon
+            ></span
+          >
+          <input
+            matInput
+            placeholder="Username"
+            type="text"
+            formControlName="email"
+          />
         </mat-form-field>
         <mat-form-field>
-          <span matPrefix><mat-icon aria-hidden="false" aria-label="Example home icon">lock</mat-icon></span>
-          <input matInput placeholder="Password" type="password" formControlName="password">
+          <span matPrefix
+            ><mat-icon aria-hidden="false" aria-label="Example home icon"
+              >lock</mat-icon
+            ></span
+          >
+          <input
+            matInput
+            placeholder="Password"
+            type="password"
+            formControlName="password"
+          />
         </mat-form-field>
-
       </form>
       <mat-checkbox>Check me!</mat-checkbox>
 
-
-      <a
-        mat-stroked-button
-        routerLink="/recipes/home"
-        routerLinkActive="active"
-        >Login in</a
-      >
-      <br>
+      <a mat-stroked-button (click)="onLogin()">Login in</a>
+      <!-- routerLink="/recipes/home"
+        routerLinkActive="active" -->
+      <br />
       <div class="login__box-newaccount">
         Don't have an account?
-        <a
-          mat-button
-          routerLink="/account/register"
-          routerLinkActive="active"
+        <a mat-button routerLink="/account/register" routerLinkActive="active"
           >New account</a
         >
       </div>
     </div>
     <div class="login__box-image">
-      <img src='../../../../assets/img/login_image3.png' alt="Photo" class="login__box-img">
+      <img
+        src="../../../../assets/img/login_image3.png"
+        alt="Photo"
+        class="login__box-img"
+      />
     </div>
   </div>
-  </div>
+</div>

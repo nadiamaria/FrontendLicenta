@@ -16,8 +16,8 @@ import { IngredientsResource } from './data/resources/IngredientsResource';
 import { IngredientsService } from './data/IngredientsService';
 import { RecipesResource } from './data/resources/RecipesResource';
 import { RecipesService } from './data/RecipesService';
-import { UserListService } from './data/UserListService';
-import { UserResource } from './data/resources/UserResource';
+import { AuthService } from './data/AuthService';
+import { AuthResource } from './data/resources/AuthResource';
 
 @NgModule({
   declarations: [
@@ -41,8 +41,8 @@ import { UserResource } from './data/resources/UserResource';
     IngredientsResource,
     FavoritesService,
     FavoritesResource,
-    UserListService,
-    UserResource,
+    AuthService,
+    AuthResource,
   ],
 })
 export class SharedModule {}
