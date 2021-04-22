@@ -13,9 +13,7 @@ export class AuthService {
     return this.authResource.postUser(user);
   }
 
-  public logIn(
-    userRequest: RequestWithUser
-  ): Observable<authDto> {
+  public logIn(userRequest: RequestWithUser): Observable<authDto> {
     return this.authResource.logInUser(userRequest);
   }
 
@@ -26,4 +24,6 @@ export class AuthService {
   public auth(): Observable<authDto> {
     return this.authResource.authUser();
   }
+
+  public storageLogIn(): void {}
 }
