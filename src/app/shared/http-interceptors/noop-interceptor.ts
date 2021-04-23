@@ -17,15 +17,15 @@ export class NoopInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
       console.log(Date.now());
-      const tokenLocal = localStorage.getItem('token');
-      if(tokenLocal){
-        const newreq = req.clone({headers : req.headers.set('Authentication', localStorage.getItem('token'))});
-        return next.handle(newreq);
-      }
-      else
-      {
+      // const tokenLocal = localStorage.getItem('token');
+      // if(tokenLocal){
+      //   const newreq = req.clone({headers : req.headers.set('Authentication', localStorage.getItem('token'))});
+      //   return next.handle(newreq);
+      // }
+      // else
+      // {
       return next.handle(req);
-      }
+      // }
       // newreq.headers.append('mama', localStorage.getItem('token'))
     // return next.handle(newreq);
   }

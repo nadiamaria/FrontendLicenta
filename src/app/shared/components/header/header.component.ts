@@ -23,6 +23,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private menuShow: boolean = false;
   // public products: Product[] = [];
   public cartNumber: number = 0;
+
+  //get cookie and decode
   public userId: number = 1;
 
   private subscription: Subscription = new Subscription();
