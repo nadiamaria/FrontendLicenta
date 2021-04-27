@@ -1,7 +1,11 @@
 <div class="filter">
   <form [formGroup]="myFormGroup">
     <span *ngFor="let ingredient of ingredients" class="filter__ingredient">
-      <mat-checkbox [formControlName]='ingredient.name' (change)="getIngredients()">{{ingredient.name}}</mat-checkbox>
+      <mat-checkbox
+        [formControlName]="ingredient.name"
+        (change)="getIngredients()"
+        >{{ ingredient.name }}</mat-checkbox
+      >
     </span>
   </form>
 </div>

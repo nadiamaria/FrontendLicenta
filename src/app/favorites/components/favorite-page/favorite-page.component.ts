@@ -20,17 +20,17 @@ export class FavoritePageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getFavoriteRecipe(1);
+    this.getFavoriteRecipe();
 
     this.subscription.add(
       this.eventBus.on('favoritePageEvent').subscribe((data: number) => {
-        this.getFavoriteRecipe(data);
+        this.getFavoriteRecipe();
       })
     );
   }
 
-  public getFavoriteRecipe(data?: number) {
-    this.recipesService.getfilteredItems(data).subscribe((recipes) => {
+  public getFavoriteRecipe() {
+    this.recipesService.getfavoriteItems().subscribe((recipes) => {
       this.recipes = recipes;
     });
   }

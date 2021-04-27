@@ -16,7 +16,6 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
   private favorite: FavoriteItem;
 
   public found: boolean;
-  public userId: number = 1;
   public foundObservable: Subject<boolean> = new Subject<boolean>();
 
   @Input() recipe;
@@ -40,9 +39,8 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
   public onFavorite() {
     if (!this.found) {
       this.favorite = {
-        name: 'favorites1',
+        name: 'favorites',
         recipeId: this.recipe.id,
-        userId: 1,
       };
       this.subscription.add(
         this.favoritesService
@@ -51,7 +49,7 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
       );
       this.found = true;
     } else this.unFavorite();
-    this.eventBus.emit({ name: 'favoritePageEvent', value: this.userId });
+    this.eventBus.emit({ name: 'favoritePageEvent', value: '1' });
   }
 
   public unFavorite() {
@@ -59,15 +57,15 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
     this.found = false;
     this.subscription.add(
       this.favoritesService
-        .deleteFavorite(this.recipe.id, 1)
+        .deleteFavorite(this.recipe.id)
         .subscribe((x) => console.log(x))
     );
-    this.eventBus.emit({ name: 'favoritePageEvent', value: this.userId });
+    this.eventBus.emit({ name: 'favoritePageEvent', value: '1' });
   }
 
   public verifyFavorite(): void {
     this.favoritesService
-      .findFavoriteExist(this.recipe.id, 1)
+      .findFavoriteExist(this.recipe.id)
       .subscribe((favorites) => {
         if (favorites.length != 0) {
           this.found = true;

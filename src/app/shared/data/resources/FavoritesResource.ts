@@ -15,29 +15,22 @@ export class FavoritesResource {
     return this.httpClient.get(this.URL) as Observable<FavoriteItem[]>;
   }
 
+  //iau din BE user-ul
   public postFavorite(favorite: FavoriteItem): Observable<FavoriteItem> {
     this.URL = ApiConfig.url + '/favorites';
-    console.log(favorite);
     return this.httpClient.post(this.URL, favorite) as Observable<FavoriteItem>;
   }
 
-  public findFavoriteExist(
-    user: number,
-    recipe: number
-  ): Observable<FavoriteItem[]> {
+  //tot din BE iau user-ul
+  public findFavoriteExist(recipe: number): Observable<FavoriteItem[]> {
     this.URL = ApiConfig.url + '/favorites';
-    this.URL =
-      this.URL + '?user=' + user.toString() + '&recipe=' + recipe.toString();
+    this.URL = this.URL + '/' + recipe.toString();
     return this.httpClient.get(this.URL) as Observable<FavoriteItem[]>;
   }
 
-  public deleteFavorite(
-    user: number,
-    recipe: number
-  ): Observable<FavoriteItem> {
+  public deleteFavorite(recipe: number): Observable<FavoriteItem> {
     this.URL = ApiConfig.url + '/favorites';
-    this.URL =
-      this.URL + '?user=' + user.toString() + '&recipe=' + recipe.toString();
+    this.URL = this.URL + '/' + recipe.toString();
     return this.httpClient.delete(this.URL) as Observable<FavoriteItem>;
   }
 }

@@ -15,17 +15,11 @@ export class FavoritesService {
     return this.favoritesResource.postFavorite(favorite);
   }
 
-  public findFavoriteExist(
-    recipe: number,
-    user: number
-  ): Observable<FavoriteItem[]> {
-    return this.favoritesResource.findFavoriteExist(user, recipe);
+  public findFavoriteExist(recipeid: number): Observable<FavoriteItem[]> {
+    return this.favoritesResource.findFavoriteExist(recipeid);
   }
 
-  public deleteFavorite(
-    user: number,
-    recipe: number
-  ): Observable<FavoriteItem> {
-    return this.favoritesResource.deleteFavorite(user, recipe);
+  public deleteFavorite(recipe: number): Observable<FavoriteItem> {
+    return this.favoritesResource.deleteFavorite(recipe);
   }
 }

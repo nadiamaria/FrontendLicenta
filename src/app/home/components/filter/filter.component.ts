@@ -24,7 +24,7 @@ export class FilterComponent implements OnInit {
   public ngOnInit() {
     // this.getValues();
     this.ingredientsService.getAllIngredients().subscribe((ingredients) => {
-      console.log(ingredients);
+      // console.log(ingredients);
       this.ingredients = ingredients;
       let group = {};
       this.ingredients.forEach((ingredient) => {
@@ -41,7 +41,7 @@ export class FilterComponent implements OnInit {
   }
 
   public getIngredients() {
-    console.log(this.myFormGroup.value);
+    // console.log(this.myFormGroup.value);
     this.eventBus.emit({
       name: 'filterChanged',
       value: this.myFormGroup.value,

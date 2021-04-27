@@ -11,7 +11,7 @@ export class RecipesService {
     return this.recipesResource.findAll(values);
   }
 
-  public getfilteredItems(values: number): Observable<RecipeItem[]> {
-    return this.recipesResource.findfiltered(values);
+  public getfavoriteItems(): Observable<RecipeItem[]> {
+    return this.recipesResource.findfavorite();
   }
 }

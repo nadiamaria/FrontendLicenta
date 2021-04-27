@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public refreshFavorites(): void {
-    this.eventBus.emit({ name: 'favoritePageEvent', value: this.userId });
+    this.eventBus.emit({ name: 'favoritePageEvent', value: '1' });
   }
 
   // private updateCartLength(): void {

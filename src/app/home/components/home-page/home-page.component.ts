@@ -22,7 +22,7 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     this.getRecipe();
 
-    console.log(document.cookie);
+    // console.log(document.cookie);
 
     this.subscription.add(
       this.eventBus.on('filterChanged').subscribe((data: any) => {
