@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from '../shared/components/layout/layout.component';
+import { RecipesService } from '../shared/data/RecipesService';
 import { HomePageComponent } from './components/home-page/home-page.component';
-
+import { RecipePageComponent } from './components/recipe-page/recipe-page.component';
 
 const routes: Routes = [
   {
@@ -11,14 +12,19 @@ const routes: Routes = [
     children: [
       {
         path: 'home',
-        component: HomePageComponent
-      }
-    ]
-  }
+        component: HomePageComponent,
+      },
+      {
+        path: ':id',
+        component: RecipePageComponent,
+        resolve: { recipe: RecipesService },
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class HomeRoutingModule { }
+export class HomeRoutingModule {}

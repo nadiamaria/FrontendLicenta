@@ -15,6 +15,11 @@ export class RecipesResource {
     return this.httpClient.get(this.URL) as Observable<RecipeItem[]>;
   }
 
+  public findById(id: number): Observable<RecipeItem> {
+    this.URL = ApiConfig.url + '/recipes/' + id;
+    return this.httpClient.get(this.URL) as Observable<RecipeItem>;
+  }
+
   public findfavorite(): Observable<RecipeItem[]> {
     this.URL = ApiConfig.url + '/recipes/favorites';
     return this.httpClient.get(this.URL) as Observable<RecipeItem[]>;

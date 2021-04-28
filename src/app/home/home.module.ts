@@ -12,10 +12,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FilterComponent } from './components/filter/filter.component';
 import { httpInterceptorProviders } from '../shared/http-interceptors';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { RecipePageComponent } from './components/recipe-page/recipe-page.component';
 
 
 @NgModule({
-  declarations: [HomePageComponent, FilterComponent],
+  declarations: [HomePageComponent, FilterComponent, RecipePageComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
