@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewChecked, AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { FavoriteItem } from '../../data/dataModel/favoriteItem';
@@ -22,19 +22,20 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
 
   constructor(
     private favoritesService: FavoritesService,
-    private eventBus: EventBusService,
-    private router: Router
+    private eventBus: EventBusService
   ) {}
 
   ngOnInit(): void {
+    // setTimeout(this.verifyFavorite.bind(this), 1000);
     this.verifyFavorite();
 
-    this.subscription.add(
-      this.eventBus.on('favoritePageEvent').subscribe((ev) => {
-        this.verifyFavorite();
-      })
-    );
+    // this.subscription.add(
+    //   this.eventBus.on('favoritePageEvent').subscribe((ev) => {
+    //     this.verifyFavorite();
+    //   })
+    // );
   }
+  
 
   public onFavorite() {
     if (!this.found) {
@@ -45,7 +46,7 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
       this.subscription.add(
         this.favoritesService
           .postFavorite(this.favorite)
-          .subscribe((x) => console.log(x))
+          .subscribe()
       );
       this.found = true;
     } else this.unFavorite();
@@ -53,12 +54,11 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
   }
 
   public unFavorite() {
-    console.log('unfavorite');
     this.found = false;
     this.subscription.add(
       this.favoritesService
         .deleteFavorite(this.recipe.id)
-        .subscribe((x) => console.log(x))
+        .subscribe()
     );
     this.eventBus.emit({ name: 'favoritePageEvent', value: '1' });
   }
@@ -67,13 +67,12 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
     this.favoritesService
       .findFavoriteExist(this.recipe.id)
       .subscribe((favorites) => {
-        if (favorites.length != 0) {
+        if (favorites && favorites.length != 0) {
           this.found = true;
         } else {
           this.found = false;
         }
       });
-    console.log(this.found);
   }
 
   public ngOnDestroy(): void {

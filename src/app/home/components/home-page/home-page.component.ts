@@ -22,13 +22,16 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     this.getRecipe();
 
-    // console.log(document.cookie);
-
     this.subscription.add(
       this.eventBus.on('filterChanged').subscribe((data: any) => {
+        // setTimeout(this.getRecipe.bind(this), 1000, data);
         this.getRecipe(data);
       })
     );
+  }
+
+  public delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
   public getRecipe(data?: any) {

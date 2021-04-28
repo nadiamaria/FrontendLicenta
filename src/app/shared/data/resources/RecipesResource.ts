@@ -12,8 +12,6 @@ export class RecipesResource {
   public findAll(values?: Array<string>): Observable<RecipeItem[]> {
     this.URL = ApiConfig.url + '/recipes';
     if (values) this.URL = this.URL + '?ingredients=' + values.toString();
-    console.log(this.URL);
-    console.log('here');
     return this.httpClient.get(this.URL) as Observable<RecipeItem[]>;
   }
 

@@ -22,7 +22,6 @@ export class NoopInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const token = this.cookieService.get('authorization');
     const tokenLocal = `authorization=${token}`;
-    console.log('eu' + tokenLocal);
     if (tokenLocal) {
       const newreq = req.clone({
         headers: req.headers.set('Set-Cookie', tokenLocal),

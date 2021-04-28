@@ -1,46 +1,4 @@
-// @import '~src/app/stylesheets/mixins';
 
-// .recipe {
-
-//   @include display-flex(column, center, center, nowrap);
-//   height: 100%;
-//   padding: 10px;
-
-//   &__favorite {
-
-//   }
-
-//   &__image {
-//     @include display-flex(column, center, center, nowrap);
-//     border-bottom: 1px solid black;
-//     padding-bottom: 5px;
-//     width: 100%;
-
-//     img {
-//       height: 180px;
-//       width: 150px;
-//     }
-//   }
-
-//   &__title {
-//     padding-bottom: 10px;
-//     padding-top: 10px;
-//   }
-
-//   &__informations {
-
-//     @include display-flex(row, space-between, baseline, nowrap);
-
-
-//     &__time {
-
-//     }
-
-//     &__calories {
-
-//     }
-//   }
-// }
 .card-recipe__heart {
   position: absolute;
   top: 0;
@@ -54,7 +12,3 @@
 .mat-card {
   padding: 0 16px;
 }
-
-// .image {
-//   background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(img/hero.jpg);
-// }

@@ -28,7 +28,7 @@ export class FilterComponent implements OnInit {
       this.ingredients = ingredients;
       let group = {};
       this.ingredients.forEach((ingredient) => {
-        group[ingredient.name] = new FormControl('');
+        group[ingredient.name] = new FormControl(false);
       });
       this.myFormGroup = new FormGroup(group);
     });

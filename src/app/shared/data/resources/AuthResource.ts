@@ -25,7 +25,7 @@ export class AuthResource {
 
   public logOutUser(): Observable<authDto> {
     this.URL = ApiConfig.url + '/authentication' + '/log-out';
-    return this.httpClient.post(this.URL, '') as Observable<authDto>;
+    return this.httpClient.post(this.URL, '', {withCredentials: true}) as Observable<authDto>;
   }
 
   public authUser(): Observable<authDto> {
