@@ -43,7 +43,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.logedIn = true;
 
     this.subscription.add(this.eventBus.on('logIn').subscribe(ev => {
-      console.log(ev);
       this.logedIn = ev;
     }));
   }

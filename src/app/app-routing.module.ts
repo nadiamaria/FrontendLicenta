@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './shared/services/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'account/login', pathMatch: 'full' },
   {
     path: 'account',
+    canDeactivate: [AuthGuard],
     loadChildren: () =>
       import('./account/account.module').then((m) => m.AccountModule),
+      
   },
   {
     path: 'recipes',

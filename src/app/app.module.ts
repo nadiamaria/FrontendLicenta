@@ -8,6 +8,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
 import { CookieModule } from 'ngx-cookie';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthGuard } from './shared/services/auth.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,9 +18,9 @@ import { CookieService } from 'ngx-cookie-service';
     BrowserAnimationsModule,
     MatSliderModule,
     MatButtonModule,
-    CookieModule.forRoot(),
+    CookieModule.forRoot()
   ],
-  providers: [CookieService],
+  providers: [CookieService, AuthGuard],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

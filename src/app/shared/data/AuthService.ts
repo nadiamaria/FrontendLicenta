@@ -30,7 +30,7 @@ export class AuthService {
 
   public isAuth(): boolean { //verif dupa expire time?
     let token = this.cookieService.get('authorization');
-    if (token == ' ')
+    if (token == ' ' || !this.cookieService.get('authorization'))
       return false;
       else
       return true;

@@ -34,11 +34,10 @@ export class NoopInterceptor implements HttpInterceptor {
     catchError((error: HttpErrorResponse) => {
       switch (error.status) {
         case 401:
-          console.log('log-out');
           if (this.urlContains('/api/auth/login', req)) {
-            return throwError(error);
+            // return throwError(error);
           } else {
-            console.log('log-out');
+            // console.log('log-out');
           }
           break;
         default:

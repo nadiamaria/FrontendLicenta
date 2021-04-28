@@ -31,6 +31,8 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
     // setTimeout(this.verifyFavorite.bind(this), 1000);
     if(this.authService.isAuth())
     this.verifyFavorite();
+    else
+    this.found = false;
 
     this.subscription.add(
       this.eventBus.on('favoritePageEvent').subscribe((ev) => {
