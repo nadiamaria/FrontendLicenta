@@ -11,6 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FilterComponent } from './components/filter/filter.component';
 import { httpInterceptorProviders } from '../shared/http-interceptors';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 @NgModule({
   declarations: [HomePageComponent, FilterComponent],
@@ -22,6 +24,7 @@ import { httpInterceptorProviders } from '../shared/http-interceptors';
     MatCardModule,
     ReactiveFormsModule,
     MatCheckboxModule,
+    MatSnackBarModule
   ],
   providers: [httpInterceptorProviders],
   exports: [],

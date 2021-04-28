@@ -18,6 +18,7 @@ import { RecipesResource } from './data/resources/RecipesResource';
 import { RecipesService } from './data/RecipesService';
 import { AuthService } from './data/AuthService';
 import { AuthResource } from './data/resources/AuthResource';
+import { AuthGuard } from './services/auth.guard';
 
 @NgModule({
   declarations: [

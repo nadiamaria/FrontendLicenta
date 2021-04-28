@@ -6,9 +6,9 @@ const routes: Routes = [
   { path: '', redirectTo: 'account/login', pathMatch: 'full' },
   {
     path: 'account',
-    canDeactivate: [AuthGuard],
     loadChildren: () =>
-      import('./account/account.module').then((m) => m.AccountModule),
+    import('./account/account.module').then((m) => m.AccountModule),
+    canActivate: [AuthGuard],
       
   },
   {

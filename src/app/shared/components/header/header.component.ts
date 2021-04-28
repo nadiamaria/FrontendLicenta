@@ -75,6 +75,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public onLogout() {
     this.refreshFavorites();
     this.eventBus.emit({ name: 'logIn', value: false });
+    this.eventBus.emit({ name: 'auth', value: 'Loged out successfully!' });
     this.subLogOut.add(
       this.authService
         .logOut()

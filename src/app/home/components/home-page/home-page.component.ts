@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { RecipeItem } from 'src/app/shared/data/dataModel/recipeItem';
 import { EventBusService } from 'src/app/shared/services/event-bus.service';
@@ -16,7 +17,8 @@ export class HomePageComponent implements OnInit {
 
   constructor(
     private recipesService: RecipesService,
-    private eventBus: EventBusService
+    private eventBus: EventBusService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -26,6 +28,13 @@ export class HomePageComponent implements OnInit {
       this.eventBus.on('filterChanged').subscribe((data: any) => {
         // setTimeout(this.getRecipe.bind(this), 1000, data);
         this.getRecipe(data);
+      })
+    );
+
+    this.subscription.add(
+      this.eventBus.on('auth').subscribe((data: any) => {
+        // setTimeout(this.getRecipe.bind(this), 1000, data);
+        this.openSnackBar(data);
       })
     );
   }
@@ -46,5 +55,11 @@ export class HomePageComponent implements OnInit {
 
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, 'Close', {
+      duration: 3000
+    });
   }
 }

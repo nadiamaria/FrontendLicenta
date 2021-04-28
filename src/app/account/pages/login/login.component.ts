@@ -21,12 +21,13 @@ export class LoginComponent implements OnDestroy {
   constructor(private authService: AuthService, private router: Router, private eventBus: EventBusService,) {}
 
   public onLogin() {
+    this.eventBus.emit({ name: 'auth', value: 'Loged in successfully!' });
     this.eventBus.emit({ name: 'logIn', value: true }); //nu merge?
     this.subscription.add(
       this.authService.logIn(this.loginForm.value).subscribe((x) => {
+        this.router.navigateByUrl('/recipes/home');
         // console.log("login successful if there's a jwt token in the response");
         // localStorage.setItem('token', x.token);
-        this.router.navigateByUrl('/recipes/home');
       })
     );
   }
