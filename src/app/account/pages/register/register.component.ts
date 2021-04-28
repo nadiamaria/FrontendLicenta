@@ -25,7 +25,7 @@ export class RegisterComponent implements OnDestroy {
     this.subscription.add(
       this.authService
         .register(this.registerForm.value)
-        .subscribe((x) => this.router.navigateByUrl('/recipes/home'))
+        .subscribe((x) => this.router.navigateByUrl('/account/login'))
     );
     // this.router.navigateByUrl('/recipes/home');
   }

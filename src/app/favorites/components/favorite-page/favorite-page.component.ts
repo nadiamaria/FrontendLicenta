@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/shared/data/AuthService';
 import { RecipeItem } from 'src/app/shared/data/dataModel/recipeItem';
 import { RecipesService } from 'src/app/shared/data/RecipesService';
 import { EventBusService } from 'src/app/shared/services/event-bus.service';
@@ -13,13 +14,17 @@ export class FavoritePageComponent implements OnInit {
   public recipes: RecipeItem[];
   private subscription: Subscription = new Subscription();
   public url: Array<string>;
+  public logIn: boolean = false;
 
   constructor(
     private recipesService: RecipesService,
-    private eventBus: EventBusService
+    private eventBus: EventBusService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
+    this.logIn = this.authService.isAuth();
+
     this.getFavoriteRecipe();
 
     this.subscription.add(

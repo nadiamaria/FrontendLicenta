@@ -4,10 +4,11 @@ import authDto from './dataModel/authDto';
 import RequestWithUser from './dataModel/logInDto';
 import { UserSignUpItem } from './dataModel/userSignUpListItem';
 import { AuthResource } from './resources/AuthResource';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private authResource: AuthResource) {}
+  constructor(private authResource: AuthResource, private cookieService: CookieService) {}
 
   public register(user: UserSignUpItem): Observable<UserSignUpItem> {
     return this.authResource.postUser(user);
@@ -26,4 +27,12 @@ export class AuthService {
   }
 
   public storageLogIn(): void {}
+
+  public isAuth(): boolean { //verif dupa expire time?
+    let token = this.cookieService.get('authorization');
+    if (token == ' ')
+      return false;
+      else
+      return true;
+  }
 }

@@ -1,7 +1,10 @@
 <div class="home">
-  <div class="home__recipes">
+  <div class="home__recipes" *ngIf=logIn>
     <div class="home__recipes-recipe" *ngFor="let recipe of recipes">
       <app-recipe-card [recipe]="recipe"></app-recipe-card>
     </div>
+  </div>
+  <div class="redirect" *ngIf=!logIn>
+    If you want to add favorites, please <a routerLink="/account/login">Log In</a>.
   </div>
 </div>

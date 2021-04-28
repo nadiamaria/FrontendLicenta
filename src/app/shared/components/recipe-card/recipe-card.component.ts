@@ -1,6 +1,7 @@
 import { AfterContentInit, AfterViewChecked, AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
+import { AuthService } from '../../data/AuthService';
 import { FavoriteItem } from '../../data/dataModel/favoriteItem';
 import { FavoritesService } from '../../data/FavoritesService';
 import { EventBusService } from '../../services/event-bus.service';
@@ -22,18 +23,23 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
 
   constructor(
     private favoritesService: FavoritesService,
-    private eventBus: EventBusService
+    private eventBus: EventBusService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
     // setTimeout(this.verifyFavorite.bind(this), 1000);
+    if(this.authService.isAuth())
     this.verifyFavorite();
 
-    // this.subscription.add(
-    //   this.eventBus.on('favoritePageEvent').subscribe((ev) => {
-    //     this.verifyFavorite();
-    //   })
-    // );
+    this.subscription.add(
+      this.eventBus.on('favoritePageEvent').subscribe((ev) => {
+        if(ev == 'unauth')
+        this.found = false;
+        else
+        this.verifyFavorite();
+      })
+    );
   }
   
 
@@ -74,6 +80,7 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
         }
       });
   }
+
 
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();

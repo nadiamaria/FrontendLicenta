@@ -4,10 +4,12 @@ import {
   HttpInterceptor,
   HttpHandler,
   HttpRequest,
+  HttpErrorResponse,
 } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { catchError, map, retry } from 'rxjs/operators';
 
 /** Pass untouched request through to the next request handler. */
 @Injectable()
@@ -20,18 +22,37 @@ export class NoopInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const token = this.cookieService.get('authorization');
+    let token = this.cookieService.get('authorization');
     const tokenLocal = `authorization=${token}`;
-    if (tokenLocal) {
-      const newreq = req.clone({
-        headers: req.headers.set('Set-Cookie', tokenLocal),
-      });
-      return next.handle(newreq);
-    } else {
-      return next.handle(req);
-    }
+    req = req.clone({headers: req.headers.set('Set-Cookie', tokenLocal),});
+
+    return next.handle(req).pipe(
+      map((event: HttpEvent<any>) => {
+        return event;
+    }),
+    retry(1),
+    catchError((error: HttpErrorResponse) => {
+      switch (error.status) {
+        case 401:
+          console.log('log-out');
+          if (this.urlContains('/api/auth/login', req)) {
+            return throwError(error);
+          } else {
+            console.log('log-out');
+          }
+          break;
+        default:
+          return throwError(error);
+      }
+    })
+    );
+
     // newreq.headers.append('mama', localStorage.getItem('token'))
     // return next.handle(newreq);
+  }
+
+  private urlContains(path: string, req: HttpRequest<any>): boolean {
+    return req.url.indexOf(path) !== -1;
   }
 
   getCookie(key: string) {

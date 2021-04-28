@@ -30,6 +30,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   private subLogOut: Subscription = new Subscription();
 
+  public logedIn: boolean = false;
+
   constructor(
     private eventBus: EventBusService,
     private authService: AuthService,
@@ -37,10 +39,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    //   this.updateCartLength();
-    //   this.subscription.add(this.eventBus.on('cartNumberToggleEvent').subscribe(ev => {
-    //     this.updateCartLength();
-    //   }));
+    if(this.authService.isAuth())
+    this.logedIn = true;
+
+    this.subscription.add(this.eventBus.on('logIn').subscribe(ev => {
+      console.log(ev);
+      this.logedIn = ev;
+    }));
   }
 
   public onClickMenu(): void {
@@ -50,7 +55,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public refreshFavorites(): void {
-    this.eventBus.emit({ name: 'favoritePageEvent', value: '1' });
+    this.eventBus.emit({ name: 'favoritePageEvent', value: 'unauth' });
   }
 
   // private updateCartLength(): void {
@@ -69,14 +74,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // }
 
   public onLogout() {
-    console.log('logout')
+    this.refreshFavorites();
+    this.eventBus.emit({ name: 'logIn', value: false });
     this.subLogOut.add(
       this.authService
         .logOut()
         .subscribe((x) => {
           this.router.navigateByUrl('/recipes/home');})
     );
-    this.router.navigateByUrl('/recipes/home');
   }
 
   public ngOnDestroy(): void {

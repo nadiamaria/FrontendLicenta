@@ -30,6 +30,6 @@ export class AuthResource {
 
   public authUser(): Observable<authDto> {
     this.URL = ApiConfig.url + '/authentication';
-    return this.httpClient.post(this.URL, '') as Observable<authDto>;
+    return this.httpClient.post(this.URL, '', {withCredentials: true}) as Observable<authDto>;
   }
 }

@@ -16,7 +16,7 @@ export class RecipesResource {
   }
 
   public findfavorite(): Observable<RecipeItem[]> {
-    this.URL = ApiConfig.url + '/recipes';
+    this.URL = ApiConfig.url + '/recipes/favorites';
     return this.httpClient.get(this.URL) as Observable<RecipeItem[]>;
   }
 }
