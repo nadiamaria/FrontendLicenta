@@ -8,4 +8,8 @@
     If you want to add favorites, please
     <a routerLink="/account/login">Log In</a>.
   </div>
+  <div class="redirect" *ngIf="!favorites">
+    Ops, you didn't mark any recipe as favorite yet.
+    <a routerLink="/recipes/home">Go now</a>.
+  </div>
 </div>

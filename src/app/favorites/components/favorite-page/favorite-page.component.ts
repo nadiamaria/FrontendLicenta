@@ -15,15 +15,17 @@ export class FavoritePageComponent implements OnInit {
   private subscription: Subscription = new Subscription();
   public url: Array<string>;
   public logIn: boolean = false;
+  public favorites: boolean = false;
 
   constructor(
     private recipesService: RecipesService,
     private eventBus: EventBusService,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.logIn = this.authService.isAuth();
+    this.favorites = !this.authService.isAuth();
 
     this.getFavoriteRecipe();
 
@@ -37,6 +39,9 @@ export class FavoritePageComponent implements OnInit {
   public getFavoriteRecipe() {
     this.recipesService.getfavoriteItems().subscribe((recipes) => {
       this.recipes = recipes;
+      if (this.recipes == null && !this.authService.isAuth()) {
+        this.favorites = true;
+      }
     });
   }
 }

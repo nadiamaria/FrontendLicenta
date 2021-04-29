@@ -1,4 +1,12 @@
-import { AfterContentInit, AfterViewChecked, AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { AuthService } from '../../data/AuthService';
@@ -13,7 +21,6 @@ import { EventBusService } from '../../services/event-bus.service';
 })
 export class RecipeCardComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
-  private foundSubs: Subscription = new Subscription();
   private favorite: FavoriteItem;
 
   public found: boolean;
@@ -24,26 +31,22 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
   constructor(
     private favoritesService: FavoritesService,
     private eventBus: EventBusService,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    console.log(this.recipe);
     // setTimeout(this.verifyFavorite.bind(this), 1000);
-    if(this.authService.isAuth())
-    this.verifyFavorite();
-    else
-    this.found = false;
+    if (this.authService.isAuth()) this.verifyFavorite();
+    else this.found = false;
 
     this.subscription.add(
       this.eventBus.on('favoritePageEvent').subscribe((ev) => {
-        if(ev == 'unauth')
-        this.found = false;
-        else
-        this.verifyFavorite();
+        if (ev == 'unauth') this.found = false;
+        else this.verifyFavorite();
       })
     );
   }
-  
 
   public onFavorite() {
     if (!this.found) {
@@ -52,9 +55,7 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
         recipeId: this.recipe.id,
       };
       this.subscription.add(
-        this.favoritesService
-          .postFavorite(this.favorite)
-          .subscribe()
+        this.favoritesService.postFavorite(this.favorite).subscribe()
       );
       this.found = true;
     } else this.unFavorite();
@@ -64,9 +65,7 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
   public unFavorite() {
     this.found = false;
     this.subscription.add(
-      this.favoritesService
-        .deleteFavorite(this.recipe.id)
-        .subscribe()
+      this.favoritesService.deleteFavorite(this.recipe.id).subscribe()
     );
     this.eventBus.emit({ name: 'favoritePageEvent', value: '1' });
   }
@@ -82,7 +81,6 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
         }
       });
   }
-
 
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();

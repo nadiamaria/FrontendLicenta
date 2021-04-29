@@ -4,7 +4,5 @@ export interface RecipeItem {
   instruction: string;
   description: string;
   image: string;
-  ingredients: {
-    ingredient_name: string;
-  };
+  ingredients: [];
 }

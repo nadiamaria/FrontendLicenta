@@ -1,1 +1,33 @@
-<p>recipe-page works!</p>
+<div class="page">
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">{{ this.data.name }}</div>
+      <div class="card__favorites">
+        <button
+          mat-icon-button
+          *ngIf="found"
+          (click)="unFavorite()"
+          class="card-recipe__heart"
+        >
+          <mat-icon class="card-recipe__color">favorite</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          *ngIf="!found"
+          (click)="onFavorite()"
+          class="card-recipe__heart"
+        >
+          <mat-icon>favorite_border</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="card__image">
+      <img mat-card-image src="{{ this.data.image }}" />
+    </div>
+    <div class="description">{{ this.data.description }}</div>
+    <div class="ingredients" *ngFor="let ingredient of this.data.ingredients">
+      {{ ingredient }}
+    </div>
+    <div class="instructions">{{ this.data.instruction }}</div>
+  </div>
+</div>

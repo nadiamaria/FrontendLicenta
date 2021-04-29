@@ -15,6 +15,18 @@ const routes: Routes = [
         path: 'home',
         component: HomePageComponent,
       },
+      // {
+      //   path: ':id',
+      //   component: RecipePageComponent,
+      //   resolve: { recipe: RecipeResolverService },
+      //   data: { path: ':id' },
+      // },
+    ],
+  },
+  {
+    path: 'rec',
+    component: LayoutComponent,
+    children: [
       {
         path: ':id',
         component: RecipePageComponent,
