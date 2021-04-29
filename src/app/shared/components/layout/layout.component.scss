@@ -2,8 +2,8 @@
 @import '~src/app/stylesheets/vars';
 
 .page {
-  
-  height: 100%;
+
+  height: 100vh;
 
   &__content {
     @include display-flex(row, flex-start, flex-start, nowrap);

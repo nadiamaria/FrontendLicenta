@@ -13,7 +13,8 @@ import { FilterComponent } from './components/filter/filter.component';
 import { httpInterceptorProviders } from '../shared/http-interceptors';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RecipePageComponent } from './components/recipe-page/recipe-page.component';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [HomePageComponent, FilterComponent, RecipePageComponent],
@@ -25,7 +26,9 @@ import { RecipePageComponent } from './components/recipe-page/recipe-page.compon
     MatCardModule,
     ReactiveFormsModule,
     MatCheckboxModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatPaginatorModule,
+    MatIconModule,
   ],
   providers: [httpInterceptorProviders],
   exports: [],

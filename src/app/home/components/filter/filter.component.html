@@ -1,6 +1,14 @@
-<div class="filter">
-  <form [formGroup]="myFormGroup">
-    <span *ngFor="let ingredient of ingredients" class="filter__ingredient">
+<a mat-icon-button class="keywoboard" (click)="showForm()">
+  <div class="filter-extend">
+    <div class="title">Filter</div>
+    <mat-icon *ngIf="!show">keyboard_arrow_down</mat-icon>
+    <mat-icon *ngIf="show">keyboard_arrow_up</mat-icon>
+  </div>
+</a>
+<div class="filter" *ngIf="show">
+  Ingredients:
+  <form [formGroup]="myFormGroup" class="filter-check">
+    <span *ngFor="let ingredient of ingredients" class="ingredient">
       <mat-checkbox
         [formControlName]="ingredient.name"
         (change)="getIngredients()"

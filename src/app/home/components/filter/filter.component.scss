@@ -1,67 +1,37 @@
 .filter {
-  height: 100%;
-  border: 1px solid black;
+    padding-top: 10px;
+    padding-left: 5px;
+    // height: 100%;
+  // border: 1px solid black;
+  background-color: white;
     form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
-    width: 1000px;}
+    width: 70vh;
+    align-content: space-between;
+    max-height: 180px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 
   &__ingredient {
     margin-right: 2px;
   }
 }
 
-// @import '~src/app/stylesheets/general';
+.filter-extend {
+  margin-top: 20px;
+  width: 80vh;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 10px;
+  cursor: pointer;
 
+  .title {
+    padding-top: 2px;
+  }
 
-// .checkbox-label {
-//       @include font-set(
-//             $form-checkbox-icon-color,
-//             $source-sans,
-//             14px,
-//             normal,
-//             24px
-//           );
-//       // margin-top: 4 * $secondary-size-base;
-//       margin: 0 px 12;
-// }
-
-
-// /* stylelint-disable */
-// ::ng-deep .mat-checkbox-frame {
-//   border-color: $forms-input-border;
-//   border-radius: 4px !important;
-//   border-width: 1px !important;
-// }
-
-// ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
-// .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
-// .mat-accent .mat-pseudo-checkbox-checked,
-// .mat-accent .mat-pseudo-checkbox-indeterminate,
-// .mat-pseudo-checkbox-checked,
-// .mat-pseudo-checkbox-indeterminate {
-//   background-color: $default-color !important;
-// }
-
-// ::ng-deep .mat-checkbox-frame {
-//   border-color: $forms-input-border;
-// }
-
-// ::ng-deep .mat-accent.mat-checkbox-checked .mat-checkbox-background{
-//   background-color: $forms-checkbox-background-color !important;
-// }
-
-
-// ::ng-deep .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background, .mat-checkbox-checked.mat-primary .mat-checkbox-background {
-//   background-color: $forms-checkbox-background-color !important;
-// }
-
-// ::ng-deep .mat-checkbox-checked.mat-primary .mat-checkbox-background {
-//   background-color: $forms-checkbox-background-color !important;
-// }
-
-// ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
-//   background-color: $forms-checkbox-background-color !important;
-// }
-
+}

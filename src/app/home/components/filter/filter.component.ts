@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { IngredientsItem } from 'src/app/shared/data/dataModel/ingredientItem';
 import { IngredientsService } from 'src/app/shared/data/IngredientsService';
 import { EventBusService } from 'src/app/shared/services/event-bus.service';
@@ -11,8 +12,10 @@ import { EventBusService } from 'src/app/shared/services/event-bus.service';
 })
 export class FilterComponent implements OnInit {
   public ingredients: IngredientsItem[];
+  public show: boolean = false;
 
   // public formSelect = new FormControl('');
+  private subscription: Subscription = new Subscription();
 
   public myFormGroup: FormGroup;
 
@@ -22,9 +25,7 @@ export class FilterComponent implements OnInit {
   ) {}
 
   public ngOnInit() {
-    // this.getValues();
     this.ingredientsService.getAllIngredients().subscribe((ingredients) => {
-      // console.log(ingredients);
       this.ingredients = ingredients;
       let group = {};
       this.ingredients.forEach((ingredient) => {
@@ -32,6 +33,12 @@ export class FilterComponent implements OnInit {
       });
       this.myFormGroup = new FormGroup(group);
     });
+
+    this.subscription.add(
+      this.eventBus.on('showForm').subscribe((data: number) => {
+        this.show = !data;
+      })
+    );
 
     // let group={}
     // this.ingredients.forEach(ingredient =>{
@@ -48,13 +55,10 @@ export class FilterComponent implements OnInit {
     });
   }
 
-  // onSubmit(){
-  //   console.log(this.formSelect.value.ingredient1);
-  //   this.formSelect.patchValue({ingredient1: false});
-  //   // console.log(JSON.stringify(this.formSelect.getRawValue()));
-  // }
-
-  // public getValues(): void {
-  //   this.formSelect.valueChanges.subscribe((value) => {console.log(value)});
-  // }
+  public showForm() {
+    this.eventBus.emit({
+      name: 'showForm',
+      value: this.show,
+    });
+  }
 }

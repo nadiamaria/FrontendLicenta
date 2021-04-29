@@ -16,7 +16,7 @@
 
   color: $header-font;
   padding: 7px;
-  width: 100%;
+  // width: 100%;
 
   @include respond(gt-xs) {
     @include display-flex(row, space-between, center, nowrap);
