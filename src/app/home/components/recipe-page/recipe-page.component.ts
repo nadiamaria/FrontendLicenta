@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { RecipeItem } from 'src/app/shared/data/dataModel/recipeItem';
@@ -15,7 +15,8 @@ export class RecipePageComponent implements OnInit {
 
   constructor(
     private recipesServices: RecipesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -32,14 +33,9 @@ export class RecipePageComponent implements OnInit {
       take(1),
       tap((recipe: RecipeItem) => {
         this.data = recipe;
+        if (this.data == null) this.router.navigateByUrl('/recipes/home');
         console.log(this.data);
       })
     );
-    // let recipe;
-    // this.recipesServices.getRecipeById(id).subscribe((recipe) => {
-    //   recipe = recipe;
-    //   console.log(recipe);
-    // });
-    // return recipe;
   }
 }
