@@ -7,6 +7,15 @@
   // height: 100%;
   width: 100%;
 
+  &__filter {
+    width: 50%;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: center;
+  }
+
   &__recipes {
     // background-color: white;
     border: 1px black;
@@ -20,20 +29,20 @@
     @include respond(gt-xs) {
       width: fit-content;
       max-width: 632px;
-      @include display-flex(row, center, center, wrap);
+      @include display-flex(row, flex-start, center, wrap);
     }
 
     @include respond(gt-sm) {
       width: fit-content;
       max-width: 947px;
-      @include display-flex(row, center, center, wrap);
+      @include display-flex(row, flex-start, center, wrap);
     }
 
     @include respond(gt-md) {
       // width: 87%;
       width: fit-content;
-      max-width: 1250px;
-      @include display-flex(row, center, center, wrap);
+      max-width: 1140px;
+      @include display-flex(row, flex-start, center, wrap);
     }
   }
   // &__recipes {
