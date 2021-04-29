@@ -2,9 +2,11 @@
   <div class="home__filter">
     <app-filter></app-filter>
   </div>
-  <div class="home__recipes">
-    <div class="home__recipes-recipe" *ngFor="let recipe of recipes">
-      <app-recipe-card [recipe]="recipe"></app-recipe-card>
+  <div class="home__container">
+    <div class="home__recipes">
+      <div class="home__recipes-recipe" *ngFor="let recipe of recipes">
+        <app-recipe-card [recipe]="recipe"></app-recipe-card>
+      </div>
     </div>
   </div>
 </div>
