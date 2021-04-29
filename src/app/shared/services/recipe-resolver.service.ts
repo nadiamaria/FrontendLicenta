@@ -18,6 +18,6 @@ export class RecipeResolverService implements Resolve<RecipeItem> {
     _route: ActivatedRouteSnapshot,
     _state: RouterStateSnapshot
   ): RecipeItem | Observable<RecipeItem> | Promise<RecipeItem> {
-    return this.recipesServices.getRecipeById(1);
+    return this.recipesServices.getRecipeById(_route.params['id']);
   }
 }

@@ -15,6 +15,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RecipePageComponent } from './components/recipe-page/recipe-page.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
+import { RecipesService } from '../shared/data/RecipesService';
+import { RecipeResolverService } from '../shared/services/recipe-resolver.service';
 
 @NgModule({
   declarations: [HomePageComponent, FilterComponent, RecipePageComponent],
@@ -30,7 +32,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatPaginatorModule,
     MatIconModule,
   ],
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders, RecipesService, RecipeResolverService],
   exports: [],
 })
 export class HomeModule {}

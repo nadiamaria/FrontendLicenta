@@ -32,6 +32,7 @@ export class RecipePageComponent implements OnInit {
       take(1),
       tap((recipe: RecipeItem) => {
         this.data = recipe;
+        console.log(this.data);
       })
     );
     // let recipe;
