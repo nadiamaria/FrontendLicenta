@@ -1,4 +1,4 @@
-<div class="page">
+<div class="page" *ngIf="this.data">
   <div class="card">
     <div class="card__header">
       <div class="card__title">{{ this.data.name }}</div>
@@ -24,10 +24,26 @@
     <div class="card__image">
       <img mat-card-image src="{{ this.data.image }}" />
     </div>
-    <div class="description">{{ this.data.description }}</div>
-    <div class="ingredients" *ngFor="let ingredient of this.data.ingredients">
-      {{ ingredient }}
+    <div class="card__description">
+      &nbsp;&nbsp;&nbsp;&nbsp;{{ this.data.description }}
     </div>
-    <div class="instructions">{{ this.data.instruction }}</div>
+    <div class="ingredients" *ngIf="this.recipeIngred">
+      <h1>Ingrediente</h1>
+
+      <div
+        class="card__ingredients"
+        *ngFor="let ingredient of this.recipeIngred"
+      >
+        <mat-icon>chevron_right</mat-icon>{{ ingredient.cant_ingr }}
+        {{ ingredient.unit_mas }}
+        {{ ingredient.ingredient.name }}
+      </div>
+    </div>
+    <div class="card__instructions">
+      <h1>Instructiuni</h1>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      {{ this.data.instruction }}
+    </div>
+    <h1 class="end">Pofta Buna!</h1>
   </div>
 </div>

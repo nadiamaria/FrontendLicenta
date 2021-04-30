@@ -1,0 +1,14 @@
+<div class="dialog">
+  <div class="dialog__header">
+    <h2 mat-dialog-title>Ops!</h2>
+    <button mat-dialog-close class="close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="dialog__body">
+    <mat-dialog-content
+      >You can't favorite recipes beacuse you are not authentificated.
+      <a routerLink="/account/login" mat-dialog-close>Log In</a>
+    </mat-dialog-content>
+  </div>
+</div>

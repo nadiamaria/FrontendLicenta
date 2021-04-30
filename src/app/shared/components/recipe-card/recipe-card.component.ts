@@ -35,7 +35,6 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.recipe);
     // setTimeout(this.verifyFavorite.bind(this), 1000);
     if (this.authService.isAuth()) this.verifyFavorite();
     else this.found = false;
@@ -49,17 +48,19 @@ export class RecipeCardComponent implements OnInit, OnDestroy {
   }
 
   public onFavorite() {
-    if (!this.found) {
-      this.favorite = {
-        name: 'favorites',
-        recipeId: this.recipe.id,
-      };
-      this.subscription.add(
-        this.favoritesService.postFavorite(this.favorite).subscribe()
-      );
-      this.found = true;
-    } else this.unFavorite();
-    this.eventBus.emit({ name: 'favoritePageEvent', value: '1' });
+    if (this.authService.isAuth()) {
+      if (!this.found) {
+        this.favorite = {
+          name: 'favorites',
+          recipeId: this.recipe.id,
+        };
+        this.subscription.add(
+          this.favoritesService.postFavorite(this.favorite).subscribe()
+        );
+        this.found = true;
+      } else this.unFavorite();
+      this.eventBus.emit({ name: 'favoritePageEvent', value: '1' });
+    } else this.eventBus.emit({ name: 'favoritenotauth', value: '1' });
   }
 
   public unFavorite() {

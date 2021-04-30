@@ -1,0 +1,19 @@
+@import '~src/app/stylesheets/mixins';
+
+.close {
+  background-color: white;
+  border: 0;
+  cursor: pointer;
+}
+
+.dialog {
+  border-radius: 16px;
+  // height: 226px;
+  // padding: 32px;
+  // width: 580px;
+
+  &__header {
+    @include display-flex(row, space-between, center, nowrap);
+    align-items: flex-start;
+    // margin-bottom: 32px;
+  }}

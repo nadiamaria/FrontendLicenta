@@ -14,9 +14,9 @@ export class RegisterComponent implements OnDestroy {
   private subscription: Subscription = new Subscription();
 
   public registerForm = new FormGroup({
-    email: new FormControl('a'),
-    name: new FormControl('a'),
-    password: new FormControl('a'),
+    email: new FormControl(''),
+    name: new FormControl(''),
+    password: new FormControl(''),
   });
 
   constructor(private authService: AuthService, private router: Router) {}

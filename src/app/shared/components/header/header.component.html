@@ -7,7 +7,7 @@
       <a class="header__links" [routerLink]="'/recipes/home'">MySpaceFood</a>
     </div>
     <div class="header__pages">
-      <a
+      <!-- <a
         mat-button
         href="https://www.google.com/"
         target="_blank"
@@ -20,10 +20,13 @@
         target="_blank"
         class="header__links header__pages-links"
         >Link2</a
-      >
+      > -->
     </div>
   </div>
   <div class="header__icons">
+    <div class="header__icons-profile" *ngIf="logedIn">
+      Hello, {{ this.username }}!
+    </div>
     <div class="header__icons-cart">
       <a
         mat-icon-button
@@ -35,20 +38,28 @@
         <!-- {{ this.cartNumber }} -->
       </a>
     </div>
-    <div class="header__icons-profile">
-      <button mat-icon-button routerLink="/home/profile">
-        <mat-icon class="header__icons-icon">face</mat-icon>
-      </button>
-    </div>
-    <div class="header__icons-logout" *ngIf="logedIn">
-      <!-- <button mat-icon-button> -->
-      <a mat-icon-button class="register__card-links" (click)="onLogout()">
-        <!-- routerLink="/account/login"
+    <!-- <div class="header__icons-logout" *ngIf="logedIn"> -->
+    <!-- <button mat-icon-button> -->
+    <a
+      mat-icon-button
+      class="register__card-links"
+      (click)="onLogout()"
+      *ngIf="logedIn"
+    >
+      <!-- routerLink="/account/login"
         routerLinkActive="active" -->
-        <mat-icon class="header__icons-icon">exit_to_app</mat-icon></a
-      >
-      <!-- </button> -->
-    </div>
+      <mat-icon class="header__icons-icon">exit_to_app</mat-icon></a
+    >
+    <!-- </button> -->
+    <!-- </div> -->
+    <a
+      mat-icon-button
+      class="register__card-links"
+      routerLink="/account/login"
+      *ngIf="!logedIn"
+    >
+      <mat-icon class="header__icons-icon">how_to_reg</mat-icon></a
+    >
   </div>
   <!-- <a
   mat-button

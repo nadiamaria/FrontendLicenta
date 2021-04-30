@@ -22,13 +22,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public menuToggleEmitter: EventEmitter<boolean> = new EventEmitter();
   private menuShow: boolean = false;
   // public products: Product[] = [];
-  public cartNumber: number = 0;
+  public username: string;
 
   //get cookie and decode
   public userId: number = 1;
 
   private subscription: Subscription = new Subscription();
   private subLogOut: Subscription = new Subscription();
+  private auth: Subscription = new Subscription();
 
   public logedIn: boolean = false;
 
@@ -39,12 +40,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    if(this.authService.isAuth())
-    this.logedIn = true;
+    if (this.authService.isAuth()) {
+      this.logedIn = true;
+      this.getAuth();
+    }
 
-    this.subscription.add(this.eventBus.on('logIn').subscribe(ev => {
-      this.logedIn = ev;
-    }));
+    this.subscription.add(
+      this.eventBus.on('logIn').subscribe((ev) => {
+        this.logedIn = ev;
+      })
+    );
   }
 
   public onClickMenu(): void {
@@ -57,35 +62,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.eventBus.emit({ name: 'favoritePageEvent', value: 'unauth' });
   }
 
-  // private updateCartLength(): void {
-  //   this.cartNumber = 0;
-  //   if (localStorage.getItem('products') === null) {
-  //     return;
-  //   } else {
-  //     this.products = JSON.parse(localStorage.getItem('products'));
-  //     if (!this.products) {
-  //       return;
-  //     }
-  //     this.products.forEach((item, index) => {
-  //       this.cartNumber += item.quantity;
-  //     });
-  //   }
-  // }
-
   public onLogout() {
     this.refreshFavorites();
     this.eventBus.emit({ name: 'logIn', value: false });
     this.eventBus.emit({ name: 'auth', value: 'Loged out successfully!' });
     this.subLogOut.add(
-      this.authService
-        .logOut()
-        .subscribe((x) => {
-          this.router.navigateByUrl('/recipes/home');})
+      this.authService.logOut().subscribe((x) => {
+        this.router.navigateByUrl('/recipes/home');
+      })
     );
   }
 
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
     this.subLogOut.unsubscribe();
+  }
+
+  public getAuth(): void {
+    this.auth.add(
+      this.authService.auth().subscribe((x) => {
+        this.username = x.name;
+      })
+    );
   }
 }

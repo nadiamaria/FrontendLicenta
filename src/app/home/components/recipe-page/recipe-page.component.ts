@@ -1,3 +1,4 @@
+import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
@@ -5,7 +6,9 @@ import { map, switchMap, take, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/data/AuthService';
 import { FavoriteItem } from 'src/app/shared/data/dataModel/favoriteItem';
 import { RecipeItem } from 'src/app/shared/data/dataModel/recipeItem';
+import { RecipesIngredientsItem } from 'src/app/shared/data/dataModel/RecipesIngredientsItem';
 import { FavoritesService } from 'src/app/shared/data/FavoritesService';
+import { RecipesIngredientsService } from 'src/app/shared/data/RecipesIngredientsService';
 import { RecipesService } from 'src/app/shared/data/RecipesService';
 import { EventBusService } from 'src/app/shared/services/event-bus.service';
 
@@ -19,26 +22,21 @@ export class RecipePageComponent implements OnInit {
   public found: boolean;
   private subscription: Subscription = new Subscription();
   private favorite: FavoriteItem;
+  public recipeIngred: any[];
 
   constructor(
     private recipesServices: RecipesService,
-    private route: ActivatedRoute,
     private router: Router,
     private favoritesService: FavoritesService,
     private eventBus: EventBusService,
-    private authService: AuthService
+    private authService: AuthService,
+    private recipeIngredientsService: RecipesIngredientsService
   ) {}
-
+  //aici am avut probleme cu logarea datelor
   ngOnInit(): void {
-    this.route.params
-      .pipe(
-        map((params) => params.id),
-        switchMap((id: number) => this.getRecipeById(id))
-      )
-      .subscribe();
-
-    if (this.authService.isAuth()) this.verifyFavorite();
-    else this.found = false;
+    const recieId = this.router.url.split('/').pop();
+    const id = Number(recieId);
+    this.getRecipeById(id);
 
     this.subscription.add(
       this.eventBus.on('favoritePageEvent').subscribe((ev) => {
@@ -48,15 +46,32 @@ export class RecipePageComponent implements OnInit {
     );
   }
 
-  public getRecipeById(id: number): Observable<RecipeItem> {
-    return this.recipesServices.getRecipeById(id).pipe(
-      take(1),
-      tap((recipe: RecipeItem) => {
-        this.data = recipe;
-        if (this.data == null) this.router.navigateByUrl('/recipes/home');
-        console.log(this.data);
-      })
-    );
+  public async getRecipeById(id: number): Promise<void> {
+    await this.recipesServices.getRecipeById(id).subscribe((data) => {
+      this.data = data;
+      if (this.authService.isAuth()) this.verifyFavorite();
+      else this.found = false;
+      this.getRecipeIngred(id);
+      console.log(this.recipeIngred);
+    });
+    // return this.recipesServices.getRecipeById(id).pipe(
+    //   take(1),
+    //   tap((recipe: RecipeItem) => {
+    //     this.getRecipeIngred(id);
+    //     // console.log(this.recipeIngred);
+    //     this.data = recipe;
+    //     if (this.data == null) this.router.navigateByUrl('/recipes/home');
+    //   })
+    // );
+  }
+
+  public getRecipeIngred(id?: any) {
+    this.recipeIngredientsService
+      .findIngredientsByRecipe(id)
+      .subscribe((data) => {
+        console.log(data);
+        this.recipeIngred = data;
+      });
   }
 
   public onFavorite() {

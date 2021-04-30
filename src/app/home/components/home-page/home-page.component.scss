@@ -8,7 +8,10 @@
   width: 100%;
 
   &__filter {
-    width: 50%;
+    width: 90%;
+    @include respond(gt-xs) {
+    width: 60%;
+    }
   }
 
   &__container {
@@ -20,28 +23,28 @@
     // background-color: white;
     border: 1px black;
     border-radius: 16px;
-    margin: 33px;
-    padding: 15px;
-    max-width: 632px;
+    max-width: 280px;
     width: fit-content;
 
 
     @include respond(gt-xs) {
       width: fit-content;
-      max-width: 632px;
+      margin: 33px;
+      padding: 15px;
+      max-width: 564px;
       @include display-flex(row, flex-start, center, wrap);
     }
 
     @include respond(gt-sm) {
       width: fit-content;
-      max-width: 947px;
+      max-width: 846px;
       @include display-flex(row, flex-start, center, wrap);
     }
 
     @include respond(gt-md) {
       // width: 87%;
       width: fit-content;
-      max-width: 1140px;
+      max-width: 1128px;
       @include display-flex(row, flex-start, center, wrap);
     }
   }
@@ -92,4 +95,8 @@
 
   //   }
   // }
+}
+
+.extand {
+  // height: 100%;
 }

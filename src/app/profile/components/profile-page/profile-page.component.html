@@ -1,8 +1,7 @@
-<div class="home">
-    <div class="home__recipes" *ngIf=logIn>
-        BUNA USER
-    </div>
-    <div class="redirect" *ngIf=!logIn>
-      If you want to acces profile, please <a routerLink="/account/login">Log In</a>.
-    </div>
+<div class="profile">
+  <div class="profile__page" *ngIf="logIn">BUNA USER</div>
+  <div class="profile__redirect" *ngIf="!logIn">
+    If you want to acces profile, please
+    <a routerLink="/account/login">Log In</a>.
   </div>
+</div>

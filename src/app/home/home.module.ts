@@ -17,9 +17,17 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { RecipesService } from '../shared/data/RecipesService';
 import { RecipeResolverService } from '../shared/services/recipe-resolver.service';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FavoriteDialogComponent } from './components/favorite-dialog/favorite-dialog.component';
+import { RecipesIngredientsService } from '../shared/data/RecipesIngredientsService';
 
 @NgModule({
-  declarations: [HomePageComponent, FilterComponent, RecipePageComponent],
+  declarations: [
+    HomePageComponent,
+    FilterComponent,
+    RecipePageComponent,
+    FavoriteDialogComponent,
+  ],
   imports: [
     CommonModule,
     HomeRoutingModule,
@@ -31,8 +39,14 @@ import { RecipeResolverService } from '../shared/services/recipe-resolver.servic
     MatSnackBarModule,
     MatPaginatorModule,
     MatIconModule,
+    MatDialogModule,
   ],
-  providers: [httpInterceptorProviders, RecipesService, RecipeResolverService],
+  providers: [
+    httpInterceptorProviders,
+    RecipesService,
+    RecipeResolverService,
+    RecipesIngredientsService,
+  ],
   exports: [],
 })
 export class HomeModule {}

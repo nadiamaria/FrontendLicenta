@@ -28,11 +28,13 @@
   }
 
   &__barnd {
+    display: none;
     color: $logo;
     font-size: x-large;
     padding: 9px;
 
     @include respond(gt-xs) {
+      display: block;
       font-size: xx-large;
     }
   }

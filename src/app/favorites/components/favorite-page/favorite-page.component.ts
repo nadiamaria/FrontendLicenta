@@ -27,11 +27,13 @@ export class FavoritePageComponent implements OnInit {
     this.logIn = this.authService.isAuth();
     this.favorites = !this.authService.isAuth();
 
-    this.getFavoriteRecipe();
+    if (this.authService.isAuth()) this.getFavoriteRecipe();
 
     this.subscription.add(
       this.eventBus.on('favoritePageEvent').subscribe((data: number) => {
-        this.getFavoriteRecipe();
+        if (this.authService.isAuth()) {
+          this.getFavoriteRecipe();
+        }
       })
     );
   }
@@ -39,9 +41,9 @@ export class FavoritePageComponent implements OnInit {
   public getFavoriteRecipe() {
     this.recipesService.getfavoriteItems().subscribe((recipes) => {
       this.recipes = recipes;
-      if (this.recipes == null && !this.authService.isAuth()) {
+      if (this.recipes == null || this.recipes.length != 0) {
         this.favorites = true;
-      }
+      } else this.favorites = false;
     });
   }
 }

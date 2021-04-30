@@ -19,6 +19,7 @@ import { RecipesService } from './data/RecipesService';
 import { AuthService } from './data/AuthService';
 import { AuthResource } from './data/resources/AuthResource';
 import { AuthGuard } from './services/auth.guard';
+import { RecipesIngredientsResource } from './data/resources/RecipesIngredientsResource';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { AuthGuard } from './services/auth.guard';
     FavoritesResource,
     AuthService,
     AuthResource,
+    RecipesIngredientsResource,
   ],
 })
 export class SharedModule {}

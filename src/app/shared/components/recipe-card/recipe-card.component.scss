@@ -22,10 +22,16 @@ a {
 
 .card-recipe {
   background-color: #ebebeb;
-  width: 70vh;
-  height: 400px;
+  width: 30vh;
+  // height: 400px;
   margin: 5px;
   margin-bottom: 20px;
+
+  @include respond(gt-xxs) {
+    width: 60vh;
+    // height: 400px;
+    margin: 5px;
+  }
 
   @include respond(gt-xs) {
     width: 15rem;
@@ -35,6 +41,10 @@ a {
 
   &__descrption {
     margin-top: 20px;
+    display: none;
+    @include respond(gt-xs) {
+      display: block;
+    }
   }
 
   img {
