@@ -18,7 +18,7 @@ import { AuthGuard } from './shared/services/auth.guard';
     BrowserAnimationsModule,
     MatSliderModule,
     MatButtonModule,
-    CookieModule.forRoot()
+    CookieModule.forRoot(),
   ],
   providers: [CookieService, AuthGuard],
   bootstrap: [AppComponent],

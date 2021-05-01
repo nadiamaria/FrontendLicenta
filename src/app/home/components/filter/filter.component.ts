@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { CategoryService } from 'src/app/shared/data/CategoryService';
+import { CategoryItem } from 'src/app/shared/data/dataModel/categoryItem';
 import { IngredientsItem } from 'src/app/shared/data/dataModel/ingredientItem';
+import { TypeItem } from 'src/app/shared/data/dataModel/typeItem';
 import { IngredientsService } from 'src/app/shared/data/IngredientsService';
+import { TypeService } from 'src/app/shared/data/TypeService';
 import { EventBusService } from 'src/app/shared/services/event-bus.service';
 
 @Component({
@@ -12,16 +16,21 @@ import { EventBusService } from 'src/app/shared/services/event-bus.service';
 })
 export class FilterComponent implements OnInit {
   public ingredients: IngredientsItem[];
+  public categorys: CategoryItem[];
+  public types: TypeItem[];
+
   public show: boolean = false;
 
-  // public formSelect = new FormControl('');
   private subscription: Subscription = new Subscription();
 
-  public myFormGroup: FormGroup;
+  public myFilterGroup: FormGroup;
 
   constructor(
     private ingredientsService: IngredientsService,
-    private eventBus: EventBusService
+    private categoryService: CategoryService,
+    private typeService: TypeService,
+    private eventBus: EventBusService,
+    private fb: FormBuilder
   ) {}
 
   public ngOnInit() {
@@ -31,7 +40,22 @@ export class FilterComponent implements OnInit {
       this.ingredients.forEach((ingredient) => {
         group[ingredient.name] = new FormControl(false);
       });
-      this.myFormGroup = new FormGroup(group);
+      group['categorys'] = new FormControl('');
+      group['types'] = new FormControl('');
+      this.myFilterGroup = new FormGroup(group);
+      this.myFilterGroup.valueChanges.subscribe((data) =>
+        this.sendFilter(data)
+      );
+    });
+
+    this.categoryService.findCategory().subscribe((categorys) => {
+      this.categorys = categorys;
+      let group = {};
+    });
+
+    this.typeService.findType().subscribe((types) => {
+      this.types = types;
+      let group = {};
     });
 
     this.subscription.add(
@@ -39,19 +63,23 @@ export class FilterComponent implements OnInit {
         this.show = !data;
       })
     );
-
-    // let group={}
-    // this.ingredients.forEach(ingredient =>{
-    //   group[ingredient.name] = new FormControl('');
-    // })
-    // this.myFormGroup = new FormGroup(group);
   }
 
-  public getIngredients() {
-    // console.log(this.myFormGroup.value);
+  public sendFilter(data: any) {
+    let filterData: formInterface = {
+      category: '',
+      type: '',
+      ingredients: [],
+    };
+    for (let filter in data) {
+      if (filter == 'categorys') filterData.category = data[filter];
+      else if (filter == 'types') filterData.type = data[filter];
+      else if (data[filter] == true) filterData.ingredients.push(filter);
+    }
+
     this.eventBus.emit({
       name: 'filterChanged',
-      value: this.myFormGroup.value,
+      value: filterData,
     });
   }
 
@@ -61,4 +89,22 @@ export class FilterComponent implements OnInit {
       value: this.show,
     });
   }
+
+  public resetForm() {
+    let data = this.myFilterGroup.value;
+    for (let filter in data) {
+      if (filter == 'categorys')
+        this.myFilterGroup.controls[filter].setValue('');
+      else if (filter == 'types')
+        this.myFilterGroup.controls[filter].setValue('');
+      else if (data[filter] == true)
+        this.myFilterGroup.controls[filter].setValue(false);
+    }
+  } //sa fac functie pentru uncheked
+}
+
+export interface formInterface {
+  ingredients: any[];
+  category: string;
+  type: string;
 }

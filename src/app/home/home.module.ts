@@ -20,6 +20,8 @@ import { RecipeResolverService } from '../shared/services/recipe-resolver.servic
 import { MatDialogModule } from '@angular/material/dialog';
 import { FavoriteDialogComponent } from './components/favorite-dialog/favorite-dialog.component';
 import { RecipesIngredientsService } from '../shared/data/RecipesIngredientsService';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { RecipesIngredientsService } from '../shared/data/RecipesIngredientsServ
     MatPaginatorModule,
     MatIconModule,
     MatDialogModule,
+    MatRadioModule,
+    MatButtonModule,
   ],
   providers: [
     httpInterceptorProviders,

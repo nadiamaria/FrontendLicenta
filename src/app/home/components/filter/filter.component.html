@@ -1,21 +1,47 @@
 <div class="filter-container">
-<a mat-icon-button class="keywoboard" (click)="showForm()">
-  <div class="filter-extend">
-    <div class="title">Filter</div>
-    <mat-icon *ngIf="!show">keyboard_arrow_down</mat-icon>
-    <mat-icon *ngIf="show">keyboard_arrow_up</mat-icon>
-  </div>
-</a>
-<div class="filter" *ngIf="show">
-  Ingredients:
-  <form [formGroup]="myFormGroup" class="filter-check">
-    <span *ngFor="let ingredient of ingredients" class="ingredient">
-      <mat-checkbox
-        [formControlName]="ingredient.name"
-        (change)="getIngredients()"
-        >{{ ingredient.name }}</mat-checkbox
+  <a class="keywoboard" (click)="showForm()">
+    <div class="filter-extend">
+      <div class="title">Filter</div>
+      <mat-icon *ngIf="!show">keyboard_arrow_down</mat-icon>
+      <mat-icon *ngIf="show">keyboard_arrow_up</mat-icon>
+    </div>
+  </a>
+  <form [formGroup]="myFilterGroup" *ngIf="myFilterGroup">
+    <div class="filter" *ngIf="show">
+      Ingredients:
+      <div class="filter-check">
+        <span *ngFor="let ingredient of ingredients" class="ingredient">
+          <mat-checkbox [formControlName]="ingredient.name">{{
+            ingredient.name
+          }}</mat-checkbox>
+        </span>
+      </div>
+    </div>
+    <div class="filter" *ngIf="show">
+      Category:
+      <mat-radio-group [formControlName]="'categorys'">
+        <span
+          *ngFor="let category of categorys"
+          class="radio-category category"
+        >
+          <mat-radio-button value="{{ category.category_name }}">{{
+            category.category_name
+          }}</mat-radio-button>
+        </span>
+      </mat-radio-group>
+    </div>
+    <div class="filter" *ngIf="show">
+      Type:
+      <mat-radio-group [formControlName]="'types'" class="radio-container type">
+        <span *ngFor="let type of types" class="radio-type">
+          <mat-radio-button value="{{ type.type_name }}">{{
+            type.type_name
+          }}</mat-radio-button>
+        </span>
+      </mat-radio-group>
+      <a mat-stroked-button (click)="resetForm()" class="reset-buttons"
+        >Sterge filtrele</a
       >
-    </span>
+    </div>
   </form>
-</div>
 </div>

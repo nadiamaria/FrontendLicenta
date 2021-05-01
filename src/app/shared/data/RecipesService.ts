@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { formInterface } from 'src/app/home/components/filter/filter.component';
 import { RecipeItem } from './dataModel/recipeItem';
 import { RecipesResource } from './resources/RecipesResource';
 
@@ -7,7 +8,7 @@ import { RecipesResource } from './resources/RecipesResource';
 export class RecipesService {
   constructor(private recipesResource: RecipesResource) {}
 
-  public getAllRecipes(values?: Array<string>): Observable<RecipeItem[]> {
+  public getAllRecipes(values?: formInterface): Observable<RecipeItem[]> {
     return this.recipesResource.findAll(values);
   }
 

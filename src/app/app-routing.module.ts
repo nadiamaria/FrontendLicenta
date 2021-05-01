@@ -7,9 +7,8 @@ const routes: Routes = [
   {
     path: 'account',
     loadChildren: () =>
-    import('./account/account.module').then((m) => m.AccountModule),
+      import('./account/account.module').then((m) => m.AccountModule),
     canActivate: [AuthGuard],
-      
   },
   {
     path: 'recipes',
@@ -24,6 +23,11 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () =>
       import('./profile/profile.module').then((m) => m.ProfileModule),
+  },
+  {
+    path: 'menu',
+    loadChildren: () =>
+      import('./smartMenu/smart-menu.module').then((m) => m.SmartMenuModule),
   },
 ];
 

@@ -28,7 +28,7 @@ a {
   margin-bottom: 20px;
 
   @include respond(gt-xxs) {
-    width: 60vh;
+    width: 30vh;
     // height: 400px;
     margin: 5px;
   }

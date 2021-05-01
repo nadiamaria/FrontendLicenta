@@ -3,15 +3,24 @@ import { ApiConfig } from '../../../shared/apiConfig';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { RecipeItem } from '../dataModel/recipeItem';
+import { formInterface } from 'src/app/home/components/filter/filter.component';
 
 @Injectable()
 export class RecipesResource {
   private URL = ApiConfig.url + '/recipes';
   constructor(private httpClient: HttpClient) {}
 
-  public findAll(values?: Array<string>): Observable<RecipeItem[]> {
+  public findAll(values?: formInterface): Observable<RecipeItem[]> {
     this.URL = ApiConfig.url + '/recipes';
-    if (values) this.URL = this.URL + '?ingredients=' + values.toString();
+    if (values)
+      this.URL =
+        this.URL +
+        '?ingredients=' +
+        values.ingredients.toString() +
+        '&categorys=' +
+        values.category +
+        '&types=' +
+        values.type;
     return this.httpClient.get(this.URL) as Observable<RecipeItem[]>;
   }
 

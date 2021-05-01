@@ -6,17 +6,12 @@
     background-color: white;
 
     form {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
     width: 100%;
     align-content: stretch;
-    max-height: 400px;
     padding-left: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
     @include respond(gt-xs) {
-    max-height: 200px;
     }
 
   }
@@ -39,3 +34,42 @@
   }
 
 }
+
+
+.radio-container {
+  width: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 10px;
+}
+
+.filter-check {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-height: 200px;
+}
+
+.type {
+  max-height: 100px;
+  flex-direction: column;
+
+}
+.radio-type {
+  width: fit-content;
+  padding-right: 25px;
+}
+
+.category {
+  flex-direction: row;
+
+
+}
+.radio-category {
+  width: fit-content;
+  padding-right: 10px;
+  }
+
+  .reset-buttons {
+    margin: 10px 0;
+  }

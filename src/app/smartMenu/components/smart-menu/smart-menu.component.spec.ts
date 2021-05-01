@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FavoriteDialogComponent } from './favorite-dialog.component';
+import { SmartMenuComponent } from './smart-menu.component';
 
-describe('FavoriteDialogComponent', () => {
-  let component: FavoriteDialogComponent;
-  let fixture: ComponentFixture<FavoriteDialogComponent>;
+describe('SmartMenuComponent', () => {
+  let component: SmartMenuComponent;
+  let fixture: ComponentFixture<SmartMenuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FavoriteDialogComponent ]
+      declarations: [ SmartMenuComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FavoriteDialogComponent);
+    fixture = TestBed.createComponent(SmartMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

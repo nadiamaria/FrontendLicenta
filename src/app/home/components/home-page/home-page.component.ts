@@ -6,6 +6,7 @@ import { RecipeItem } from 'src/app/shared/data/dataModel/recipeItem';
 import { EventBusService } from 'src/app/shared/services/event-bus.service';
 import { RecipesService } from '../../../shared/data/RecipesService';
 import { FavoriteDialogComponent } from '../favorite-dialog/favorite-dialog.component';
+import { formInterface } from '../filter/filter.component';
 
 @Component({
   selector: 'app-home-page',
@@ -58,12 +59,12 @@ export class HomePageComponent implements OnInit {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  public getRecipe(data?: any) {
-    var url: Array<any> = [];
-    for (var key in data) {
-      if (data[key] == true) url.push(key);
-    }
-    this.recipesService.getAllRecipes(url).subscribe((recipes) => {
+  public getRecipe(data?: formInterface) {
+    // var url: Array<any> = [];
+    // for (var key in data) {
+    //   if (data[key] == true) url.push(key);
+    // }
+    this.recipesService.getAllRecipes(data).subscribe((recipes) => {
       this.recipes = recipes;
     });
   }
