@@ -7,10 +7,20 @@ import { AuthService } from '../shared/data/AuthService';
 import { AuthResource } from '../shared/data/resources/AuthResource';
 import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
+import { RecipesService } from '../shared/data/RecipesService';
+import { RecipesResource } from '../shared/data/resources/RecipesResource';
+import { RecipeCardComponent } from '../shared/components/recipe-card/recipe-card.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [SmartMenuComponent],
-  imports: [CommonModule, SmartMenuRoutingModule, HttpClientModule],
-  providers: [AuthService, AuthResource, SharedModule],
+  imports: [
+    CommonModule,
+    SmartMenuRoutingModule,
+    HttpClientModule,
+    SharedModule,
+    MatButtonModule,
+  ],
+  providers: [AuthService, AuthResource, RecipesService, RecipesResource],
 })
 export class SmartMenuModule {}

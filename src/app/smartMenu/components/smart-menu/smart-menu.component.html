@@ -1,1 +1,33 @@
-<p>smart-menu works!</p>
+<div class="breakfast">
+  <h1>Mic de jun</h1>
+  <app-recipe-card
+    [recipe]="this.breakfastRecipe"
+    *ngIf="this.breakfastRecipe"
+  ></app-recipe-card>
+</div>
+<a mat-stroked-button (click)="resetBreakfast()" class="reset-buttons"
+  >Geenreaza alta reteta pentru mic de jun</a
+>
+<div class="lunch">
+  <h1>Pranz</h1>
+  <app-recipe-card
+    [recipe]="this.lunchRecipe"
+    *ngIf="this.lunchRecipe"
+  ></app-recipe-card>
+</div>
+<a mat-stroked-button (click)="resetLunch()" class="reset-buttons"
+  >Geenreaza alta reteta pentru pranz</a
+>
+<div class="dinner">
+  <h1>Cina</h1>
+  <app-recipe-card
+    [recipe]="this.dinnerRecipe"
+    *ngIf="this.dinnerRecipe"
+  ></app-recipe-card>
+</div>
+<a mat-stroked-button (click)="resetDinner()" class="reset-buttons"
+  >Geenreaza alta reteta pentru cina</a
+>
+<a mat-stroked-button (click)="resetMenu()" class="reset-buttons"
+  >Geenreaza alt meniu</a
+>

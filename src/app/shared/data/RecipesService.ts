@@ -8,8 +8,11 @@ import { RecipesResource } from './resources/RecipesResource';
 export class RecipesService {
   constructor(private recipesResource: RecipesResource) {}
 
-  public getAllRecipes(values?: formInterface): Observable<RecipeItem[]> {
-    return this.recipesResource.findAll(values);
+  public getAllRecipes(
+    values?: formInterface,
+    category?: string
+  ): Observable<RecipeItem[]> {
+    return this.recipesResource.findAll(values, category);
   }
 
   public getRecipeById(id: number): Observable<RecipeItem> {

@@ -10,7 +10,10 @@ export class RecipesResource {
   private URL = ApiConfig.url + '/recipes';
   constructor(private httpClient: HttpClient) {}
 
-  public findAll(values?: formInterface): Observable<RecipeItem[]> {
+  public findAll(
+    values?: formInterface,
+    category?: string
+  ): Observable<RecipeItem[]> {
     this.URL = ApiConfig.url + '/recipes';
     if (values)
       this.URL =
@@ -21,6 +24,9 @@ export class RecipesResource {
         values.category +
         '&types=' +
         values.type;
+    if (category) {
+      this.URL = this.URL + '?categorys=' + category;
+    }
     return this.httpClient.get(this.URL) as Observable<RecipeItem[]>;
   }
 
