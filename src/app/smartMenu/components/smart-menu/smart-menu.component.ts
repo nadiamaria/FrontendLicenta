@@ -28,8 +28,9 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.getSession();
-    if (this.sesionMenu[0] != '-1') this.getRecipeById(this.sesionMenu);
-    else {
+    if (this.sesionMenu[0] != '-1') {
+      this.getRecipeById(this.sesionMenu);
+    } else {
       this.getRecipes('mic dejun');
       this.getRecipes('pranz');
       this.getRecipes('cina');
@@ -66,6 +67,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
           category: data,
         };
         this.menu.next(recipe);
+        this.sesionMenu[0] = random;
         this.setSession();
       }
       if (data == 'pranz') {
@@ -83,6 +85,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
           category: data,
         };
         this.menu.next(recipe);
+        this.sesionMenu[1] = random;
         this.setSession();
       }
       if (data == 'cina') {
@@ -100,27 +103,30 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
           category: data,
         };
         this.menu.next(recipe);
+        this.sesionMenu[2] = random;
         this.setSession();
       }
     });
   }
 
   public getRecipeById(id: any[]): void {
-    this.recipesServices.getRecipeById(id[0]).subscribe((data) => {
+    // this.recipeId.lunchId.push(random);
+
+    this.recipesServices.getAllRecipes(null, 'mic dejun').subscribe((data) => {
       const recipe: menu = {
         recipe: data[id[0]],
         category: 'mic dejun',
       };
       this.menu.next(recipe);
     });
-    this.recipesServices.getRecipeById(id[1]).subscribe((data) => {
+    this.recipesServices.getAllRecipes(null, 'pranz').subscribe((data) => {
       const recipe: menu = {
         recipe: data[id[1]],
         category: 'pranz',
       };
       this.menu.next(recipe);
     });
-    this.recipesServices.getRecipeById(id[2]).subscribe((data) => {
+    this.recipesServices.getAllRecipes(null, 'cina').subscribe((data) => {
       const recipe: menu = {
         recipe: data[id[2]],
         category: 'cina',
@@ -148,11 +154,10 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
   }
 
   public setSession(): void {
-    this.sesionMenu[0] = this.breakfastRecipe.id;
-    this.sesionMenu[1] = this.lunchRecipe.id;
-    this.sesionMenu[2] = this.dinnerRecipe.id;
-    console.log('mda');
-    console.log(this.sesionMenu);
+    // if (this.breakfastRecipe) this.sesionMenu[0] = this.breakfastRecipe.id;
+    // if (this.lunchRecipe) this.sesionMenu[1] = this.lunchRecipe.id;
+    // if (this.dinnerRecipe) this.sesionMenu[2] = this.dinnerRecipe.id;
+    // console.log('mda');
     sessionStorage.setItem('menu', this.sesionMenu.toString());
   }
 
@@ -165,7 +170,6 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    console.log('wtf');
     this.setSession();
   }
 }
