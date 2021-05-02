@@ -3,6 +3,7 @@ import { ApiConfig } from '../../apiConfig';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { RecipesIngredientsItem } from '../dataModel/RecipesIngredientsItem';
+import { insertRecipesIngredientsItem } from '../dataModel/insertRecipeIngerdientDto';
 
 @Injectable()
 export class RecipesIngredientsResource {
@@ -15,5 +16,14 @@ export class RecipesIngredientsResource {
     return this.httpClient.get(this.URL) as Observable<
       RecipesIngredientsItem[]
     >;
+  }
+
+  public post(
+    recipeIngredient: insertRecipesIngredientsItem
+  ): Observable<insertRecipesIngredientsItem> {
+    return this.httpClient.post(
+      this.URL,
+      recipeIngredient
+    ) as Observable<insertRecipesIngredientsItem>;
   }
 }

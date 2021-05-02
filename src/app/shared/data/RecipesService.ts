@@ -22,4 +22,8 @@ export class RecipesService {
   public getfavoriteItems(): Observable<RecipeItem[]> {
     return this.recipesResource.findfavorite();
   }
+
+  public insert(recipe: RecipeItem): Observable<RecipeItem> {
+    return this.recipesResource.post(recipe);
+  }
 }

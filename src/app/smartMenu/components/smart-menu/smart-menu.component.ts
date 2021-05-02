@@ -9,7 +9,6 @@ import { RecipesService } from 'src/app/shared/data/RecipesService';
   styleUrls: ['./smart-menu.component.scss'],
 })
 export class SmartMenuComponent implements OnInit, OnDestroy {
-  //last generated menu? salvat unde?
   public recipeId = {
     breakfastIds: [],
     lunchId: [],
@@ -29,7 +28,12 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getSession();
     if (this.sesionMenu[0] != '-1') {
-      this.getRecipeById(this.sesionMenu);
+      this.getRecipeById(this.sesionMenu[0], 'mic dejun');
+      this.recipeId.breakfastIds.push(this.sesionMenu[0]);
+      this.getRecipeById(this.sesionMenu[1], 'pranz');
+      this.recipeId.lunchId.push(this.sesionMenu[1]);
+      this.getRecipeById(this.sesionMenu[2], 'cina');
+      this.recipeId.dinnerId.push(this.sesionMenu[2]);
     } else {
       this.getRecipes('mic dejun');
       this.getRecipes('pranz');
@@ -61,14 +65,12 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         //dau push la id
         this.recipeId.breakfastIds.push(random);
         //iau reteta de la id-ul respectiv
-        // this.breakfastRecipe = recipesArray[random];
         const recipe: menu = {
           recipe: recipesArray[random],
           category: data,
         };
         this.menu.next(recipe);
         this.sesionMenu[0] = random;
-        this.setSession();
       }
       if (data == 'pranz') {
         recipesArray = recipes;
@@ -86,7 +88,6 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         };
         this.menu.next(recipe);
         this.sesionMenu[1] = random;
-        this.setSession();
       }
       if (data == 'cina') {
         recipesArray = recipes;
@@ -104,32 +105,16 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         };
         this.menu.next(recipe);
         this.sesionMenu[2] = random;
-        this.setSession();
       }
+      this.setSession();
     });
   }
 
-  public getRecipeById(id: any[]): void {
-    // this.recipeId.lunchId.push(random);
-
-    this.recipesServices.getAllRecipes(null, 'mic dejun').subscribe((data) => {
+  public getRecipeById(id, category): void {
+    this.recipesServices.getAllRecipes(null, category).subscribe((data) => {
       const recipe: menu = {
-        recipe: data[id[0]],
-        category: 'mic dejun',
-      };
-      this.menu.next(recipe);
-    });
-    this.recipesServices.getAllRecipes(null, 'pranz').subscribe((data) => {
-      const recipe: menu = {
-        recipe: data[id[1]],
-        category: 'pranz',
-      };
-      this.menu.next(recipe);
-    });
-    this.recipesServices.getAllRecipes(null, 'cina').subscribe((data) => {
-      const recipe: menu = {
-        recipe: data[id[2]],
-        category: 'cina',
+        recipe: data[id],
+        category: category,
       };
       this.menu.next(recipe);
     });
@@ -154,10 +139,6 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
   }
 
   public setSession(): void {
-    // if (this.breakfastRecipe) this.sesionMenu[0] = this.breakfastRecipe.id;
-    // if (this.lunchRecipe) this.sesionMenu[1] = this.lunchRecipe.id;
-    // if (this.dinnerRecipe) this.sesionMenu[2] = this.dinnerRecipe.id;
-    // console.log('mda');
     sessionStorage.setItem('menu', this.sesionMenu.toString());
   }
 

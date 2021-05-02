@@ -39,4 +39,8 @@ export class RecipesResource {
     this.URL = ApiConfig.url + '/recipes/favorites';
     return this.httpClient.get(this.URL) as Observable<RecipeItem[]>;
   }
+
+  public post(recipe: RecipeItem): Observable<RecipeItem> {
+    return this.httpClient.post(this.URL, recipe) as Observable<RecipeItem>;
+  }
 }

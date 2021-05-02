@@ -29,6 +29,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./smartMenu/smart-menu.module').then((m) => m.SmartMenuModule),
   },
+  {
+    path: 'recipe',
+    loadChildren: () =>
+      import('./add-recipe/add-recipe.module').then((m) => m.AddRecipeModule),
+  },
 ];
 
 @NgModule({

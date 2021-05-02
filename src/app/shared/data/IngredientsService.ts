@@ -1,16 +1,17 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IngredientsItem } from "./dataModel/ingredientItem";
-import { IngredientsResource } from "./resources/IngredientsResource";
+import { IngredientsItem } from './dataModel/ingredientItem';
+import { IngredientsResource } from './resources/IngredientsResource';
 
 @Injectable()
 export class IngredientsService {
-
-  constructor(private ingredientsResource: IngredientsResource) {
-
-  }
+  constructor(private ingredientsResource: IngredientsResource) {}
 
   public getAllIngredients(): Observable<IngredientsItem[]> {
     return this.ingredientsResource.findAll();
+  }
+
+  public insert(ingredient: IngredientsItem): Observable<IngredientsItem> {
+    return this.ingredientsResource.post(ingredient);
   }
 }

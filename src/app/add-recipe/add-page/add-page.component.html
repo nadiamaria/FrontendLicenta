@@ -1,0 +1,70 @@
+<p>add-page works!</p>
+<form
+  class="form"
+  [formGroup]="myRecipeGroup"
+  *ngIf="myRecipeGroup"
+  (ngSubmit)="sendJson()"
+>
+  <div class="form_category">
+    Categoria retetei:
+    <mat-radio-group [formControlName]="'categorys'">
+      <span *ngFor="let category of categorys" class="radio-category category">
+        <mat-radio-button value="{{ category.category_name }}">{{
+          category.category_name
+        }}</mat-radio-button>
+      </span>
+    </mat-radio-group>
+  </div>
+  <div class="form_type">
+    Tipul retetei:
+    <mat-radio-group [formControlName]="'types'" class="radio-container type">
+      <span *ngFor="let type of types" class="radio-type">
+        <mat-radio-button value="{{ type.type_name }}">{{
+          type.type_name
+        }}</mat-radio-button>
+      </span>
+    </mat-radio-group>
+  </div>
+  <div class="form_recipe">
+    Reteta:
+    <mat-form-field>
+      <mat-label>Nume</mat-label>
+      <input matInput [formControlName]="'recipe_name'" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Descriere</mat-label>
+      <input matInput [formControlName]="'recipe_description'" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Imagine</mat-label>
+      <input matInput [formControlName]="'recipe_image'" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Calorii</mat-label>
+      <input matInput [formControlName]="'recipe_kcal'" />
+    </mat-form-field>
+  </div>
+  <div class="form_ingredients">
+    Ingrediente:
+    <a mat-icon-button>
+      <mat-icon class="header__icons-icon" (click)="ingredientsInputs()"
+        >add</mat-icon
+      >
+    </a>
+    <div class="ingredient" *ngFor="let ingredient of nrIngredients">
+      <mat-form-field>
+        <mat-label>Cantitate</mat-label>
+        <input matInput [formControlName]="'ingredient_cantity' + ingredient" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Unitate de masura</mat-label>
+        <input matInput [formControlName]="'ingredient_unit' + ingredient" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Nume</mat-label>
+        <input matInput [formControlName]="'ingredient_name' + ingredient" />
+      </mat-form-field>
+    </div>
+  </div>
+  <button mat-stroked-button>Submit</button>
+</form>
