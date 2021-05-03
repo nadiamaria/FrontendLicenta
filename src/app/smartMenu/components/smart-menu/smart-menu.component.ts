@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { RecipeItem } from 'src/app/shared/data/dataModel/recipeItem';
 import { RecipesService } from 'src/app/shared/data/RecipesService';
@@ -9,6 +10,9 @@ import { RecipesService } from 'src/app/shared/data/RecipesService';
   styleUrls: ['./smart-menu.component.scss'],
 })
 export class SmartMenuComponent implements OnInit, OnDestroy {
+  public smartForm = new FormGroup({
+    kcal: new FormControl(''),
+  });
   public recipeId = {
     breakfastIds: [],
     lunchId: [],

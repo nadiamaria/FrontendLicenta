@@ -4,6 +4,7 @@ export interface insertRecipeItemDto {
   instruction: string;
   description: string;
   image: string;
+  kcal: number;
   recipeCategoryId: number;
   recipeTypeId: number;
 }

@@ -11,6 +11,8 @@ import { RecipesService } from '../shared/data/RecipesService';
 import { RecipesResource } from '../shared/data/resources/RecipesResource';
 import { RecipeCardComponent } from '../shared/components/recipe-card/recipe-card.component';
 import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [SmartMenuComponent],
@@ -20,6 +22,8 @@ import { MatButtonModule } from '@angular/material/button';
     HttpClientModule,
     SharedModule,
     MatButtonModule,
+    ReactiveFormsModule,
+    MatInputModule,
   ],
   providers: [AuthService, AuthResource, RecipesService, RecipesResource],
 })

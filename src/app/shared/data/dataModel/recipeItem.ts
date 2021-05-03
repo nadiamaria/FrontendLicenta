@@ -4,5 +4,6 @@ export interface RecipeItem {
   instruction: string;
   description: string;
   image: string;
+  kcal: number;
   ingredients: [];
 }

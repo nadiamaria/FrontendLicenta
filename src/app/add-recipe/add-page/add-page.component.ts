@@ -69,6 +69,7 @@ export class AddPageComponent implements OnInit {
     this.group['recipe_description'] = new FormControl('');
     this.group['recipe_image'] = new FormControl('');
     this.group['recipe_instruction'] = new FormControl('');
+    this.group['recipe_kcal'] = new FormControl('');
     this.ingredientsInputs();
     this.myRecipeGroup = new FormGroup(this.group);
 
@@ -92,6 +93,7 @@ export class AddPageComponent implements OnInit {
       instruction: '',
       description: '',
       image: '',
+      kcal: -1,
       recipeCategoryId: -1,
       recipeTypeId: -1,
     };
@@ -130,6 +132,7 @@ export class AddPageComponent implements OnInit {
       recipeItem.image = this.myRecipeGroup.value['recipe_image'];
       recipeItem.instruction = this.myRecipeGroup.value['recipe_instruction'];
       recipeItem.name = this.myRecipeGroup.value['recipe_name'];
+      recipeItem.kcal = this.myRecipeGroup.value['recipe_kcal'];
       this.postRecipe(recipeItem);
       //pentru recipeIngredients
       await this.delay(0.5);
