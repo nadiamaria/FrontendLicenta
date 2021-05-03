@@ -130,9 +130,9 @@ export class AddPageComponent implements OnInit {
       recipeItem.instruction = this.myRecipeGroup.value['recipe_instruction'];
       recipeItem.name = this.myRecipeGroup.value['recipe_name'];
       recipeItem.kcal = this.myRecipeGroup.value['recipe_kcal'];
-      this.postRecipe(recipeItem);
+      await this.postRecipe(recipeItem);
       //pentru recipeIngredients
-      await this.delay(0.5);
+      // await this.delay(0.5);
       for (let index in this.myRecipeGroup.value) {
         if (index.includes('ingredient_name')) {
           indexId = +index.replace(/[^0-9\.]+/g, '');
@@ -149,6 +149,7 @@ export class AddPageComponent implements OnInit {
               this.myRecipeGroup.value['ingredient_name' + indexId]
             )
               this.recipeIngredientItem.ingredientId = ingredient.id;
+
           this.recipeIngredientItem.recipeId = this.recipeId;
           this.postRecipeIngredient(this.recipeIngredientItem);
         }
@@ -170,11 +171,12 @@ export class AddPageComponent implements OnInit {
   }
 
   public postRecipe(data: insertRecipeItemDto) {
-    this.subscription.add(
+    return new Promise<number>((resolve, reject) => {
       this.recipesService.insert(data).subscribe((x) => {
         this.recipeId = x.id;
+        resolve(x.id);
       })
-    );
+    })
   }
 
   public postRecipeIngredient(data: insertRecipesIngredientsItem) {
