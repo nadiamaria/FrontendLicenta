@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { CategoryService } from 'src/app/shared/data/CategoryService';
@@ -44,7 +45,8 @@ export class AddPageComponent implements OnInit {
     private categoryService: CategoryService,
     private typeService: TypeService,
     private recipesService: RecipesService,
-    private recipeIngredientsService: RecipesIngredientsService
+    private recipeIngredientsService: RecipesIngredientsService,
+    private _snackBar: MatSnackBar
   ) {}
 
   public ngOnInit(): void {
@@ -175,13 +177,15 @@ export class AddPageComponent implements OnInit {
       this.recipesService.insert(data).subscribe((x) => {
         this.recipeId = x.id;
         resolve(x.id);
-      })
-    })
+      });
+    });
   }
 
   public postRecipeIngredient(data: insertRecipesIngredientsItem) {
     this.subscription.add(
-      this.recipeIngredientsService.insert(data).subscribe()
+      this.recipeIngredientsService
+        .insert(data)
+        .subscribe((x) => this.openSnackBar('sent'))
     );
   }
 
@@ -194,9 +198,15 @@ export class AddPageComponent implements OnInit {
     });
   }
 
-  public delay(n) {
-    return new Promise(function (resolve) {
-      setTimeout(resolve, n * 1000);
+  // public delay(n) {
+  //   return new Promise(function (resolve) {
+  //     setTimeout(resolve, n * 1000);
+  //   });
+  // }
+
+  public openSnackBar(data: string) {
+    this._snackBar.open('Reteta a fost adaugata cu succes', 'Close', {
+      duration: 3000,
     });
   }
 }

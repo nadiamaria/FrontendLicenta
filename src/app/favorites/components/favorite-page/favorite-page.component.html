@@ -5,11 +5,13 @@
     </div>
   </div>
   <div class="redirect" *ngIf="!logIn">
-    If you want to add favorites, please
-    <a routerLink="/account/login">Log In</a>.
+    Ops, nu ești logat. Dacă dorești sa adaugi rețete la favorite, te rog
+    <!-- If you want to add favorites, please -->
+    <a routerLink="/account/login">loghează-te</a>.
   </div>
   <div class="redirect" *ngIf="!favorites">
-    Ops, you didn't mark any recipe as favorite yet.
-    <a routerLink="/recipes/home">Go now</a>.
+    Ops, nu ai adăugat încă rețete la favorite.
+    <!-- Ops, you didn't mark any recipe as favorite yet. -->
+    <a routerLink="/recipes/home">Dute acum</a>
   </div>
 </div>

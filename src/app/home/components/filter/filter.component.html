@@ -1,14 +1,14 @@
 <div class="filter-container">
   <a class="keywoboard" (click)="showForm()">
     <div class="filter-extend">
-      <div class="title">Filter</div>
+      <div class="title">Filtru de căutare</div>
       <mat-icon *ngIf="!show">keyboard_arrow_down</mat-icon>
       <mat-icon *ngIf="show">keyboard_arrow_up</mat-icon>
     </div>
   </a>
   <form [formGroup]="myFilterGroup" *ngIf="myFilterGroup">
     <div class="filter" *ngIf="show">
-      Ingredients:
+      Ingrediente:
       <div class="filter-check">
         <span *ngFor="let ingredient of ingredients" class="ingredient">
           <mat-checkbox [formControlName]="ingredient.name">{{
@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="filter" *ngIf="show">
-      Category:
+      Categorie:
       <mat-radio-group [formControlName]="'categorys'">
         <span
           *ngFor="let category of categorys"
@@ -31,7 +31,7 @@
       </mat-radio-group>
     </div>
     <div class="filter" *ngIf="show">
-      Type:
+      Tip:
       <mat-radio-group [formControlName]="'types'" class="radio-container type">
         <span *ngFor="let type of types" class="radio-type">
           <mat-radio-button value="{{ type.type_name }}">{{
@@ -40,7 +40,7 @@
         </span>
       </mat-radio-group>
       <a mat-stroked-button (click)="resetForm()" class="reset-buttons"
-        >Sterge filtrele</a
+        >Șterge fltrul de căutare</a
       >
     </div>
   </form>

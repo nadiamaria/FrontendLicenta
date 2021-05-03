@@ -11,7 +11,7 @@ import { RecipesService } from 'src/app/shared/data/RecipesService';
 })
 export class SmartMenuComponent implements OnInit, OnDestroy {
   public smartForm = new FormGroup({
-    kcal: new FormControl('500'),
+    kcal: new FormControl('000'),
   });
   public recipeId = {
     breakfastIds: [],
@@ -52,66 +52,69 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
 
   public getRecipes(data: string): void {
     let recipesArray: RecipeItem[];
-    this.recipesService.getAllRecipes(null, data).subscribe((recipes) => {
-      if (data == 'mic dejun') {
-        //aduc retetele de tip mic de jun care sunt mereu in acceasi ordine
-        recipesArray = recipes;
-        //verific daca sa umplut assay-ul cu id-uri de retete, daca sa umplut, il golesc
-        if (recipesArray.length == this.recipeId.breakfastIds.length)
-          this.recipeId.breakfastIds = [];
-        //setez random initial
-        let random = -1;
-        //fac random number cu arrayurile din recipe array
-        random = Math.floor(Math.random() * recipesArray.length);
-        while (this.recipeId.breakfastIds.indexOf(random) !== -1) {
+    if (this.smartForm.value['kcal'] == '000') {
+      this.recipesService.getAllRecipes(null, data).subscribe((recipes) => {
+        if (data == 'mic dejun') {
+          //aduc retetele de tip mic de jun care sunt mereu in acceasi ordine
+          recipesArray = recipes;
+          //verific daca sa umplut assay-ul cu id-uri de retete, daca sa umplut, il golesc
+          if (recipesArray.length == this.recipeId.breakfastIds.length)
+            this.recipeId.breakfastIds = [];
+          //setez random initial
+          let random = -1;
+          //fac random number cu arrayurile din recipe array
           random = Math.floor(Math.random() * recipesArray.length);
+          while (this.recipeId.breakfastIds.indexOf(random) !== -1) {
+            random = Math.floor(Math.random() * recipesArray.length);
+          }
+          //dau push la id
+          this.recipeId.breakfastIds.push(random);
+          //iau reteta de la id-ul respectiv
+          const recipe: menu = {
+            recipe: recipesArray[random],
+            category: data,
+          };
+          this.menu.next(recipe);
+          this.sesionMenu[0] = random;
         }
-        //dau push la id
-        this.recipeId.breakfastIds.push(random);
-        //iau reteta de la id-ul respectiv
-        const recipe: menu = {
-          recipe: recipesArray[random],
-          category: data,
-        };
-        this.menu.next(recipe);
-        this.sesionMenu[0] = random;
-      }
-      if (data == 'pranz') {
-        recipesArray = recipes;
-        if (recipesArray.length == this.recipeId.lunchId.length)
-          this.recipeId.lunchId = [];
-        let random = -1;
-        random = Math.floor(Math.random() * recipesArray.length);
-        while (this.recipeId.lunchId.indexOf(random) !== -1) {
+        if (data == 'pranz') {
+          recipesArray = recipes;
+          if (recipesArray.length == this.recipeId.lunchId.length)
+            this.recipeId.lunchId = [];
+          let random = -1;
           random = Math.floor(Math.random() * recipesArray.length);
+          while (this.recipeId.lunchId.indexOf(random) !== -1) {
+            random = Math.floor(Math.random() * recipesArray.length);
+          }
+          this.recipeId.lunchId.push(random);
+          const recipe: menu = {
+            recipe: recipesArray[random],
+            category: data,
+          };
+          this.menu.next(recipe);
+          this.sesionMenu[1] = random;
         }
-        this.recipeId.lunchId.push(random);
-        const recipe: menu = {
-          recipe: recipesArray[random],
-          category: data,
-        };
-        this.menu.next(recipe);
-        this.sesionMenu[1] = random;
-      }
-      if (data == 'cina') {
-        recipesArray = recipes;
-        if (recipesArray.length == this.recipeId.dinnerId.length)
-          this.recipeId.dinnerId = [];
-        let random = -1;
-        random = Math.floor(Math.random() * recipesArray.length);
-        while (this.recipeId.dinnerId.indexOf(random) !== -1) {
+        if (data == 'cina') {
+          recipesArray = recipes;
+          if (recipesArray.length == this.recipeId.dinnerId.length)
+            this.recipeId.dinnerId = [];
+          let random = -1;
           random = Math.floor(Math.random() * recipesArray.length);
+          while (this.recipeId.dinnerId.indexOf(random) !== -1) {
+            random = Math.floor(Math.random() * recipesArray.length);
+          }
+          this.recipeId.dinnerId.push(random);
+          const recipe: menu = {
+            recipe: recipesArray[random],
+            category: data,
+          };
+          this.menu.next(recipe);
+          this.sesionMenu[2] = random;
         }
-        this.recipeId.dinnerId.push(random);
-        const recipe: menu = {
-          recipe: recipesArray[random],
-          category: data,
-        };
-        this.menu.next(recipe);
-        this.sesionMenu[2] = random;
-      }
-      this.setSession();
-    });
+        this.setSession();
+      });
+    } else {
+    }
   }
 
   public getRecipeById(id, category): void {

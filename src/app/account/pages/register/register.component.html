@@ -4,12 +4,13 @@
       src="../../../../assets/img/logo.png"
       alt="Photo"
       class="register__box-img"
+      [routerLink]="'/recipes/home'"
     />
-    Logo
+    My SpaceFood
   </div>
   <div class="register__box">
     <div class="register__box-case">
-      <h1>Register</h1>
+      <h1>Inregistrare</h1>
       <form class="register__box-form" [formGroup]="registerForm">
         <mat-form-field>
           <span matPrefix
@@ -32,7 +33,7 @@
           >
           <input
             matInput
-            placeholder="Username"
+            placeholder="Nume"
             type="text"
             formControlName="name"
           />
@@ -45,23 +46,23 @@
           >
           <input
             matInput
-            placeholder="Password"
+            placeholder="Parola"
             type="password"
             formControlName="password"
           />
         </mat-form-field>
       </form>
 
-      <a mat-stroked-button (click)="onRegister()">Register in</a>
+      <a mat-stroked-button (click)="onRegister()">Salvare</a>
       <br />
       <div class="register__box-newaccount">
-        Already have an account?
+        Ai deja un cont?
         <a
           mat-button
           routerLink="/account/login"
           routerLinkActive="active"
           class="register__card-links"
-          >Sign In</a
+          >Conectare</a
         >
       </div>
     </div>

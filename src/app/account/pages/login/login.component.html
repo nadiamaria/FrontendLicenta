@@ -7,12 +7,12 @@
         class="login__box-img"
         [routerLink]="'/recipes/home'"
       />
-      Logo
+      My SpaceFood
     </a>
   </div>
   <div class="login__box">
     <div class="login__box-case">
-      <h1>Login</h1>
+      <h1>Logare</h1>
       <form class="login__box-form" [formGroup]="loginForm">
         <mat-form-field>
           <span matPrefix
@@ -22,7 +22,7 @@
           >
           <input
             matInput
-            placeholder="Username"
+            placeholder="Email"
             type="text"
             formControlName="email"
           />
@@ -35,22 +35,21 @@
           >
           <input
             matInput
-            placeholder="Password"
+            placeholder="Parola"
             type="password"
             formControlName="password"
           />
         </mat-form-field>
       </form>
-      <mat-checkbox>Check me!</mat-checkbox>
 
-      <a mat-stroked-button (click)="onLogin()">Login in</a>
+      <a mat-stroked-button (click)="onLogin()">Conectare</a>
       <!-- routerLink="/recipes/home"
         routerLinkActive="active" -->
       <br />
       <div class="login__box-newaccount">
-        Don't have an account?
+        Nu te-ai inregistrat incă?
         <a mat-button routerLink="/account/register" routerLinkActive="active"
-          >New account</a
+          >Creează un cont nou.</a
         >
       </div>
     </div>
