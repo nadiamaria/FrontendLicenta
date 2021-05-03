@@ -43,9 +43,6 @@ export class AddPageComponent implements OnInit {
     private ingredientsService: IngredientsService,
     private categoryService: CategoryService,
     private typeService: TypeService,
-    private eventBus: EventBusService,
-    private fb: FormBuilder,
-    private router: Router,
     private recipesService: RecipesService,
     private recipeIngredientsService: RecipesIngredientsService
   ) {}

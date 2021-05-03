@@ -11,7 +11,7 @@ import { RecipesService } from 'src/app/shared/data/RecipesService';
 })
 export class SmartMenuComponent implements OnInit, OnDestroy {
   public smartForm = new FormGroup({
-    kcal: new FormControl(''),
+    kcal: new FormControl('500'),
   });
   public recipeId = {
     breakfastIds: [],
