@@ -1,4 +1,4 @@
 export interface TypeItem {
-  id: string;
+  id: number;
   type_name: number;
 }

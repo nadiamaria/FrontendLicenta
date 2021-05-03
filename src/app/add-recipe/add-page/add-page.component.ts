@@ -5,8 +5,13 @@ import { Subject, Subscription } from 'rxjs';
 import { CategoryService } from 'src/app/shared/data/CategoryService';
 import { CategoryItem } from 'src/app/shared/data/dataModel/categoryItem';
 import { IngredientsItem } from 'src/app/shared/data/dataModel/ingredientItem';
+import { insertRecipesIngredientsItem } from 'src/app/shared/data/dataModel/insertRecipeIngerdientDto';
+import { insertRecipeItemDto } from 'src/app/shared/data/dataModel/insertRecipeItemDto';
+import { RecipesIngredientsItem } from 'src/app/shared/data/dataModel/RecipesIngredientsItem';
 import { TypeItem } from 'src/app/shared/data/dataModel/typeItem';
 import { IngredientsService } from 'src/app/shared/data/IngredientsService';
+import { RecipesIngredientsService } from 'src/app/shared/data/RecipesIngredientsService';
+import { RecipesService } from 'src/app/shared/data/RecipesService';
 import { TypeService } from 'src/app/shared/data/TypeService';
 import { EventBusService } from 'src/app/shared/services/event-bus.service';
 
@@ -25,6 +30,14 @@ export class AddPageComponent implements OnInit {
   public nr = 0;
   public ingredientsInput: Subject<any> = new Subject<any>();
   private subscription: Subscription = new Subscription();
+  public foundRecipe: string;
+  public recipeId: number = -1;
+  public recipeIngredientItem: insertRecipesIngredientsItem = {
+    unit_mas: ' ',
+    cant_ingr: -1,
+    ingredientId: -1,
+    recipeId: -1,
+  };
 
   public constructor(
     private ingredientsService: IngredientsService,
@@ -32,7 +45,9 @@ export class AddPageComponent implements OnInit {
     private typeService: TypeService,
     private eventBus: EventBusService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private recipesService: RecipesService,
+    private recipeIngredientsService: RecipesIngredientsService
   ) {}
 
   public ngOnInit(): void {
@@ -53,7 +68,7 @@ export class AddPageComponent implements OnInit {
     this.group['recipe_name'] = new FormControl('');
     this.group['recipe_description'] = new FormControl('');
     this.group['recipe_image'] = new FormControl('');
-    this.group['recipe_kcal'] = new FormControl('');
+    this.group['recipe_instruction'] = new FormControl('');
     this.ingredientsInputs();
     this.myRecipeGroup = new FormGroup(this.group);
 
@@ -72,27 +87,113 @@ export class AddPageComponent implements OnInit {
   }
 
   public sendJson() {
-    let str = '';
-    console.log(this.myRecipeGroup.value);
-    //You can also pass a regex to this function. In the following example, it would replace everything except numerics:
-    for (let index in this.myRecipeGroup.value)
-      if (index.includes('ingredient_name')) {
-        this.postIngredient(index);
+    let recipeItem: insertRecipeItemDto = {
+      name: '',
+      instruction: '',
+      description: '',
+      image: '',
+      recipeCategoryId: -1,
+      recipeTypeId: -1,
+    };
+    let indexId: number;
+    console.log(this.myRecipeGroup.value['categorys']);
+    //daca am ingredient
+    this.foundRecipe = '';
+    this.searchRecipeExists();
+    if (this.foundRecipe == '' || this.foundRecipe == 'notFound') {
+      for (let index in this.myRecipeGroup.value)
+        if (index.includes('ingredient_name')) {
+          let found = false;
+          for (let ingredient of this.ingredients) {
+            if (ingredient.name == this.myRecipeGroup.value[index])
+              found = true;
+          }
+          if (found == false) this.postIngredient(index);
+        }
+      //pentru category
+      for (let category of this.categorys) {
+        if (category.category_name == this.myRecipeGroup.value['categorys'])
+          recipeItem.recipeCategoryId = category.id;
       }
+      //pentru type
+      for (let type of this.types) {
+        if (type.type_name == this.myRecipeGroup.value['types'])
+          recipeItem.recipeTypeId = type.id;
+      }
+      //pentru recipe
+      recipeItem.description = this.myRecipeGroup.value['recipe_description'];
+      recipeItem.image = this.myRecipeGroup.value['recipe_image'];
+      recipeItem.instruction = this.myRecipeGroup.value['recipe_instruction'];
+      recipeItem.name = this.myRecipeGroup.value['recipe_name'];
+      console.log(recipeItem);
+      debugger;
+      this.postRecipe(recipeItem);
+      //pentru recipeIngredients
+      this.ingredientsService.getAllIngredients().subscribe((ingredients) => {
+        this.ingredients = ingredients;
+      });
+      for (let index in this.myRecipeGroup.value) {
+        // debugger;
+        if (index.includes('ingredient_name')) {
+          indexId = +index.replace(/[^0-9\.]+/g, '');
+          this.recipeIngredientItem.cant_ingr = this.myRecipeGroup.value[
+            'ingredient_cantity' + indexId
+          ];
+          this.recipeIngredientItem.unit_mas = this.myRecipeGroup.value[
+            'ingredient_unit' + indexId
+          ];
+          //nu apuca sa de-a insert sau sa se updateze
+          for (let ingredient of this.ingredients)
+            if (
+              ingredient.name ==
+              this.myRecipeGroup.value['ingredient_name' + indexId]
+            )
+              this.recipeIngredientItem.ingredientId = ingredient.id;
+          this.recipeIngredientItem.recipeId = this.recipeId;
+          this.postRecipeIngredient(this.recipeIngredientItem);
+        }
+      }
+
+      this.foundRecipe = '';
+    } else this.foundRecipe = 'found';
   }
 
-  public postIngredient(data: string) {
+  public async postIngredient(data: string) {
     let ingredient: IngredientsItem = {
       name: this.myRecipeGroup.value[data],
     };
-    this.subscription.add(
+    await this.subscription.add(
       this.ingredientsService
         .insert(ingredient)
-        .subscribe((x) => console.log(x))
+        .subscribe((x) => console.log('Posted Ingredient'))
     );
   }
 
-  public postRecipe() {}
+  public postRecipe(data: insertRecipeItemDto) {
+    console.log('buna');
+    this.subscription.add(
+      this.recipesService.insert(data).subscribe((x) => {
+        this.recipeId = x.id;
+        console.log(x);
+      })
+    );
+  }
 
-  public postRecipeIngredient() {}
+  public postRecipeIngredient(data: insertRecipesIngredientsItem) {
+    console.log(data);
+    this.subscription.add(
+      this.recipeIngredientsService
+        .insert(data)
+        .subscribe((x) => console.log('posted Recipe Ingredient'))
+    );
+  }
+
+  public searchRecipeExists() {
+    this.recipesService.getAllRecipes(null, null).subscribe((recipes) => {
+      for (let recipe of recipes)
+        if (recipe.name === this.myRecipeGroup.value['recipe_name'])
+          this.foundRecipe = 'found';
+      if (this.foundRecipe !== 'found') this.foundRecipe = 'notFound';
+    });
+  }
 }

@@ -31,6 +31,18 @@
       <mat-label>Nume</mat-label>
       <input matInput [formControlName]="'recipe_name'" />
     </mat-form-field>
+    <a mat-icon-button>
+      <mat-icon class="header__icons-icon" (click)="searchRecipeExists()"
+        >search</mat-icon
+      >
+    </a>
+    <div class="found" *ngIf="foundRecipe == 'found'">
+      Reteta deja introdusa.
+    </div>
+    <div class="found" *ngIf="foundRecipe == 'notFound'">
+      Reteta nu a mai fost introdusa.
+    </div>
+
     <mat-form-field>
       <mat-label>Descriere</mat-label>
       <input matInput [formControlName]="'recipe_description'" />
@@ -40,8 +52,8 @@
       <input matInput [formControlName]="'recipe_image'" />
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Calorii</mat-label>
-      <input matInput [formControlName]="'recipe_kcal'" />
+      <mat-label>Instructions</mat-label>
+      <input matInput [formControlName]="'recipe_instruction'" />
     </mat-form-field>
   </div>
   <div class="form_ingredients">

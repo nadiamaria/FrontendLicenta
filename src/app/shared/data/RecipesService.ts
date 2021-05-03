@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { formInterface } from 'src/app/home/components/filter/filter.component';
+import { insertRecipeItemDto } from './dataModel/insertRecipeItemDto';
 import { RecipeItem } from './dataModel/recipeItem';
 import { RecipesResource } from './resources/RecipesResource';
 
@@ -23,7 +24,7 @@ export class RecipesService {
     return this.recipesResource.findfavorite();
   }
 
-  public insert(recipe: RecipeItem): Observable<RecipeItem> {
+  public insert(recipe: insertRecipeItemDto): Observable<insertRecipeItemDto> {
     return this.recipesResource.post(recipe);
   }
 }

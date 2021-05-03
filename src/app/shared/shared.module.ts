@@ -24,6 +24,7 @@ import { CategoryResource } from './data/resources/CategoryResource';
 import { TypeResource } from './data/resources/TypeResource';
 import { CategoryService } from './data/CategoryService';
 import { TypeService } from './data/TypeService';
+import { RecipesIngredientsService } from './data/RecipesIngredientsService';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { TypeService } from './data/TypeService';
     CategoryResource,
     CategoryService,
     TypeService,
+    RecipesIngredientsService,
   ],
 })
 export class SharedModule {}

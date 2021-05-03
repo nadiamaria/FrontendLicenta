@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { RecipeItem } from '../dataModel/recipeItem';
 import { formInterface } from 'src/app/home/components/filter/filter.component';
+import { insertRecipeItemDto } from '../dataModel/insertRecipeItemDto';
 
 @Injectable()
 export class RecipesResource {
@@ -40,7 +41,10 @@ export class RecipesResource {
     return this.httpClient.get(this.URL) as Observable<RecipeItem[]>;
   }
 
-  public post(recipe: RecipeItem): Observable<RecipeItem> {
-    return this.httpClient.post(this.URL, recipe) as Observable<RecipeItem>;
+  public post(recipe: insertRecipeItemDto): Observable<insertRecipeItemDto> {
+    return this.httpClient.post(
+      this.URL,
+      recipe
+    ) as Observable<insertRecipeItemDto>;
   }
 }
