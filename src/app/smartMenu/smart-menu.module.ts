@@ -13,6 +13,7 @@ import { RecipeCardComponent } from '../shared/components/recipe-card/recipe-car
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { RandomKcalService } from '../shared/services/random-kcal.service';
 
 @NgModule({
   declarations: [SmartMenuComponent],
@@ -25,6 +26,12 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatInputModule,
   ],
-  providers: [AuthService, AuthResource, RecipesService, RecipesResource],
+  providers: [
+    AuthService,
+    AuthResource,
+    RecipesService,
+    RecipesResource,
+    RandomKcalService,
+  ],
 })
 export class SmartMenuModule {}
