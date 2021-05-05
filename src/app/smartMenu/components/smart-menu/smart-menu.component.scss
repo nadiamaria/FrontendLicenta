@@ -1,0 +1,17 @@
+@import '~src/app/stylesheets/mixins';
+
+.smart {
+  @include display-flex(column, flex-start, center, nowrap);
+  background-color: #F4F4F4;
+  width: 100%;
+  height: auto;
+
+  &__form {
+    background-color: white;
+    border: 3px solid #ebebeb;
+    border-radius: 10px;
+    margin: 33px;
+    width: 50%;
+    padding: 32px;
+  }
+}

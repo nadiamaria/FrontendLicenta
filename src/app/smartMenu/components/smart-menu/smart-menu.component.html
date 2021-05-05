@@ -1,42 +1,56 @@
-<form class="login__box-form" [formGroup]="smartForm">
-  <input
-    type="number"
-    id="myNumber"
-    min="500"
-    max="3000"
-    formControlName="kcal"
-  />
-</form>
-<div class="breakfast">
-  <h1>Mic de jun</h1>
-  <app-recipe-card
-    [recipe]="this.breakfastRecipe"
-    *ngIf="this.breakfastRecipe"
-  ></app-recipe-card>
+<div class="smart">
+  <form class="smart__form" [formGroup]="smartForm">
+    <input
+      type="number"
+      id="myNumber"
+      min="500"
+      max="3000"
+      formControlName="kcal"
+    />
+  </form>
+  <div class="breakfast">
+    <h1>Mic de jun</h1>
+    <app-recipe-card
+      [recipe]="this.breakfastRecipe"
+      *ngIf="this.breakfastRecipe"
+    ></app-recipe-card>
+  </div>
+  <a
+    mat-stroked-button
+    (click)="resetBreakfast()"
+    class="reset-buttons"
+    *ngIf="buttonPressed || this.sesionMenu[0] != -1"
+    >Genreaza alta reteta pentru mic de jun</a
+  >
+  <div class="lunch">
+    <h1>Pranz</h1>
+    <app-recipe-card
+      [recipe]="this.lunchRecipe"
+      *ngIf="this.lunchRecipe"
+    ></app-recipe-card>
+  </div>
+  <a
+    mat-stroked-button
+    (click)="resetLunch()"
+    class="reset-buttons"
+    *ngIf="buttonPressed || this.sesionMenu[0] != -1"
+    >Genreaza alta reteta pentru pranz</a
+  >
+  <div class="dinner">
+    <h1>Cina</h1>
+    <app-recipe-card
+      [recipe]="this.dinnerRecipe"
+      *ngIf="this.dinnerRecipe"
+    ></app-recipe-card>
+  </div>
+  <a
+    mat-stroked-button
+    (click)="resetDinner()"
+    class="reset-buttons"
+    *ngIf="buttonPressed || this.sesionMenu[0] != -1"
+    >Genreaza alta reteta pentru cina</a
+  >
+  <a mat-stroked-button (click)="resetMenu()" class="reset-buttons"
+    >Geenreaza alt meniu</a
+  >
 </div>
-<a mat-stroked-button (click)="resetBreakfast()" class="reset-buttons"
-  >Genreaza alta reteta pentru mic de jun</a
->
-<div class="lunch">
-  <h1>Pranz</h1>
-  <app-recipe-card
-    [recipe]="this.lunchRecipe"
-    *ngIf="this.lunchRecipe"
-  ></app-recipe-card>
-</div>
-<a mat-stroked-button (click)="resetLunch()" class="reset-buttons"
-  >Genreaza alta reteta pentru pranz</a
->
-<div class="dinner">
-  <h1>Cina</h1>
-  <app-recipe-card
-    [recipe]="this.dinnerRecipe"
-    *ngIf="this.dinnerRecipe"
-  ></app-recipe-card>
-</div>
-<a mat-stroked-button (click)="resetDinner()" class="reset-buttons"
-  >Genreaza alta reteta pentru cina</a
->
-<a mat-stroked-button (click)="resetMenu()" class="reset-buttons"
-  >Geenreaza alt meniu</a
->

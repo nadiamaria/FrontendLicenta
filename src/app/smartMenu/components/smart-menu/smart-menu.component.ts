@@ -26,6 +26,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
   public breakfastRecipe: RecipeItem;
   public lunchRecipe: RecipeItem;
   public dinnerRecipe: RecipeItem;
+  public buttonPressed: boolean = false;
 
   //GetRandomKcal
   public fullRecipes = {
@@ -156,6 +157,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
   }
 
   public async resetMenu(): Promise<void> {
+    this.buttonPressed = true;
     if (this.smartForm.value['kcal'] == '000') {
       console.log('clasic');
       this.getRecipes('mic dejun');
