@@ -1,86 +1,177 @@
-<p>add-page works!</p>
-<form
-  class="form"
-  [formGroup]="myRecipeGroup"
-  *ngIf="myRecipeGroup"
-  (ngSubmit)="sendJson()"
->
-  <div class="form_category">
-    Categoria retetei:
-    <mat-radio-group [formControlName]="'categorys'">
-      <span *ngFor="let category of categorys" class="radio-category category">
-        <mat-radio-button value="{{ category.category_name }}">{{
-          category.category_name
-        }}</mat-radio-button>
-      </span>
-    </mat-radio-group>
-  </div>
-  <div class="form_type">
-    Tipul retetei:
-    <mat-radio-group [formControlName]="'types'" class="radio-container type">
-      <span *ngFor="let type of types" class="radio-type">
-        <mat-radio-button value="{{ type.type_name }}">{{
-          type.type_name
-        }}</mat-radio-button>
-      </span>
-    </mat-radio-group>
-  </div>
-  <div class="form_recipe">
-    Reteta:
-    <mat-form-field>
-      <mat-label>Nume</mat-label>
-      <input matInput [formControlName]="'recipe_name'" />
-    </mat-form-field>
-    <a mat-icon-button>
-      <mat-icon class="header__icons-icon" (click)="searchRecipeExists()"
-        >search</mat-icon
-      >
-    </a>
-    <div class="found" *ngIf="foundRecipe == 'found'">
-      Reteta deja introdusa.
+<div class="add">
+  <form
+    class="add__form"
+    [formGroup]="myRecipeGroup"
+    *ngIf="myRecipeGroup"
+    (ngSubmit)="sendJson()"
+  >
+    <div class="add__form__title">
+      <h1>Add a New Recipe</h1>
     </div>
-    <div class="found" *ngIf="foundRecipe == 'notFound'">
-      Reteta nu a mai fost introdusa.
+    <div class="add__form__container">
+      <div class="container__input">
+        <label for="name" class="label"> Numele retetei </label>
+        <div class="input-container">
+          <input
+            name="name"
+            type="text"
+            autocomplete="off"
+            class="add__form__input"
+            [placeholder]="'Nume'"
+            [formControlName]="'recipe_name'"
+          />
+          <a mat-icon-button>
+            <mat-icon class="header__icons-icon" (click)="searchRecipeExists()"
+              >search</mat-icon
+            >
+          </a>
+        </div>
+        <div class="found" *ngIf="foundRecipe == 'found'">
+          Reteta deja introdusa.
+        </div>
+        <div class="found" *ngIf="foundRecipe == 'notFound'">
+          Reteta nu a mai fost introdusa.
+        </div>
+      </div>
+      <div class="add__form__category">
+        <label class="label">Categoria retetei</label>
+        <mat-radio-group [formControlName]="'categorys'">
+          <span
+            *ngFor="let category of categorys"
+            class="radio-category category"
+          >
+            <mat-radio-button value="{{ category.category_name }}">{{
+              category.category_name
+            }}</mat-radio-button>
+          </span>
+        </mat-radio-group>
+      </div>
+      <div class="add__form__type">
+        <label class="label">Tipul retetei</label>
+        <mat-radio-group
+          [formControlName]="'types'"
+          class="radio-container type"
+        >
+          <span *ngFor="let type of types" class="radio-type">
+            <mat-radio-button value="{{ type.type_name }}">{{
+              type.type_name
+            }}</mat-radio-button>
+          </span>
+        </mat-radio-group>
+      </div>
+      <div class="container__input">
+        <label for="descriere" class="label label--special">
+          Descriere Retetei
+        </label>
+        <textarea
+          name="descriere"
+          class="add__form__text"
+          style="overflow: hidden"
+          style="resize: none"
+          rows="7"
+          [formControlName]="'recipe_description'"
+          placeholder="Descriere"
+        ></textarea>
+      </div>
     </div>
 
-    <mat-form-field>
-      <mat-label>Descriere</mat-label>
-      <input matInput [formControlName]="'recipe_description'" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Imagine</mat-label>
-      <input matInput [formControlName]="'recipe_image'" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Instructions</mat-label>
-      <input matInput [formControlName]="'recipe_instruction'" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Kcal</mat-label>
-      <input matInput [formControlName]="'recipe_kcal'" />
-    </mat-form-field>
-  </div>
-  <div class="form_ingredients">
-    Ingrediente:
-    <a mat-icon-button>
-      <mat-icon class="header__icons-icon" (click)="ingredientsInputs()"
-        >add</mat-icon
-      >
-    </a>
-    <div class="ingredient" *ngFor="let ingredient of nrIngredients">
-      <mat-form-field>
-        <mat-label>Cantitate</mat-label>
-        <input matInput [formControlName]="'ingredient_cantity' + ingredient" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Unitate de masura</mat-label>
-        <input matInput [formControlName]="'ingredient_unit' + ingredient" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Nume</mat-label>
-        <input matInput [formControlName]="'ingredient_name' + ingredient" />
-      </mat-form-field>
+    <div class="container__input">
+      <label for="name" class="label"> Link-ul imaginii retetei </label>
+      <div class="input-container">
+        <input
+          name="name"
+          type="text"
+          autocomplete="off"
+          class="add__form__input"
+          [placeholder]="'Link'"
+          [formControlName]="'recipe_image'"
+        />
+      </div>
     </div>
-  </div>
-  <button mat-stroked-button>Submit</button>
-</form>
+
+    <div class="container__input">
+      <label for="instructiuni" class="label label--special">
+        Instructiunile retetei
+      </label>
+      <textarea
+        name="instructiuni"
+        class="add__form__text"
+        style="overflow: hidden"
+        style="resize: none"
+        rows="7"
+        [formControlName]="'recipe_instruction'"
+        placeholder="Instructiuni"
+      ></textarea>
+    </div>
+
+    <div class="container__input">
+      <label for="kcal" class="label"> Numar total de calorii </label>
+      <div class="input-container">
+        <input
+          name="kcal"
+          type="text"
+          autocomplete="off"
+          class="add__form__input"
+          [placeholder]="'Calorii'"
+          [formControlName]="'recipe_kcal'"
+        />
+      </div>
+    </div>
+    <div class="form_ingredients">
+      Ingrediente:
+      <a mat-icon-button>
+        <mat-icon class="header__icons-icon" (click)="ingredientsInputs()"
+          >add</mat-icon
+        >
+      </a>
+      <div class="ingredient" *ngFor="let ingredient of nrIngredients">
+        <div class="container__input">
+          <label for="ingredientname" class="label" *ngIf="ingredient == 0"
+            >Numele ingreientului</label
+          >
+          <div class="input-container">
+            <input
+              name="ingredientname"
+              type="text"
+              autocomplete="off"
+              class="add__form__input"
+              [placeholder]="'Nume'"
+              [formControlName]="'ingredient_name' + ingredient"
+            />
+          </div>
+        </div>
+        <div class="container__input">
+          <label for="cantitatea" class="label" *ngIf="ingredient == 0"
+            >Canitatea</label
+          >
+          <div class="input-container">
+            <input
+              name="cantitatea"
+              type="text"
+              autocomplete="off"
+              class="add__form__input"
+              [placeholder]="'500'"
+              [formControlName]="'ingredient_cantity' + ingredient"
+            />
+          </div>
+        </div>
+        <div class="container__input">
+          <label for="unit" class="label" *ngIf="ingredient == 0"
+            >Unitatea de masura</label
+          >
+          <div class="input-container">
+            <input
+              name="unit"
+              type="text"
+              autocomplete="off"
+              class="add__form__input"
+              [placeholder]="'g'"
+              [formControlName]="'ingredient_unit' + ingredient"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <button mat-stroked-button>Submit</button>
+  </form>
+</div>

@@ -69,7 +69,6 @@ export class AddPageComponent implements OnInit {
     this.group['recipe_image'] = new FormControl('');
     this.group['recipe_instruction'] = new FormControl('');
     this.group['recipe_kcal'] = new FormControl('');
-    this.ingredientsInputs();
     this.myRecipeGroup = new FormGroup(this.group);
 
     this.ingredientsInput.subscribe(() => {
@@ -80,6 +79,8 @@ export class AddPageComponent implements OnInit {
       this.nr += 1;
       this.myRecipeGroup = new FormGroup(this.group);
     });
+
+    this.ingredientsInputs();
   }
 
   public ingredientsInputs() {
