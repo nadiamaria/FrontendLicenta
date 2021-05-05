@@ -5,13 +5,42 @@
   background-color: #F4F4F4;
   width: 100%;
   height: auto;
+  min-height: 100vh;
 
   &__form {
     background-color: white;
     border: 3px solid #ebebeb;
     border-radius: 10px;
     margin: 33px;
-    width: 50%;
+    width: 56%;
     padding: 32px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+
+    &__form__title {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 8px;
+
+    }
+
+    &__recipes {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .menu {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+      }
+    }
   }
+}
+
+.reset-buttons {
+  margin-top: 10px;
 }
