@@ -3,14 +3,17 @@
     <div class="smart__form__title">
       <h1>Smart Menu</h1>
     </div>
-    <form [formGroup]="smartForm">
+    <form [formGroup]="smartForm" class="form">
+      Calorii:
       <input
-        type="number"
         id="myNumber"
-        min="500"
-        max="3000"
+        type="text"
         formControlName="kcal"
+        maxlength="4"
+        [placeholder]="'500'"
       />
+      <div class="info">Please enter between 500 and 3000 calories.</div>
+      <div>Total calorii ale smart meniului generat: {{ this.kcal }}</div>
     </form>
     <div class="smart__form__recipes">
       <div class="menu">

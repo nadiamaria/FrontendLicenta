@@ -3,7 +3,7 @@
 
 .login {
   @include display-flex(column, center, center, nowrap);
-  background-image: url('../../../../assets/img/login_cover.jpg');
+  background-image: url('../../../../assets/img/try10.jpeg');
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -22,7 +22,8 @@
 
   &__box {
     @include display-flex(row, space-around, center, nowrap);
-    background-color: #435491;
+    background-color: #ad7e65; //#d68d67
+
     border-radius: 10px;
     height: 400px;
     padding: 5px;
@@ -38,11 +39,35 @@
   }
 
   &__box-img {
-    width: 300px;
-    height: 300px;
+    width: 356px;
+    height: 272px;
   }
 
   &__box-newaccount {
     padding-top: 20px;
+    a {
+      padding: 0;
+    }
   }
+
+
+}
+
+input,textarea {
+  color: #8f0407;
+  text-shadow: 0px 0px 0px #000 ;
+  -webkit-text-fill-color: transparent ;
+}
+
+input::-webkit-input-placeholder,
+  textarea::-webkit-input-placeholder {
+  color: #ccc;
+  text-shadow: none;
+  -webkit-text-fill-color: initial;
+}
+
+.title {
+  padding-top: 20px;
+  font-size: xx-large;
+  cursor: pointer;
 }

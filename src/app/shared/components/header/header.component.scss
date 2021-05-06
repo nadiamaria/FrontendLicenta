@@ -11,7 +11,7 @@
 
 .header {
   @include display-flex(row, space-between, center, nowrap);
-  background-color: $header-background;
+  background-color:#ad7e65; // $header-background;
   box-shadow: 0 0 8px 2px $shadow;
 
   color: $header-font;
@@ -29,7 +29,7 @@
 
   &__barnd {
     display: none;
-    color: $logo;
+    color: #694c3d;
     font-size: x-large;
     padding: 9px;
 

@@ -13,7 +13,7 @@ import { RandomKcalService } from 'src/app/shared/services/random-kcal.service';
 export class SmartMenuComponent implements OnInit, OnDestroy {
   //GetRandomClassic
   public smartForm = new FormGroup({
-    kcal: new FormControl('000'),
+    kcal: new FormControl(''),
   });
   public recipeId = {
     breakfastIds: [],
@@ -81,7 +81,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
 
   public getRecipes(data: string): void {
     let recipesArray: RecipeItem[];
-    if (this.smartForm.value['kcal'] == '000') {
+    if (this.smartForm.value['kcal'] == null) {
       this.recipesService.getAllRecipes(null, data).subscribe((recipes) => {
         if (data == 'mic dejun') {
           //aduc retetele de tip mic de jun care sunt mereu in acceasi ordine
@@ -158,7 +158,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
 
   public async resetMenu(): Promise<void> {
     this.buttonPressed = true;
-    if (this.smartForm.value['kcal'] == '000') {
+    if (this.smartForm.value['kcal'] == null) {
       console.log('clasic');
       this.getRecipes('mic dejun');
       this.getRecipes('pranz');
