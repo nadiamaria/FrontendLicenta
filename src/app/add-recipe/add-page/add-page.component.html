@@ -14,26 +14,29 @@
           Numele retetei
           <span class="mandatory-field">*</span></label
         >
-        <div class="input-container">
-          <input
-            name="name"
-            type="text"
-            autocomplete="off"
-            class="add__form__input"
-            [placeholder]="'Nume'"
-            [formControlName]="'recipe_name'"
-            required
-          />
+        <div class="input-container-specif">
+          <div>
+            <input
+              name="name"
+              type="text"
+              autocomplete="off"
+              class="add__form__input"
+              [placeholder]="'Nume'"
+              [formControlName]="'recipe_name'"
+              required
+            />
 
-          <mat-spinner
-            diameter="20"
-            *ngIf="this.valueChangeRecipe != 0 && this.valueChangeRecipe != 4"
-          ></mat-spinner>
+            <mat-spinner
+              diameter="20"
+              *ngIf="this.valueChangeRecipe != 0 && this.valueChangeRecipe != 4"
+            ></mat-spinner>
+          </div>
           <div
             *ngIf="
               this.myRecipeGroup.controls.recipe_name.errors &&
               this.myRecipeGroup.controls.recipe_name.touched
             "
+            class="form-errors"
           >
             Numele retetei este obligatoriu.
           </div>

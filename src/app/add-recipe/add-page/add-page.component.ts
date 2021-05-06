@@ -230,6 +230,7 @@ export class AddPageComponent implements OnInit {
 
   public searchRecipeExists() {
     this.recipesService.getAllRecipes(null, null).subscribe((recipes) => {
+      this.foundRecipe = 'notFound';
       for (let recipe of recipes)
         if (recipe.name === this.myRecipeGroup.value['recipe_name'])
           this.foundRecipe = 'found';

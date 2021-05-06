@@ -23,6 +23,11 @@
       justify-content: center;
       margin-bottom: 8px;
     }
+    .input-container-specif {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
 
     &__input {
       border: 1px solid #e9e8e8;
@@ -31,7 +36,7 @@
       padding: 9px 16px;
       resize: none;
       margin-top: 1px;
-      width: 100%;
+      width: 95%;
 
       &--error {
         border-color: red !important;
@@ -133,6 +138,10 @@ mat-radio-group {
 mat-spinner {
   position: absolute;
   margin-top: 8px;
-  right: 26%;
+  right: 25%;
+  top: 22%;
 }
 
+.form-errors {
+  color: red;
+}
