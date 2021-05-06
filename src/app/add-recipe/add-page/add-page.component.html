@@ -10,7 +10,10 @@
     </div>
     <div class="add__form__container">
       <div class="container__input">
-        <label for="name" class="label"> Numele retetei </label>
+        <label for="name" class="label">
+          Numele retetei
+          <span class="mandatory-field">*</span></label
+        >
         <div class="input-container">
           <input
             name="name"
@@ -19,12 +22,27 @@
             class="add__form__input"
             [placeholder]="'Nume'"
             [formControlName]="'recipe_name'"
+            required
           />
-          <a mat-icon-button>
+
+          <mat-spinner
+            diameter="20"
+            *ngIf="this.valueChangeRecipe != 0 && this.valueChangeRecipe != 4"
+          ></mat-spinner>
+          <div
+            *ngIf="
+              this.myRecipeGroup.controls.recipe_name.errors &&
+              this.myRecipeGroup.controls.recipe_name.touched
+            "
+          >
+            Numele retetei este obligatoriu.
+          </div>
+
+          <!-- <a mat-icon-button>
             <mat-icon class="header__icons-icon" (click)="searchRecipeExists()"
               >search</mat-icon
             >
-          </a>
+          </a> -->
         </div>
         <div class="found" *ngIf="foundRecipe == 'found'">
           Reteta deja introdusa.
@@ -34,7 +52,9 @@
         </div>
       </div>
       <div class="add__form__category">
-        <label class="label">Categoria retetei</label>
+        <label class="label"
+          >Categoria retetei<span class="mandatory-field">*</span></label
+        >
         <mat-radio-group [formControlName]="'categorys'">
           <span
             *ngFor="let category of categorys"
@@ -47,7 +67,9 @@
         </mat-radio-group>
       </div>
       <div class="add__form__type">
-        <label class="label">Tipul retetei</label>
+        <label class="label"
+          >Tipul retetei<span class="mandatory-field">*</span></label
+        >
         <mat-radio-group
           [formControlName]="'types'"
           class="radio-container type"
@@ -61,7 +83,7 @@
       </div>
       <div class="container__input">
         <label for="descriere" class="label label--special">
-          Descriere Retetei
+          Descriere Retetei<span class="mandatory-field">*</span>
         </label>
         <textarea
           name="descriere"
@@ -76,7 +98,9 @@
     </div>
 
     <div class="container__input">
-      <label for="name" class="label"> Link-ul imaginii retetei </label>
+      <label for="name" class="label">
+        Link-ul imaginii retetei<span class="mandatory-field">*</span></label
+      >
       <div class="input-container">
         <input
           name="name"
@@ -91,7 +115,7 @@
 
     <div class="container__input">
       <label for="instructiuni" class="label label--special">
-        Instructiunile retetei
+        Instructiunile retetei<span class="mandatory-field">*</span>
       </label>
       <textarea
         name="instructiuni"
@@ -105,7 +129,9 @@
     </div>
 
     <div class="container__input">
-      <label for="kcal" class="label"> Numar total de calorii </label>
+      <label for="kcal" class="label">
+        Numar total de calorii<span class="mandatory-field">*</span>
+      </label>
       <div class="input-container">
         <input
           name="kcal"
@@ -118,7 +144,7 @@
       </div>
     </div>
     <div class="form_ingredients">
-      Ingrediente:
+      Ingrediente<span class="mandatory-field">*</span>
       <a mat-icon-button>
         <mat-icon class="header__icons-icon" (click)="ingredientsInputs()"
           >add</mat-icon
@@ -127,7 +153,7 @@
       <div class="ingredient" *ngFor="let ingredient of nrIngredients">
         <div class="container__input">
           <label for="ingredientname" class="label" *ngIf="ingredient == 0"
-            >Numele ingreientului</label
+            >Numele ingreientului<span class="mandatory-field">*</span></label
           >
           <div class="input-container">
             <input
@@ -142,7 +168,7 @@
         </div>
         <div class="container__input">
           <label for="cantitatea" class="label" *ngIf="ingredient == 0"
-            >Canitatea</label
+            >Canitatea<span class="mandatory-field">*</span></label
           >
           <div class="input-container">
             <input
@@ -157,7 +183,7 @@
         </div>
         <div class="container__input">
           <label for="unit" class="label" *ngIf="ingredient == 0"
-            >Unitatea de masura</label
+            >Unitatea de masura<span class="mandatory-field">*</span></label
           >
           <div class="input-container">
             <input
@@ -173,5 +199,6 @@
       </div>
     </div>
     <button mat-stroked-button>Submit</button>
+    <div *ngIf="this.buttonPressed">Toate campurile sunt obligatorii.</div>
   </form>
 </div>

@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CookieModule } from 'ngx-cookie';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthGuard } from './shared/services/auth.guard';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { AuthGuard } from './shared/services/auth.guard';
     MatSliderModule,
     MatButtonModule,
     CookieModule.forRoot(),
+    MatSnackBarModule,
   ],
   providers: [CookieService, AuthGuard],
   bootstrap: [AppComponent],

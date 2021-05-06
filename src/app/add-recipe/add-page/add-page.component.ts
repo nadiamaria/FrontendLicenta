@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
@@ -31,14 +36,17 @@ export class AddPageComponent implements OnInit {
   public nr = 0;
   public ingredientsInput: Subject<any> = new Subject<any>();
   private subscription: Subscription = new Subscription();
+  private subscriptionButton: Subscription = new Subscription();
   public foundRecipe: string;
   public recipeId: number = -1;
+  public buttonPressed: boolean = false;
   public recipeIngredientItem: insertRecipesIngredientsItem = {
     unit_mas: ' ',
     cant_ingr: -1,
     ingredientId: -1,
     recipeId: -1,
   };
+  public valueChangeRecipe: number = 0;
 
   public constructor(
     private ingredientsService: IngredientsService,
@@ -46,10 +54,18 @@ export class AddPageComponent implements OnInit {
     private typeService: TypeService,
     private recipesService: RecipesService,
     private recipeIngredientsService: RecipesIngredientsService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private eventBus: EventBusService
   ) {}
 
   public ngOnInit(): void {
+    this.subscriptionButton.add(
+      this.eventBus.on('sendButtonPressed').subscribe((ev) => {
+        if (this.myRecipeGroup.status == 'INVALID') this.buttonPressed = true;
+        if (this.myRecipeGroup.status != 'INVALID') this.buttonPressed = false;
+      })
+    );
+
     this.ingredientsService.getAllIngredients().subscribe((ingredients) => {
       this.ingredients = ingredients;
     });
@@ -64,12 +80,13 @@ export class AddPageComponent implements OnInit {
 
     this.group['categorys'] = new FormControl('');
     this.group['types'] = new FormControl('');
-    this.group['recipe_name'] = new FormControl('');
+    this.group['recipe_name'] = new FormControl('', Validators.required);
     this.group['recipe_description'] = new FormControl('');
     this.group['recipe_image'] = new FormControl('');
     this.group['recipe_instruction'] = new FormControl('');
     this.group['recipe_kcal'] = new FormControl('');
     this.myRecipeGroup = new FormGroup(this.group);
+    console.log(this.myRecipeGroup.controls.recipe_name);
 
     this.ingredientsInput.subscribe(() => {
       this.nrIngredients.push(this.nr);
@@ -81,6 +98,24 @@ export class AddPageComponent implements OnInit {
     });
 
     this.ingredientsInputs();
+
+    this.myRecipeGroup.get('recipe_name').valueChanges.subscribe((x) => {
+      this.valueChangeRecipe = 0;
+      this.trySearch();
+    });
+  }
+
+  public async trySearch() {
+    while (this.valueChangeRecipe <= 3) {
+      console.log('wtf');
+      this.valueChangeRecipe++;
+      await this.delay(1);
+      if (this.valueChangeRecipe == 0) {
+        this.valueChangeRecipe = 4;
+        break;
+      }
+      if (this.valueChangeRecipe == 3) this.searchRecipeExists();
+    }
   }
 
   public ingredientsInputs() {
@@ -88,78 +123,81 @@ export class AddPageComponent implements OnInit {
   }
 
   public async sendJson() {
-    let recipeItem: insertRecipeItemDto = {
-      name: '',
-      instruction: '',
-      description: '',
-      image: '',
-      kcal: -1,
-      recipeCategoryId: -1,
-      recipeTypeId: -1,
-    };
-    let indexId: number;
-    console.log(this.myRecipeGroup.value['categorys']);
-    //daca am ingredient
-    this.foundRecipe = '';
-    this.searchRecipeExists();
-    if (this.foundRecipe == '' || this.foundRecipe == 'notFound') {
-      for (let index in this.myRecipeGroup.value)
-        if (index.includes('ingredient_name')) {
-          let found = false;
-          for (let ingredient of this.ingredients) {
-            if (ingredient.name == this.myRecipeGroup.value[index])
-              found = true;
-          }
-          if (found == false) this.postIngredient(index);
-          this.ingredientsService
-            .getAllIngredients()
-            .subscribe((ingredients) => {
-              this.ingredients = ingredients;
-            });
-        }
-      //pentru category
-      for (let category of this.categorys) {
-        if (category.category_name == this.myRecipeGroup.value['categorys'])
-          recipeItem.recipeCategoryId = category.id;
-      }
-      //pentru type
-      for (let type of this.types) {
-        if (type.type_name == this.myRecipeGroup.value['types'])
-          recipeItem.recipeTypeId = type.id;
-      }
-      //pentru recipe
-      recipeItem.description = this.myRecipeGroup.value['recipe_description'];
-      recipeItem.image = this.myRecipeGroup.value['recipe_image'];
-      recipeItem.instruction = this.myRecipeGroup.value['recipe_instruction'];
-      recipeItem.name = this.myRecipeGroup.value['recipe_name'];
-      recipeItem.kcal = this.myRecipeGroup.value['recipe_kcal'];
-      await this.postRecipe(recipeItem);
-      //pentru recipeIngredients
-      // await this.delay(0.5);
-      for (let index in this.myRecipeGroup.value) {
-        if (index.includes('ingredient_name')) {
-          indexId = +index.replace(/[^0-9\.]+/g, '');
-          this.recipeIngredientItem.cant_ingr = this.myRecipeGroup.value[
-            'ingredient_cantity' + indexId
-          ];
-          this.recipeIngredientItem.unit_mas = this.myRecipeGroup.value[
-            'ingredient_unit' + indexId
-          ];
-          //nu apuca sa de-a insert sau sa se updateze
-          for (let ingredient of this.ingredients)
-            if (
-              ingredient.name ==
-              this.myRecipeGroup.value['ingredient_name' + indexId]
-            )
-              this.recipeIngredientItem.ingredientId = ingredient.id;
-
-          this.recipeIngredientItem.recipeId = this.recipeId;
-          this.postRecipeIngredient(this.recipeIngredientItem);
-        }
-      }
-
+    this.eventBus.emit({ name: 'sendButtonPressed', value: '1' });
+    if (this.myRecipeGroup.status != 'INVALID') {
+      let recipeItem: insertRecipeItemDto = {
+        name: '',
+        instruction: '',
+        description: '',
+        image: '',
+        kcal: -1,
+        recipeCategoryId: -1,
+        recipeTypeId: -1,
+      };
+      let indexId: number;
+      console.log(this.myRecipeGroup.value['recipe_name']);
+      //daca am ingredient
       this.foundRecipe = '';
-    } else this.foundRecipe = 'found';
+      this.searchRecipeExists();
+      if (this.foundRecipe == '' || this.foundRecipe == 'notFound') {
+        for (let index in this.myRecipeGroup.value)
+          if (index.includes('ingredient_name')) {
+            let found = false;
+            for (let ingredient of this.ingredients) {
+              if (ingredient.name == this.myRecipeGroup.value[index])
+                found = true;
+            }
+            if (found == false) this.postIngredient(index);
+            this.ingredientsService
+              .getAllIngredients()
+              .subscribe((ingredients) => {
+                this.ingredients = ingredients;
+              });
+          }
+        //pentru category
+        for (let category of this.categorys) {
+          if (category.category_name == this.myRecipeGroup.value['categorys'])
+            recipeItem.recipeCategoryId = category.id;
+        }
+        //pentru type
+        for (let type of this.types) {
+          if (type.type_name == this.myRecipeGroup.value['types'])
+            recipeItem.recipeTypeId = type.id;
+        }
+        //pentru recipe
+        recipeItem.description = this.myRecipeGroup.value['recipe_description'];
+        recipeItem.image = this.myRecipeGroup.value['recipe_image'];
+        recipeItem.instruction = this.myRecipeGroup.value['recipe_instruction'];
+        recipeItem.name = this.myRecipeGroup.value['recipe_name'];
+        recipeItem.kcal = this.myRecipeGroup.value['recipe_kcal'];
+        await this.postRecipe(recipeItem);
+        //pentru recipeIngredients
+        // await this.delay(0.5);
+        for (let index in this.myRecipeGroup.value) {
+          if (index.includes('ingredient_name')) {
+            indexId = +index.replace(/[^0-9\.]+/g, '');
+            this.recipeIngredientItem.cant_ingr = this.myRecipeGroup.value[
+              'ingredient_cantity' + indexId
+            ];
+            this.recipeIngredientItem.unit_mas = this.myRecipeGroup.value[
+              'ingredient_unit' + indexId
+            ];
+            //nu apuca sa de-a insert sau sa se updateze
+            for (let ingredient of this.ingredients)
+              if (
+                ingredient.name ==
+                this.myRecipeGroup.value['ingredient_name' + indexId]
+              )
+                this.recipeIngredientItem.ingredientId = ingredient.id;
+
+            this.recipeIngredientItem.recipeId = this.recipeId;
+            this.postRecipeIngredient(this.recipeIngredientItem);
+          }
+        }
+
+        this.foundRecipe = '';
+      } else this.foundRecipe = 'found';
+    }
   }
 
   public async postIngredient(data: string) {
@@ -199,11 +237,11 @@ export class AddPageComponent implements OnInit {
     });
   }
 
-  // public delay(n) {
-  //   return new Promise(function (resolve) {
-  //     setTimeout(resolve, n * 1000);
-  //   });
-  // }
+  public delay(n) {
+    return new Promise(function (resolve) {
+      setTimeout(resolve, n * 1000);
+    });
+  }
 
   public openSnackBar(data: string) {
     this._snackBar.open('Reteta a fost adaugata cu succes', 'Close', {
