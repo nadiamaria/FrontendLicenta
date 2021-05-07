@@ -41,7 +41,7 @@
             Numele retetei este obligatoriu.
           </div>
         </div>
-        <div class="found" *ngIf="foundRecipe == 'found'">
+        <div class="form-errors" *ngIf="foundRecipe == 'found'">
           Reteta deja introdusa.
         </div>
         <div
@@ -271,6 +271,9 @@
     <button mat-stroked-button>Submit</button>
     <div *ngIf="this.buttonPressed" class="form-errors">
       Toate campurile sunt obligatorii.
+    </div>
+    <div class="form-errors" *ngIf="foundRecipe == 'found'">
+      Reteta deja introdusa.
     </div>
   </form>
 </div>

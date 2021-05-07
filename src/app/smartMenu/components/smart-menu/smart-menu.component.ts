@@ -103,6 +103,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
             recipe: recipesArray[random],
             category: data,
           };
+          this.kcal += recipe.recipe.kcal;
           this.menu.next(recipe);
           this.sesionMenu[0] = random;
         }
@@ -120,6 +121,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
             recipe: recipesArray[random],
             category: data,
           };
+          this.kcal += recipe.recipe.kcal;
           this.menu.next(recipe);
           this.sesionMenu[1] = random;
         }
@@ -137,6 +139,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
             recipe: recipesArray[random],
             category: data,
           };
+          this.kcal += recipe.recipe.kcal;
           this.menu.next(recipe);
           this.sesionMenu[2] = random;
         }
@@ -159,6 +162,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
   public async resetMenu(): Promise<void> {
     this.buttonPressed = true;
     if (this.smartForm.value['kcal'] == null) {
+      this.kcal = 0;
       console.log('clasic');
       this.getRecipes('mic dejun');
       this.getRecipes('pranz');
