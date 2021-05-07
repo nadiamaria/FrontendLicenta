@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/data/AuthService';
@@ -18,7 +18,11 @@ export class LoginComponent implements OnDestroy {
     password: new FormControl(''),
   });
 
-  constructor(private authService: AuthService, private router: Router, private eventBus: EventBusService,) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private eventBus: EventBusService
+  ) {}
 
   public onLogin() {
     this.eventBus.emit({ name: 'auth', value: 'Loged in successfully!' });

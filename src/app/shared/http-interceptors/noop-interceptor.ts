@@ -33,21 +33,20 @@ export class NoopInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(
       map((event: HttpEvent<any>) => {
-        console.log('etc');
-
         if (event instanceof HttpResponse) {
+          console.log(event.url);
           if (
             'http://localhost:3000/authentication/register' == event.url &&
             event.status == 201 &&
             event.statusText == 'Created'
           )
             this.openSnackBar('Utilizator inregistrat cu succes! :)');
-          if (
-            ('http://localhost:3000/authentication/log-in' == event.url &&
-              event.status == 200,
-            event.statusText == 'OK')
-          )
-            this.openSnackBar('Te-ai logat cu succes! Spor la gatit! :)');
+          // if (
+          //   ('http://localhost:3000/authentication/log-in' == event.url &&
+          //     event.status == 200,
+          //   event.statusText == 'OK')
+          // )
+          //   this.openSnackBar('Te-ai logat cu succes! Spor la gatit! :)');
         }
         return event;
       }),
@@ -73,14 +72,15 @@ export class NoopInterceptor implements HttpInterceptor {
               this.openSnackBar(
                 'Nu ai completat toate campurile, incearca din nou!'
               );
+            if ('http://localhost:3000/authentication' == error.url) {
+              this.openSnackBar('Sesiunea a expirat, logheaza-te din nou!');
+              console.log('mdea');
+              this.cookieService.set('authorization', ' ');
+            }
           }
           if (error.status === 401) {
             // TODO: Permission denied; show toast
             this.openSnackBar('Sesiune expirata, logheaza-te din nou!');
-          }
-          if (error.status === 201) {
-            console.log(error);
-            // TODO: Permission denied; show toast
           }
         }
         return throwError(error);
@@ -119,7 +119,7 @@ export class NoopInterceptor implements HttpInterceptor {
 
   public openSnackBar(message: string) {
     this._snackBar.open(message, 'Close', {
-      duration: 5000,
+      duration: 10000,
     });
   }
 }

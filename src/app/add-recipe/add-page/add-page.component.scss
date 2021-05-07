@@ -98,7 +98,7 @@
   }
 }
 .label {
-  margin: 10px 5px 10px 0;
+  margin: 15px 5px 10px 0;
 
   &--special {
     margin-top: 0;
@@ -138,10 +138,11 @@ mat-radio-group {
 mat-spinner {
   position: absolute;
   margin-top: 8px;
-  right: 25%;
+  right: 26%;
   top: 22%;
 }
 
 .form-errors {
+  padding-top: 8px;
   color: red;
 }

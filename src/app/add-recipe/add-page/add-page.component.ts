@@ -78,21 +78,30 @@ export class AddPageComponent implements OnInit {
       this.types = types;
     });
 
-    this.group['categorys'] = new FormControl('');
-    this.group['types'] = new FormControl('');
+    this.group['categorys'] = new FormControl('', Validators.required);
+    this.group['types'] = new FormControl('', Validators.required);
     this.group['recipe_name'] = new FormControl('', Validators.required);
-    this.group['recipe_description'] = new FormControl('');
-    this.group['recipe_image'] = new FormControl('');
-    this.group['recipe_instruction'] = new FormControl('');
-    this.group['recipe_kcal'] = new FormControl('');
+    this.group['recipe_description'] = new FormControl('', Validators.required);
+    this.group['recipe_image'] = new FormControl('', Validators.required);
+    this.group['recipe_instruction'] = new FormControl('', Validators.required);
+    this.group['recipe_kcal'] = new FormControl('', Validators.required);
     this.myRecipeGroup = new FormGroup(this.group);
     console.log(this.myRecipeGroup.controls.recipe_name);
 
     this.ingredientsInput.subscribe(() => {
       this.nrIngredients.push(this.nr);
-      this.group['ingredient_name' + this.nr] = new FormControl('');
-      this.group['ingredient_cantity' + this.nr] = new FormControl('');
-      this.group['ingredient_unit' + this.nr] = new FormControl('');
+      this.group['ingredient_name' + this.nr] = new FormControl(
+        '',
+        Validators.required
+      );
+      this.group['ingredient_cantity' + this.nr] = new FormControl(
+        '',
+        Validators.required
+      );
+      this.group['ingredient_unit' + this.nr] = new FormControl(
+        '',
+        Validators.required
+      );
       this.nr += 1;
       this.myRecipeGroup = new FormGroup(this.group);
     });
@@ -123,6 +132,11 @@ export class AddPageComponent implements OnInit {
   }
 
   public async sendJson() {
+    Object.keys(this.myRecipeGroup.controls).forEach((field) => {
+      // {1}
+      const control = this.myRecipeGroup.get(field); // {2}
+      control.markAsTouched({ onlySelf: true }); // {3}
+    });
     this.eventBus.emit({ name: 'sendButtonPressed', value: '1' });
     if (this.myRecipeGroup.status != 'INVALID') {
       let recipeItem: insertRecipeItemDto = {
@@ -248,5 +262,14 @@ export class AddPageComponent implements OnInit {
     this._snackBar.open('Reteta a fost adaugata cu succes', 'Close', {
       duration: 3000,
     });
+  }
+
+  public verifyValability(id: number) {
+    if (
+      this.myRecipeGroup.controls.categorys.errors &&
+      this.myRecipeGroup.controls.categorys.touched
+    )
+      return true;
+    else return false;
   }
 }

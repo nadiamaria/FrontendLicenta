@@ -40,17 +40,17 @@
           >
             Numele retetei este obligatoriu.
           </div>
-
-          <!-- <a mat-icon-button>
-            <mat-icon class="header__icons-icon" (click)="searchRecipeExists()"
-              >search</mat-icon
-            >
-          </a> -->
         </div>
         <div class="found" *ngIf="foundRecipe == 'found'">
           Reteta deja introdusa.
         </div>
-        <div class="found" *ngIf="foundRecipe == 'notFound'">
+        <div
+          class="found"
+          *ngIf="
+            foundRecipe == 'notFound' &&
+            this.myRecipeGroup.controls.recipe_name.value != ''
+          "
+        >
           Reteta nu a mai fost introdusa.
         </div>
       </div>
@@ -69,6 +69,15 @@
           </span>
         </mat-radio-group>
       </div>
+      <div
+        *ngIf="
+          this.myRecipeGroup.controls.categorys.errors &&
+          this.myRecipeGroup.controls.categorys.touched
+        "
+        class="form-errors"
+      >
+        Categoria retetei este obligatorie.
+      </div>
       <div class="add__form__type">
         <label class="label"
           >Tipul retetei<span class="mandatory-field">*</span></label
@@ -84,6 +93,15 @@
           </span>
         </mat-radio-group>
       </div>
+      <div
+        *ngIf="
+          this.myRecipeGroup.controls.types.errors &&
+          this.myRecipeGroup.controls.types.touched
+        "
+        class="form-errors"
+      >
+        Tipul retetei este obligatoriu.
+      </div>
       <div class="container__input">
         <label for="descriere" class="label label--special">
           Descriere Retetei<span class="mandatory-field">*</span>
@@ -97,6 +115,15 @@
           [formControlName]="'recipe_description'"
           placeholder="Descriere"
         ></textarea>
+        <div
+          *ngIf="
+            this.myRecipeGroup.controls.recipe_description.errors &&
+            this.myRecipeGroup.controls.recipe_description.touched
+          "
+          class="form-errors"
+        >
+          Descrierea retetei este obligatorie.
+        </div>
       </div>
     </div>
 
@@ -114,10 +141,19 @@
           [formControlName]="'recipe_image'"
         />
       </div>
+      <div
+        *ngIf="
+          this.myRecipeGroup.controls.recipe_image.errors &&
+          this.myRecipeGroup.controls.recipe_image.touched
+        "
+        class="form-errors"
+      >
+        Link-ul retetei sunt obligatorii.
+      </div>
     </div>
 
     <div class="container__input">
-      <label for="instructiuni" class="label label--special">
+      <label for="instructiuni" class="label">
         Instructiunile retetei<span class="mandatory-field">*</span>
       </label>
       <textarea
@@ -129,6 +165,15 @@
         [formControlName]="'recipe_instruction'"
         placeholder="Instructiuni"
       ></textarea>
+      <div
+        *ngIf="
+          this.myRecipeGroup.controls.recipe_instruction.errors &&
+          this.myRecipeGroup.controls.recipe_instruction.touched
+        "
+        class="form-errors"
+      >
+        Instructiunile retetei sunt obligatorii.
+      </div>
     </div>
 
     <div class="container__input">
@@ -145,8 +190,17 @@
           [formControlName]="'recipe_kcal'"
         />
       </div>
+      <div
+        *ngIf="
+          this.myRecipeGroup.controls.recipe_kcal.errors &&
+          this.myRecipeGroup.controls.recipe_kcal.touched
+        "
+        class="form-errors"
+      >
+        Numarul de calorii ale retetei sunt obligatorii.
+      </div>
     </div>
-    <div class="form_ingredients">
+    <div class="form_ingredients label">
       Ingrediente<span class="mandatory-field">*</span>
       <a mat-icon-button>
         <mat-icon class="header__icons-icon" (click)="ingredientsInputs()"
@@ -200,8 +254,23 @@
           </div>
         </div>
       </div>
+      <!-- <div
+        *ngIf="
+          'this.myRecipeGroup.controls.ingredient_unit' +
+            ingredient +
+            '.errors ' &&
+          'this.myRecipeGroup.controls.ingredient_unit' +
+            ingredient +
+            '.touched'
+        "
+        class="form-errors"
+      >
+        Numarul de calorii ale retetei sunt obligatorii.
+      </div> -->
     </div>
     <button mat-stroked-button>Submit</button>
-    <div *ngIf="this.buttonPressed">Toate campurile sunt obligatorii.</div>
+    <div *ngIf="this.buttonPressed" class="form-errors">
+      Toate campurile sunt obligatorii.
+    </div>
   </form>
 </div>

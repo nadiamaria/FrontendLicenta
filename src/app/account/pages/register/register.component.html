@@ -20,11 +20,20 @@
           >
           <input
             matInput
-            placeholder="Email"
-            type="text"
+            placeholder="Email*"
+            type="email"
             formControlName="email"
           />
         </mat-form-field>
+        <div
+          *ngIf="
+            this.registerForm.controls.email.errors &&
+            this.registerForm.controls.email.touched
+          "
+          class="form-errors"
+        >
+          Emailul este obligatoriu.
+        </div>
         <mat-form-field>
           <span matPrefix
             ><mat-icon aria-hidden="false" aria-label="Example home icon"
@@ -33,11 +42,20 @@
           >
           <input
             matInput
-            placeholder="Nume"
+            placeholder="Nume*"
             type="text"
             formControlName="name"
           />
         </mat-form-field>
+        <div
+          *ngIf="
+            this.registerForm.controls.name.errors &&
+            this.registerForm.controls.name.touched
+          "
+          class="form-errors"
+        >
+          Numele este obligatoriu.
+        </div>
         <mat-form-field>
           <span matPrefix
             ><mat-icon aria-hidden="false" aria-label="Example home icon"
@@ -46,11 +64,20 @@
           >
           <input
             matInput
-            placeholder="Parola"
+            placeholder="Parola*"
             type="password"
             formControlName="password"
           />
         </mat-form-field>
+        <div
+          *ngIf="
+            this.registerForm.controls.password.errors &&
+            this.registerForm.controls.password.touched
+          "
+          class="form-errors"
+        >
+          Parola este obligatorie.
+        </div>
       </form>
 
       <a mat-stroked-button (click)="onRegister()">Salvare</a>
