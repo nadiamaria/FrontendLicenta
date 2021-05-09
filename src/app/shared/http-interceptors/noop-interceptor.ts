@@ -19,14 +19,13 @@ export class NoopInterceptor implements HttpInterceptor {
   public constructor(
     private cookieService: CookieService,
     private _snackBar: MatSnackBar
-  ) {
-    // console.log('noop');
-  }
+  ) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    console.log('why');
     let token = this.cookieService.get('authorization');
     const tokenLocal = `authorization=${token}`;
     req = req.clone({ headers: req.headers.set('Set-Cookie', tokenLocal) });
@@ -34,7 +33,6 @@ export class NoopInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
-          console.log(event.url);
           if (
             'http://localhost:3000/authentication/register' == event.url &&
             event.status == 201 &&
@@ -52,11 +50,7 @@ export class NoopInterceptor implements HttpInterceptor {
       }),
       retry(1),
       catchError((error: HttpErrorResponse) => {
-        console.log('etc');
-
         if (error.error instanceof ErrorEvent) {
-          console.log('etc');
-
           // client-side error or network error
         } else {
           // TODO: Clean up following by introducing method
@@ -74,7 +68,6 @@ export class NoopInterceptor implements HttpInterceptor {
               );
             if ('http://localhost:3000/authentication' == error.url) {
               this.openSnackBar('Sesiunea a expirat, logheaza-te din nou!');
-              console.log('mdea');
               this.cookieService.set('authorization', ' ');
             }
           }

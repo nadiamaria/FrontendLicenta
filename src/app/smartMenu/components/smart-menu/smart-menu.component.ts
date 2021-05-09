@@ -73,7 +73,6 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
       this.recipeId.dinnerId.push(this.sesionMenu[2]);
     }
     this.menu.subscribe((value) => {
-      console.log(value);
       if (value.category == 'mic dejun') this.breakfastRecipe = value.recipe;
       if (value.category == 'pranz') this.lunchRecipe = value.recipe;
       if (value.category == 'cina') this.dinnerRecipe = value.recipe;
@@ -168,7 +167,6 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         if (recipesArray.length == this.recipeId.breakfastIds.length)
           this.recipeId.breakfastIds = [];
         if (this.smartForm.value['kcal'] == '') {
-          console.log('buna');
           for (var element of recipesArray) {
             if (this.recipeId.breakfastIds.indexOf(element.id) == -1) {
               found = true;
@@ -281,7 +279,6 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         // random = Math.floor(Math.random() * recipesArray.length);
         if (this.smartForm.value['kcal'] == '') {
           for (var element of recipesArray) {
-            console.log(this.recipeId.dinnerId.indexOf(element.id));
             if (this.recipeId.dinnerId.indexOf(element.id) == -1) {
               found = true;
               this.recip.dinnerRecipe = {
@@ -339,7 +336,6 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
     this.recipesServices.getAllRecipes(null, category).subscribe((data) => {
       //trec prin toata data
       var recipe: menu;
-      debugger;
       for (var element of data) {
         if (element.id == id) {
           recipe = {

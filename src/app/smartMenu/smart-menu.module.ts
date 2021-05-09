@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { RandomKcalService } from '../shared/services/random-kcal.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { httpInterceptorProviders } from '../shared/http-interceptors';
 
 @NgModule({
   declarations: [SmartMenuComponent],
@@ -34,6 +35,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     RecipesService,
     RecipesResource,
     RandomKcalService,
+    httpInterceptorProviders,
   ],
 })
 export class SmartMenuModule {}

@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { httpInterceptorProviders } from '../shared/http-interceptors';
 
 @NgModule({
   declarations: [AddPageComponent],
@@ -34,6 +35,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSnackBarModule,
     MatProgressSpinnerModule,
   ],
-  providers: [AuthService, AuthResource, RecipesService, RecipesResource],
+  providers: [
+    AuthService,
+    AuthResource,
+    RecipesService,
+    RecipesResource,
+    httpInterceptorProviders,
+  ],
 })
 export class AddRecipeModule {}

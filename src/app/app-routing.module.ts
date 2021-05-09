@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './shared/services/auth.guard';
+import { RoleGuardGuard } from './shared/services/role-guard.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'account/login', pathMatch: 'full' },
@@ -33,6 +34,7 @@ const routes: Routes = [
     path: 'recipe',
     loadChildren: () =>
       import('./add-recipe/add-recipe.module').then((m) => m.AddRecipeModule),
+    canActivate: [RoleGuardGuard],
   },
 ];
 

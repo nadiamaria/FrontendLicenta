@@ -3,7 +3,7 @@
 
 .page {
 
-  height: 100vh;
+  // height: 100vh;
 
   &__content {
     @include display-flex(row, flex-start, flex-start, nowrap);

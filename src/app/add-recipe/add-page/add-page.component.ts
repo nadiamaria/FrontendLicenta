@@ -86,7 +86,6 @@ export class AddPageComponent implements OnInit {
     this.group['recipe_instruction'] = new FormControl('', Validators.required);
     this.group['recipe_kcal'] = new FormControl('', Validators.required);
     this.myRecipeGroup = new FormGroup(this.group);
-    console.log(this.myRecipeGroup.controls.recipe_name);
 
     this.ingredientsInput.subscribe(() => {
       this.nrIngredients.push(this.nr);
@@ -116,7 +115,6 @@ export class AddPageComponent implements OnInit {
 
   public async trySearch() {
     while (this.valueChangeRecipe <= 3) {
-      console.log('wtf');
       this.valueChangeRecipe++;
       await this.delay(1);
       if (this.valueChangeRecipe == 0) {
@@ -149,7 +147,6 @@ export class AddPageComponent implements OnInit {
         recipeTypeId: -1,
       };
       let indexId: number;
-      console.log(this.myRecipeGroup.value['recipe_name']);
       //daca am ingredient
       this.foundRecipe = '';
       this.searchRecipeExists();

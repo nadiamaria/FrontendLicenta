@@ -13,27 +13,30 @@
     border-radius: 16px;
     margin: 33px;
     padding: 15px;
-    max-width: 632px;
+    max-width: 280px;
+
     width: fit-content;
 
 
     @include respond(gt-xs) {
       width: fit-content;
-      max-width: 632px;
-      @include display-flex(row, center, center, wrap);
+      margin: 33px;
+      padding: 15px;
+      max-width: 564px;
+      @include display-flex(row, flex-start, center, wrap);
     }
 
     @include respond(gt-sm) {
       width: fit-content;
-      max-width: 947px;
-      @include display-flex(row, center, center, wrap);
+      max-width: 846px;
+      @include display-flex(row, flex-start, center, wrap);
     }
 
     @include respond(gt-md) {
       // width: 87%;
       width: fit-content;
-      max-width: 1250px;
-      @include display-flex(row, center, center, wrap);
+      max-width: 1128px;
+      @include display-flex(row, flex-start, center, wrap);
     }
   }
 

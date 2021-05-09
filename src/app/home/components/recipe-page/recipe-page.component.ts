@@ -48,11 +48,14 @@ export class RecipePageComponent implements OnInit {
 
   public async getRecipeById(id: number): Promise<void> {
     await this.recipesServices.getRecipeById(id).subscribe((data) => {
-      this.data = data;
-      if (this.authService.isAuth()) this.verifyFavorite();
-      else this.found = false;
-      this.getRecipeIngred(id);
-      console.log(this.recipeIngred);
+      if (data != null) {
+        this.data = data;
+        if (this.authService.isAuth()) this.verifyFavorite();
+        else this.found = false;
+        this.getRecipeIngred(id);
+      } else {
+        this.router.navigateByUrl('/recipes/home');
+      }
     });
     // return this.recipesServices.getRecipeById(id).pipe(
     //   take(1),
@@ -69,7 +72,6 @@ export class RecipePageComponent implements OnInit {
     this.recipeIngredientsService
       .findIngredientsByRecipe(id)
       .subscribe((data) => {
-        console.log(data);
         this.recipeIngred = data;
       });
   }

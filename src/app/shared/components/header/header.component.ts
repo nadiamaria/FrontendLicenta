@@ -10,6 +10,10 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../../data/AuthService';
 
 import { EventBusService } from '../../services/event-bus.service';
+import jwt_decode from 'jwt-decode';
+import { CookieService } from 'ngx-cookie-service';
+import { ThrowStmt } from '@angular/compiler';
+import { decode } from '../../data/dataModel/decodeDto';
 
 @Component({
   selector: 'app-header',
@@ -32,17 +36,32 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private auth: Subscription = new Subscription();
 
   public logedIn: boolean = false;
+  public showPlus: boolean = false;
 
   constructor(
     private eventBus: EventBusService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) {}
 
   ngOnInit(): void {
     if (this.authService.isAuth()) {
       this.logedIn = true;
       this.getAuth();
+    }
+
+    var token = this.cookieService.get('authorization');
+
+    if (token != null && token != '') {
+      var decoded: decode = jwt_decode(token);
+      if (decoded.role == 'admin') {
+        this.showPlus = true;
+      } else {
+        this.showPlus = false;
+      }
+    } else {
+      this.showPlus = false;
     }
 
     this.subscription.add(
@@ -78,11 +97,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subLogOut.unsubscribe();
   }
 
-  public getAuth(): void {
-    this.auth.add(
-      this.authService.auth().subscribe((x) => {
-        this.username = x.name;
-      })
-    );
+  public async getAuth(): Promise<void> {
+    var token = this.cookieService.get('authorization');
+    var decoded: decode = jwt_decode(token);
+    this.username = decoded.name;
+    // await this.auth.add(
+    //   this.authService.auth().subscribe((x) => {
+    //     console.log(x);
+    //     this.username = x.name;
+    //   })
+    // );
   }
 }
