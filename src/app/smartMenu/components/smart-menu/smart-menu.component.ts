@@ -52,7 +52,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
       id: -1,
     },
   };
-  public kcal: number = 0;
+  public kcal: number;
 
   public constructor(
     private recipesService: RecipesService,
@@ -61,6 +61,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
+    this.kcal = 0;
     //caut daca avem ceva pe sesiune pentru a le afisa
     this.getSession();
     if (this.sesionMenu) {
