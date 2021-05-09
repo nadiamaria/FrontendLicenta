@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { RecipeItem } from 'src/app/shared/data/dataModel/recipeItem';
 import { RecipesService } from 'src/app/shared/data/RecipesService';
@@ -51,28 +52,27 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
       id: -1,
     },
   };
-  public kcal: number = -1;
+  public kcal: number = 0;
 
   public constructor(
     private recipesService: RecipesService,
-    private recipesServices: RecipesService
+    private recipesServices: RecipesService,
+    private _snackBar: MatSnackBar
   ) {}
 
   public ngOnInit(): void {
+    //caut daca avem ceva pe sesiune pentru a le afisa
     this.getSession();
-    if (this.sesionMenu[0] != '-1') {
+    if (this.sesionMenu) {
       this.getRecipeById(this.sesionMenu[0], 'mic dejun');
       this.recipeId.breakfastIds.push(this.sesionMenu[0]);
       this.getRecipeById(this.sesionMenu[1], 'pranz');
       this.recipeId.lunchId.push(this.sesionMenu[1]);
       this.getRecipeById(this.sesionMenu[2], 'cina');
       this.recipeId.dinnerId.push(this.sesionMenu[2]);
-    } else {
-      // this.getRecipes('mic dejun');
-      // this.getRecipes('pranz');
-      // this.getRecipes('cina');
     }
     this.menu.subscribe((value) => {
+      console.log(value);
       if (value.category == 'mic dejun') this.breakfastRecipe = value.recipe;
       if (value.category == 'pranz') this.lunchRecipe = value.recipe;
       if (value.category == 'cina') this.dinnerRecipe = value.recipe;
@@ -81,126 +81,329 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
 
   public getRecipes(data: string): void {
     let recipesArray: RecipeItem[];
-    if (this.smartForm.value['kcal'] == null) {
-      this.recipesService.getAllRecipes(null, data).subscribe((recipes) => {
-        if (data == 'mic dejun') {
-          //aduc retetele de tip mic de jun care sunt mereu in acceasi ordine
-          recipesArray = recipes;
-          //verific daca sa umplut assay-ul cu id-uri de retete, daca sa umplut, il golesc
-          if (recipesArray.length == this.recipeId.breakfastIds.length)
-            this.recipeId.breakfastIds = [];
-          //setez random initial
-          let random = -1;
-          //fac random number cu arrayurile din recipe array
-          random = Math.floor(Math.random() * recipesArray.length);
-          while (this.recipeId.breakfastIds.indexOf(random) !== -1) {
-            random = Math.floor(Math.random() * recipesArray.length);
+    this.recipesService.getAllRecipes(null, data).subscribe((recipes) => {
+      // if (data == 'mic dejun') {
+      //   //aduc retetele de tip mic de jun care sunt mereu in acceasi ordine
+      //   recipesArray = this.shuffle(recipes);
+      //   //verific daca sa umplut assay-ul cu id-uri de retete, daca sa umplut, il golesc
+      //   if (recipesArray.length == this.recipeId.breakfastIds.length)
+      //     this.recipeId.breakfastIds = [];
+      //   //setez random initial
+      //   let random = -1;
+      //   //fac random number cu arrayurile din recipe array
+      //   random = Math.floor(Math.random() * recipesArray.length);
+      //   //atata timp cat exista id-ul reteti de pe pozitia respectiva, caut alt numar
+      //   while (
+      //     this.recipeId.breakfastIds.indexOf(recipesArray[random].id) !== -1
+      //   ) {
+      //     random = Math.floor(Math.random() * recipesArray.length);
+      //   }
+      //   //dau push la id
+      //   this.recipeId.breakfastIds.push(recipesArray[random].id);
+      //   const recipe: menu = {
+      //     recipe: recipesArray[random],
+      //     category: data,
+      //   };
+      //   //iau reteta de la id-ul respectiv
+      //   // this.recip.breakfastRecipe = {
+      //   //   recipe: recipesArray[random],
+      //   //   category: data,
+      //   //   id: recipesArray[random].id,
+      //   // };
+      //   this.kcal += recipesArray[random].kcal;
+      //   console.log(recipe);
+      //   this.menu.next(recipe);
+      //   this.sesionMenu[0] = recipesArray[random].id;
+      // }
+      // if (data == 'mic dejun') {
+      //   //aduc retetele de tip mic de jun care sunt mereu in acceasi ordine
+      //   recipesArray = recipes;
+      //   //verific daca sa umplut assay-ul cu id-uri de retete, daca sa umplut, il golesc
+      //   if (recipesArray.length == this.recipeId.breakfastIds.length)
+      //     this.recipeId.breakfastIds = [];
+      //   //setez random initial
+      //   let random = -1;
+      //   //fac random number cu arrayurile din recipe array
+      //   random = Math.floor(Math.random() * recipesArray.length);
+      //   while (this.recipeId.breakfastIds.indexOf(random) !== -1) {
+      //     random = Math.floor(Math.random() * recipesArray.length);
+      //   }
+      //   //dau push la id
+      //   this.recipeId.breakfastIds.push(random);
+      //   //iau reteta de la id-ul respectiv
+      //   const recipe: menu = {
+      //     recipe: recipesArray[random],
+      //     category: data,
+      //   };
+      //   this.kcal += recipe.recipe.kcal;
+      //   this.menu.next(recipe);
+      //   this.sesionMenu[0] = random;
+      // }
+      // if (data == 'pranz') {
+      //   recipesArray = this.shuffle(recipes);
+      //   if (recipesArray.length == this.recipeId.lunchId.length)
+      //     this.recipeId.lunchId = [];
+      //   let random = -1;
+      //   random = Math.floor(Math.random() * recipesArray.length);
+      //   while (this.recipeId.lunchId.indexOf(recipesArray[random].id) !== -1) {
+      //     random = Math.floor(Math.random() * recipesArray.length);
+      //   }
+      //   this.recipeId.lunchId.push(recipesArray[random].id);
+
+      //   this.recip.lunchRecipe = {
+      //     recipe: recipesArray[random],
+      //     category: data,
+      //     id: recipesArray[random].id,
+      //   };
+      //   this.kcal += recipesArray[random].kcal;
+      //   this.menu.next(this.recip.lunchRecipe);
+      //   this.sesionMenu[1] = recipesArray[random].id;
+      // }
+      var i = 0;
+      var found = false;
+      var times = 0;
+      recipesArray = this.shuffle(recipes);
+      if (data == 'mic dejun') {
+        if (recipesArray.length == this.recipeId.breakfastIds.length)
+          this.recipeId.breakfastIds = [];
+        if (this.smartForm.value['kcal'] == '') {
+          console.log('buna');
+          for (var element of recipesArray) {
+            if (this.recipeId.breakfastIds.indexOf(element.id) == -1) {
+              found = true;
+              this.recip.breakfastRecipe = {
+                recipe: element,
+                category: data,
+                id: element.id,
+              };
+              break;
+            }
           }
-          //dau push la id
-          this.recipeId.breakfastIds.push(random);
-          //iau reteta de la id-ul respectiv
-          const recipe: menu = {
-            recipe: recipesArray[random],
-            category: data,
-          };
-          this.kcal += recipe.recipe.kcal;
-          this.menu.next(recipe);
-          this.sesionMenu[0] = random;
-        }
-        if (data == 'pranz') {
-          recipesArray = recipes;
-          if (recipesArray.length == this.recipeId.lunchId.length)
-            this.recipeId.lunchId = [];
-          let random = -1;
-          random = Math.floor(Math.random() * recipesArray.length);
-          while (this.recipeId.lunchId.indexOf(random) !== -1) {
-            random = Math.floor(Math.random() * recipesArray.length);
+        } else
+          while (!found && times != 2) {
+            //verific daca arrayul de id-uri folosite era gold deja ca nu faca de 2 ori iteratia
+            for (var element of recipesArray) {
+              if (
+                this.recipeId.breakfastIds.indexOf(element.id) == -1 &&
+                this.kcal + element.kcal >=
+                  this.smartForm.value['kcal'] - 300 &&
+                this.kcal + element.kcal <= this.smartForm.value['kcal']
+              ) {
+                found = true;
+                this.recip.breakfastRecipe = {
+                  recipe: element,
+                  category: data,
+                  id: element.id,
+                };
+                break;
+              }
+              if (recipesArray[recipesArray.length - 1] == element && !found) {
+                this.recipeId.breakfastIds = [];
+                times += 1;
+              }
+            }
           }
-          this.recipeId.lunchId.push(random);
-          const recipe: menu = {
-            recipe: recipesArray[random],
-            category: data,
-          };
-          this.kcal += recipe.recipe.kcal;
-          this.menu.next(recipe);
-          this.sesionMenu[1] = random;
+
+        //cleanup
+        if (found == true) {
+          this.recipeId.breakfastIds.push(this.recip.breakfastRecipe.id);
+
+          this.kcal += this.recip.breakfastRecipe.recipe.kcal;
+          this.menu.next(this.recip.breakfastRecipe);
+          this.sesionMenu[0] = this.recip.breakfastRecipe.recipe.id;
+        } else {
+          this.openSnackBar(
+            'Nu sa putut gasi reteta pentru acest numar de calorii!1'
+          );
         }
-        if (data == 'cina') {
-          recipesArray = recipes;
-          if (recipesArray.length == this.recipeId.dinnerId.length)
-            this.recipeId.dinnerId = [];
-          let random = -1;
-          random = Math.floor(Math.random() * recipesArray.length);
-          while (this.recipeId.dinnerId.indexOf(random) !== -1) {
-            random = Math.floor(Math.random() * recipesArray.length);
+      }
+      if (data == 'pranz') {
+        if (recipesArray.length == this.recipeId.lunchId.length)
+          this.recipeId.lunchId = [];
+        // let random = -1;
+        // random = Math.floor(Math.random() * recipesArray.length);
+        if (this.smartForm.value['kcal'] == '') {
+          for (var element of recipesArray) {
+            if (this.recipeId.lunchId.indexOf(element.id) == -1) {
+              var found = true;
+              this.recip.lunchRecipe = {
+                recipe: element,
+                category: data,
+                id: element.id,
+              };
+              break;
+            }
           }
-          this.recipeId.dinnerId.push(random);
-          const recipe: menu = {
-            recipe: recipesArray[random],
-            category: data,
-          };
-          this.kcal += recipe.recipe.kcal;
-          this.menu.next(recipe);
-          this.sesionMenu[2] = random;
+        } else
+          while (!found && times != 2) {
+            //verific daca arrayul de id-uri folosite era gold deja ca nu faca de 2 ori iteratia
+
+            for (var element of recipesArray) {
+              if (
+                this.recipeId.lunchId.indexOf(element.id) == -1 &&
+                this.kcal + element.kcal >=
+                  this.smartForm.value['kcal'] - 300 &&
+                this.kcal + element.kcal <= this.smartForm.value['kcal']
+              ) {
+                found = true;
+                this.recip.lunchRecipe = {
+                  recipe: element,
+                  category: data,
+                  id: element.id,
+                };
+                break;
+              }
+              if (recipesArray[recipesArray.length - 1] == element && !found) {
+                this.recipeId.lunchId = [];
+                times += 1;
+              }
+            }
+          }
+
+        //cleanup
+        if (found == true) {
+          this.recipeId.dinnerId.push(this.recip.lunchRecipe.id);
+
+          this.kcal += this.recip.lunchRecipe.recipe.kcal;
+          this.menu.next(this.recip.lunchRecipe);
+          this.sesionMenu[1] = this.recip.lunchRecipe.recipe.id;
+        } else {
+          this.openSnackBar(
+            'Nu sa putut gasi reteta pentru acest numar de calorii!2'
+          );
         }
-        this.setSession();
-      });
-    } else {
-    }
+      }
+      if (data == 'cina') {
+        if (recipesArray.length == this.recipeId.dinnerId.length)
+          this.recipeId.dinnerId = [];
+        // let random = -1;
+        // random = Math.floor(Math.random() * recipesArray.length);
+        if (this.smartForm.value['kcal'] == '') {
+          for (var element of recipesArray) {
+            console.log(this.recipeId.dinnerId.indexOf(element.id));
+            if (this.recipeId.dinnerId.indexOf(element.id) == -1) {
+              found = true;
+              this.recip.dinnerRecipe = {
+                recipe: element,
+                category: data,
+                id: element.id,
+              };
+              break;
+            }
+          }
+        } else
+          while (!found && times != 2) {
+            //verific daca arrayul de id-uri folosite era gold deja ca nu faca de 2 ori iteratia
+
+            for (var element of recipesArray) {
+              if (
+                this.recipeId.dinnerId.indexOf(element.id) == -1 &&
+                this.kcal + element.kcal >=
+                  this.smartForm.value['kcal'] - 300 &&
+                this.kcal + element.kcal <= this.smartForm.value['kcal']
+              ) {
+                found = true;
+                this.recip.dinnerRecipe = {
+                  recipe: element,
+                  category: data,
+                  id: element.id,
+                };
+                break;
+              }
+              if (recipesArray[recipesArray.length - 1] == element && !found) {
+                this.recipeId.dinnerId = [];
+                times += 1;
+              }
+            }
+          }
+
+        //cleanup
+        if (found == true) {
+          this.recipeId.dinnerId.push(this.recip.dinnerRecipe.id);
+
+          this.kcal += this.recip.dinnerRecipe.recipe.kcal;
+          this.menu.next(this.recip.dinnerRecipe);
+          this.sesionMenu[2] = this.recip.dinnerRecipe.recipe.id;
+        } else {
+          this.openSnackBar(
+            'Nu sa putut gasi reteta pentru acest numar de calorii!3'
+          );
+        }
+      }
+      this.setSession();
+    });
   }
 
   public getRecipeById(id, category): void {
     this.recipesServices.getAllRecipes(null, category).subscribe((data) => {
-      const recipe: menu = {
-        recipe: data[id],
-        category: category,
-      };
+      //trec prin toata data
+      var recipe: menu;
+      debugger;
+      for (var element of data) {
+        if (element.id == id) {
+          recipe = {
+            recipe: element,
+            category: category,
+          };
+          this.kcal = this.kcal + element.kcal;
+        }
+      }
       this.menu.next(recipe);
     });
   }
 
   public async resetMenu(): Promise<void> {
-    this.buttonPressed = true;
-    if (this.smartForm.value['kcal'] == null) {
-      this.kcal = 0;
-      console.log('clasic');
+    this.kcal = 0;
+    if (this.smartForm.value['kcal'] == '') {
+      this.buttonPressed = true;
       this.getRecipes('mic dejun');
       this.getRecipes('pranz');
       this.getRecipes('cina');
+    } else if (
+      this.smartForm.value['kcal'] < 500 &&
+      this.smartForm.value['kcal'] != ''
+    ) {
+      this.openSnackBar(
+        'Introduceti va rog valoare pentru calorii intre 500 si 3000.'
+      );
     } else {
-      console.log('kcal');
-      console.log(this.smartForm.value['kcal']);
+      this.buttonPressed = true;
       await this.getAllRecipes();
       this.getAllRandom(this.smartForm.value['kcal']);
-      console.log(this.recip.breakfastRecipe.recipe);
       const recipe: menu = {
         recipe: this.recip.breakfastRecipe.recipe,
         category: this.recip.breakfastRecipe.category,
       };
+      this.sesionMenu[0] = recipe.recipe.id;
       this.menu.next(recipe);
       const recipe2: menu = {
         recipe: this.recip.lunchRecipe.recipe,
         category: this.recip.lunchRecipe.category,
       };
+      this.sesionMenu[1] = recipe2.recipe.id;
       this.menu.next(recipe2);
       const recipe3: menu = {
         recipe: this.recip.dinnerRecipe.recipe,
         category: this.recip.dinnerRecipe.category,
       };
+      this.sesionMenu[2] = recipe3.recipe.id;
       this.menu.next(recipe3);
-      debugger;
     }
   }
 
   public resetBreakfast(): void {
+    debugger;
+    this.kcal = this.kcal - this.breakfastRecipe.kcal;
     this.getRecipes('mic dejun');
   }
 
   public resetLunch(): void {
+    this.kcal = this.kcal - this.lunchRecipe.kcal;
     this.getRecipes('pranz');
   }
 
   public resetDinner(): void {
+    this.kcal = this.kcal - this.dinnerRecipe.kcal;
     this.getRecipes('cina');
   }
 
@@ -235,72 +438,70 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
     await this.delay(0.5);
   }
 
-  public getRandomRecipe(data: string) {
-    if (data == 'mic dejun') {
-      if (
-        this.fullRecipes.breakfastRecipes.length ==
-        this.recipeId.breakfastIds.length
-      )
-        this.recipeId.breakfastIds = [];
-      let random = -1;
-      random = Math.floor(
-        Math.random() * this.fullRecipes.breakfastRecipes.length
-      );
-      while (this.recipeId.breakfastIds.indexOf(random) !== -1) {
-        random = Math.floor(
-          Math.random() * this.fullRecipes.breakfastRecipes.length
-        );
-      }
-      this.recipeId.breakfastIds.push(random);
-      this.recip.breakfastRecipe = {
-        recipe: this.fullRecipes.breakfastRecipes[random],
-        category: data,
-        id: random,
-      };
-    }
-    if (data == 'pranz') {
-      if (this.fullRecipes.lunchRecipes.length == this.recipeId.lunchId.length)
-        this.recipeId.lunchId = [];
-      let random = -1;
-      random = Math.floor(Math.random() * this.fullRecipes.lunchRecipes.length);
-      while (this.recipeId.lunchId.indexOf(random) !== -1) {
-        random = Math.floor(
-          Math.random() * this.fullRecipes.lunchRecipes.length
-        );
-      }
-      this.recipeId.lunchId.push(random);
-      this.recip.lunchRecipe = {
-        recipe: this.fullRecipes.lunchRecipes[random],
-        category: data,
-        id: random,
-      };
-    }
-    if (data == 'cina') {
-      if (
-        this.fullRecipes.dinnerRecipes.length == this.recipeId.dinnerId.length
-      )
-        this.recipeId.dinnerId = [];
-      let random = -1;
-      random = Math.floor(
-        Math.random() * this.fullRecipes.dinnerRecipes.length
-      );
-      while (this.recipeId.dinnerId.indexOf(random) !== -1) {
-        random = Math.floor(
-          Math.random() * this.fullRecipes.dinnerRecipes.length
-        );
-      }
-      this.recipeId.dinnerId.push(random);
-      this.recip.dinnerRecipe = {
-        recipe: this.fullRecipes.breakfastRecipes[random],
-        category: data,
-        id: random,
-      };
-    }
-  }
+  // public getRandomRecipe(data: string) {
+  //   if (data == 'mic dejun') {
+  //     if (
+  //       this.fullRecipes.breakfastRecipes.length ==
+  //       this.recipeId.breakfastIds.length
+  //     )
+  //       this.recipeId.breakfastIds = [];
+  //     let random = -1;
+  //     random = Math.floor(
+  //       Math.random() * this.fullRecipes.breakfastRecipes.length
+  //     );
+  //     while (this.recipeId.breakfastIds.indexOf(random) !== -1) {
+  //       random = Math.floor(
+  //         Math.random() * this.fullRecipes.breakfastRecipes.length
+  //       );
+  //     }
+  //     this.recipeId.breakfastIds.push(random);
+  //     this.recip.breakfastRecipe = {
+  //       recipe: this.fullRecipes.breakfastRecipes[random],
+  //       category: data,
+  //       id: random,
+  //     };
+  //   }
+  //   if (data == 'pranz') {
+  //     if (this.fullRecipes.lunchRecipes.length == this.recipeId.lunchId.length)
+  //       this.recipeId.lunchId = [];
+  //     let random = -1;
+  //     random = Math.floor(Math.random() * this.fullRecipes.lunchRecipes.length);
+  //     while (this.recipeId.lunchId.indexOf(random) !== -1) {
+  //       random = Math.floor(
+  //         Math.random() * this.fullRecipes.lunchRecipes.length
+  //       );
+  //     }
+  //     this.recipeId.lunchId.push(random);
+  //     this.recip.lunchRecipe = {
+  //       recipe: this.fullRecipes.lunchRecipes[random],
+  //       category: data,
+  //       id: random,
+  //     };
+  //   }
+  //   if (data == 'cina') {
+  //     if (
+  //       this.fullRecipes.dinnerRecipes.length == this.recipeId.dinnerId.length
+  //     )
+  //       this.recipeId.dinnerId = [];
+  //     let random = -1;
+  //     random = Math.floor(
+  //       Math.random() * this.fullRecipes.dinnerRecipes.length
+  //     );
+  //     while (this.recipeId.dinnerId.indexOf(random) !== -1) {
+  //       random = Math.floor(
+  //         Math.random() * this.fullRecipes.dinnerRecipes.length
+  //       );
+  //     }
+  //     this.recipeId.dinnerId.push(random);
+  //     this.recip.dinnerRecipe = {
+  //       recipe: this.fullRecipes.breakfastRecipes[random],
+  //       category: data,
+  //       id: random,
+  //     };
+  //   }
+  // }
 
   public getAllRandom(formKcal: number) {
-    console.log(this.fullRecipes);
-
     var found = false;
     this.kcal = 0;
     const shuffledBreakfast = this.shuffle(this.fullRecipes.breakfastRecipes);
@@ -316,7 +517,6 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
       this.recipeId.lunchId = [];
     if (this.recipeId.dinnerId.length == this.fullRecipes.dinnerRecipes.length)
       this.recipeId.dinnerId = [];
-    // debugger;
     //nu merge return sa iasa din functie, oare trebuie cu for?
     // shuffledBreakfast.forEach((element) => {
     for (var element of shuffledBreakfast) {
@@ -399,6 +599,12 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.setSession();
+  }
+
+  public openSnackBar(message: string) {
+    this._snackBar.open(message, 'Close', {
+      duration: 10000,
+    });
   }
 }
 

@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { RandomKcalService } from '../shared/services/random-kcal.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [SmartMenuComponent],
@@ -25,6 +26,7 @@ import { RandomKcalService } from '../shared/services/random-kcal.service';
     MatButtonModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatSnackBarModule,
   ],
   providers: [
     AuthService,

@@ -6,11 +6,16 @@
     <form [formGroup]="smartForm" class="form">
       Calorii:
       <input
+        class="kcal"
         id="myNumber"
-        type="text"
+        type="number"
         formControlName="kcal"
         maxlength="4"
-        [placeholder]="'500'"
+        [placeholder]="'####'"
+        autocomplete="off"
+        max="3000"
+        min="500"
+        step="100"
       />
       <div class="info">Please enter between 500 and 3000 calories.</div>
       <div>Total calorii ale smart meniului generat: {{ this.kcal }}</div>
