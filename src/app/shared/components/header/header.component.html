@@ -28,6 +28,11 @@
       Hello, {{ this.username }}!
     </div>
     <div class="header__icons-cart" *ngIf="this.showPlus">
+      <a mat-icon-button routerLink="/panel/users" routerLinkActive="active">
+        <mat-icon class="header__icons-icon">supervised_user_circle</mat-icon>
+      </a>
+    </div>
+    <div class="header__icons-cart" *ngIf="this.showPlus">
       <a mat-icon-button routerLink="/recipe/add" routerLinkActive="active">
         <mat-icon class="header__icons-icon">add</mat-icon>
       </a>

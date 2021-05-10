@@ -36,6 +36,12 @@ const routes: Routes = [
       import('./add-recipe/add-recipe.module').then((m) => m.AddRecipeModule),
     canActivate: [RoleGuardGuard],
   },
+  {
+    path: 'panel',
+    loadChildren: () =>
+      import('./admin-page/admin-page.module').then((m) => m.AdminPageModule),
+    canActivate: [RoleGuardGuard],
+  },
 ];
 
 @NgModule({

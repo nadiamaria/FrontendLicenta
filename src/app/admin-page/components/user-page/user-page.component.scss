@@ -1,0 +1,29 @@
+@import '~src/app/stylesheets/mixins';
+
+.page {
+  @include display-flex(column, flex-start, center, nowrap);
+  background-color: #F4F4F4;
+  width: 100%;
+  height: auto;
+
+  &__card {
+    // background-color: white;
+    // border: 3px solid #ebebeb;
+    border-radius: 10px;
+    margin: 33px;
+    width: 50%;
+    padding: 32px;
+
+    .mat-table {
+      width: 100%;
+    }
+
+    .role {
+      background-color: #996042;
+    color: white;
+    width: fit-content;
+    padding: 4px 5px;
+    border-radius: 5px;
+    }
+
+  }}
