@@ -135,14 +135,29 @@ mat-radio-group {
   }
 }
 
+.input-recipe-name {
+position: relative;
+}
+
 mat-spinner {
+  // position: absolute;
+  // margin-top: 8px;
+  // right: 26%;
+  // top: 22%;
+  // float: right;
+  width: 20px;
   position: absolute;
-  margin-top: 8px;
-  right: 26%;
-  top: 22%;
+  top: 7px;
+  height: 20px;
+  right: 3%;
 }
 
 .form-errors {
   padding-top: 8px;
   color: red;
+}
+
+.close-button {
+  align-self: flex-end;
+  padding-bottom: 7px;
 }

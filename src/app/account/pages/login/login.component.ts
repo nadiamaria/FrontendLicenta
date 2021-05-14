@@ -14,8 +14,8 @@ export class LoginComponent implements OnDestroy {
   private subscription: Subscription = new Subscription();
 
   public loginForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
+    email: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
   });
 
   constructor(
@@ -25,6 +25,12 @@ export class LoginComponent implements OnDestroy {
   ) {}
 
   public onLogin() {
+    Object.keys(this.loginForm.controls).forEach((field) => {
+      // {1}
+      const control = this.loginForm.get(field); // {2}
+      control.markAsTouched({ onlySelf: true }); // {3}
+    });
+    if (this.loginForm.status != 'INVALID') {
     this.eventBus.emit({ name: 'auth', value: 'Loged in successfully!' });
     this.eventBus.emit({ name: 'logIn', value: true }); //nu merge?
     this.subscription.add(
@@ -34,6 +40,7 @@ export class LoginComponent implements OnDestroy {
         // localStorage.setItem('token', x.token);
       })
     );
+    }
   }
 
   public ngOnDestroy(): void {

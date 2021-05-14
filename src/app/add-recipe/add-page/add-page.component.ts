@@ -129,6 +129,19 @@ export class AddPageComponent implements OnInit {
     this.ingredientsInput.next();
   }
 
+  public ingredientsClose(form: any) {
+    console.log(form);
+    this.myRecipeGroup.removeControl('ingredient_name' + form);
+    this.myRecipeGroup.removeControl('ingredient_cantity' + form);
+    this.myRecipeGroup.removeControl('ingredient_unit' + form);
+
+    // this.nrIngredients.slice(this.nrIngredients.indexOf('ingredient_name' + form),this.nrIngredients.indexOf('ingredient_name' + form)+1);
+    this.nrIngredients.splice(this.nrIngredients.indexOf(form),1)
+    console.log(this.nrIngredients);
+    console.log(this.myRecipeGroup.controls);
+  }
+
+
   public async sendJson() {
     Object.keys(this.myRecipeGroup.controls).forEach((field) => {
       // {1}
@@ -243,7 +256,7 @@ export class AddPageComponent implements OnInit {
     this.recipesService.getAllRecipes(null, null).subscribe((recipes) => {
       this.foundRecipe = 'notFound';
       for (let recipe of recipes)
-        if (recipe.name === this.myRecipeGroup.value['recipe_name'])
+        if (recipe.name.toLowerCase() === this.myRecipeGroup.value['recipe_name'].toLowerCase())
           this.foundRecipe = 'found';
       if (this.foundRecipe !== 'found') this.foundRecipe = 'notFound';
     });

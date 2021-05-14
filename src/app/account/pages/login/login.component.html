@@ -27,6 +27,15 @@
             formControlName="email"
           />
         </mat-form-field>
+        <div
+        *ngIf="
+          this.loginForm.controls.email.errors &&
+          this.loginForm.controls.email.touched
+        "
+        class="form-errors"
+      >
+        Emailul este obligatoriu.
+      </div>
         <mat-form-field>
           <span matPrefix
             ><mat-icon aria-hidden="false" aria-label="Example home icon"
@@ -40,6 +49,15 @@
             formControlName="password"
           />
         </mat-form-field>
+        <div
+        *ngIf="
+          this.loginForm.controls.password.errors &&
+          this.loginForm.controls.password.touched
+        "
+        class="form-errors"
+      >
+        Parola este obligatorie.
+      </div>
       </form>
 
       <a mat-stroked-button (click)="onLogin()">Conectare</a>

@@ -15,7 +15,7 @@
           <span class="mandatory-field">*</span></label
         >
         <div class="input-container-specif">
-          <div>
+          <div class="input-recipe-name">
             <input
               name="name"
               type="text"
@@ -29,7 +29,7 @@
             <mat-spinner
               diameter="20"
               *ngIf="this.valueChangeRecipe != 0 && this.valueChangeRecipe != 4"
-            ></mat-spinner>
+              ></mat-spinner>
           </div>
           <div
             *ngIf="
@@ -253,6 +253,8 @@
             />
           </div>
         </div>
+        <a mat-icon-button class="close-button">
+        <mat-icon (click)="ingredientsClose(ingredient)">close</mat-icon></a>
       </div>
       <!-- <div
         *ngIf="

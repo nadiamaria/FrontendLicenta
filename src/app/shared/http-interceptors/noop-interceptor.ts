@@ -21,6 +21,8 @@ export class NoopInterceptor implements HttpInterceptor {
     private _snackBar: MatSnackBar
   ) {}
 
+  public number: number = 0;
+
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -39,12 +41,14 @@ export class NoopInterceptor implements HttpInterceptor {
             event.statusText == 'Created'
           )
             this.openSnackBar('Utilizator inregistrat cu succes! :)');
-          // if (
-          //   ('http://localhost:3000/authentication/log-in' == event.url &&
-          //     event.status == 200,
-          //   event.statusText == 'OK')
-          // )
-          //   this.openSnackBar('Te-ai logat cu succes! Spor la gatit! :)');
+          if ('http://localhost:3000/authentication/log-in' === event.url && event.status == 200
+            &&   event.statusText == 'OK'
+          )
+          {
+            this.openSnackBar('Te-ai logat cu succes! Spor la gatit! :)');
+            console.log(event.url);
+        }
+
         }
         return event;
       }),
@@ -72,7 +76,9 @@ export class NoopInterceptor implements HttpInterceptor {
             }
           }
           if (error.status === 401) {
-            // TODO: Permission denied; show toast
+            if('http://localhost:3000/authentication/log-in' == error.url)
+            this.openSnackBar('Parola sau email gresit. Incearca din nou.');
+            else
             this.openSnackBar('Sesiune expirata, logheaza-te din nou!');
           }
         }
