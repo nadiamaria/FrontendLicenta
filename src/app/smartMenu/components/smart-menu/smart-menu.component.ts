@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject, Subscription } from 'rxjs';
 import { RecipeItem } from 'src/app/shared/data/dataModel/recipeItem';
 import { RecipesService } from 'src/app/shared/data/RecipesService';
+import { EventBusService } from 'src/app/shared/services/event-bus.service';
 import { RandomKcalService } from 'src/app/shared/services/random-kcal.service';
 import { EventBusService } from 'src/app/shared/services/event-bus.service';
 
@@ -30,6 +31,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
   public lunchRecipe: RecipeItem;
   public dinnerRecipe: RecipeItem;
   public buttonPressed: boolean = false;
+  private subscription: Subscription = new Subscription();
 
   //GetRandomKcal
   public fullRecipes = {
@@ -83,6 +85,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
       if (value.category == 'cina') this.dinnerRecipe = value.recipe;
     });
 
+<<<<<<< HEAD
     this.subscriptionButton.add(
       this.eventBus.on('recipe').subscribe((value) => {
         // this.getSession();
@@ -90,6 +93,13 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         if (value.category == 'mic dejun') this.breakfastRecipe = value.recipe;
         if (value.category == 'pranz') this.lunchRecipe = value.recipe;
         if (value.category == 'cina') this.dinnerRecipe = value.recipe;
+=======
+    this.subscription.add(
+      this.eventBus.on('RecipeEvent').subscribe((data) => {
+        if (data.category == 'mic dejun') this.breakfastRecipe = data.recipe;
+        if (data.category == 'pranz') this.lunchRecipe = data.recipe;
+        if (data.category == 'cina') this.dinnerRecipe = data.recipe;
+>>>>>>> 380cbd3dbe57b32a16c6bda118f209c66e2bbf7c
       })
     );
   }
@@ -222,8 +232,17 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         if (found == true) {
           this.recipeId.breakfastIds.push(this.recip.breakfastRecipe.id);
           this.kcal += this.recip.breakfastRecipe.recipe.kcal;
+<<<<<<< HEAD
           if(this.smartForm.value['kcal'] == '')
           this.eventBus.emit({ name: 'recipe', value: this.recip.breakfastRecipe});
+=======
+          if (this.sesionMenu[0] == -1) {
+            this.eventBus.emit({
+              name: 'RecipeEvent',
+              value: this.recip.breakfastRecipe,
+            });
+          }
+>>>>>>> 380cbd3dbe57b32a16c6bda118f209c66e2bbf7c
           this.menu.next(this.recip.breakfastRecipe);
           this.sesionMenu[0] = this.recip.breakfastRecipe.recipe.id;
         } else {
@@ -336,10 +355,20 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         //cleanup
         if (found == true) {
           this.recipeId.dinnerId.push(this.recip.dinnerRecipe.id);
+<<<<<<< HEAD
           console.log(this.recip.dinnerRecipe);
           this.kcal += this.recip.dinnerRecipe.recipe.kcal;
           if(this.smartForm.value['kcal'] == '')
           this.eventBus.emit({ name: 'recipe', value: this.recip.dinnerRecipe});
+=======
+          this.kcal += this.recip.dinnerRecipe.recipe.kcal;
+          if (this.sesionMenu[2] == -1) {
+            this.eventBus.emit({
+              name: 'RecipeEvent',
+              value: this.recip.dinnerRecipe,
+            });
+          }
+>>>>>>> 380cbd3dbe57b32a16c6bda118f209c66e2bbf7c
           this.menu.next(this.recip.dinnerRecipe);
           this.sesionMenu[2] = this.recip.dinnerRecipe.recipe.id;
         } else {
