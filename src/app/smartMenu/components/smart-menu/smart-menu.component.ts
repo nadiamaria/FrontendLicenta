@@ -322,8 +322,8 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
   }
 
   public async resetMenu(): Promise<void> {
-    this.kcal = 0;
     if (this.smartForm.value['kcal'] == '' || this.smartForm.value['kcal'] == null || this.smartForm.value['kcal'] == 0 || this.smartForm.value['kcal'] == ' ') {
+      this.kcal = 0;
       this.buttonPressed = true;
       this.getRecipes('mic dejun');
       this.getRecipes('pranz');
@@ -408,10 +408,26 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
 
   //functie pentru aducerea retetelor in functie de kcal
   public getAllRandom(formKcal: number) {
-    var provKcal = this.kcal;
+    var temporarRecip: recipes = {
+      breakfastRecipe: {
+        recipe: null,
+        category: ' ',
+        id: -1,
+      },
+      lunchRecipe: {
+        recipe: null,
+        category: ' ',
+        id: -1,
+      },
+      dinnerRecipe: {
+        recipe: null,
+        category: ' ',
+        id: -1,
+      },
+    };
     //initial nu am retete gasite
     var found = false;
-    this.kcal = 0;
+    var provKcal = 0;
     //fac shuffle la retete
     const shuffledBreakfast = this.shuffle(this.fullRecipes.breakfastRecipes);
     const shuffledLunch = this.shuffle(this.fullRecipes.lunchRecipes);
@@ -432,9 +448,9 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
     for (var element of shuffledBreakfast) {
       if (found == true) break;
       if (this.recipeId.breakfastIds.indexOf(element.id) == -1) {
-        this.kcal = 0;
-        this.kcal += element.kcal;
-        this.recip.breakfastRecipe = {
+        provKcal = 0;
+        provKcal += element.kcal;
+        temporarRecip.breakfastRecipe = {
           recipe: element,
           category: 'mic dejun',
           id: element.id,
@@ -443,9 +459,9 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
           if (found == true) break;
           if (this.recipeId.lunchId.indexOf(element.id) == -1) {
             if(shuffledLunch[shuffledLunch.indexOf(element)-1])
-            this.kcal -= shuffledLunch[shuffledLunch.indexOf(element)-1]
-            this.kcal += element.kcal;
-            this.recip.lunchRecipe = {
+            provKcal -= shuffledLunch[shuffledLunch.indexOf(element)-1]
+            provKcal += element.kcal;
+            temporarRecip.lunchRecipe = {
               recipe: element,
               category: 'pranz',
               id: element.id,
@@ -453,11 +469,11 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
             for (var element of shuffledDinner)
               if (this.recipeId.dinnerId.indexOf(element.id) == -1) {
                 if (
-                  this.kcal + element.kcal >= formKcal - 400 &&
-                  this.kcal + element.kcal <= formKcal
+                  provKcal + element.kcal >= formKcal - 400 &&
+                  provKcal + element.kcal <= formKcal
                 ) {
-                  this.kcal += element.kcal;
-                  this.recip.dinnerRecipe = {
+                  provKcal += element.kcal;
+                  temporarRecip.dinnerRecipe = {
                     recipe: element,
                     category: 'cina',
                     id: element.id,
@@ -482,10 +498,14 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         this.getRecipeById(this.sesionMenu[2], 'cina');
         this.recipeId.dinnerId.push(this.sesionMenu[2]);
       }
-      this.kcal = provKcal;
+      debugger
+      this.kcal = this.breakfastRecipe.kcal + this.lunchRecipe.kcal + this.dinnerRecipe.kcal;
+      console.log(this.kcal);
     this.openSnackBar(
       'Nu s-au putut gasi retete pentru acest numar de kcal'
     );} else {
+    this.kcal = provKcal;
+    this.recip = temporarRecip;
     this.recipeId.breakfastIds.push(this.recip.breakfastRecipe.id);
     this.recipeId.lunchId.push(this.recip.lunchRecipe.id);
     this.recipeId.dinnerId.push(this.recip.dinnerRecipe.id);}
