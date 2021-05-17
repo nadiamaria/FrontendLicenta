@@ -3,7 +3,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject, Subscription } from 'rxjs';
 import { RecipeItem } from 'src/app/shared/data/dataModel/recipeItem';
+import { TypeItem } from 'src/app/shared/data/dataModel/typeItem';
 import { RecipesService } from 'src/app/shared/data/RecipesService';
+import { TypeService } from 'src/app/shared/data/TypeService';
 import { EventBusService } from 'src/app/shared/services/event-bus.service';
 
 @Component({
@@ -15,6 +17,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
   //GetRandomClassic
   public smartForm = new FormGroup({
     kcal: new FormControl(''),
+    types: new FormControl(''),
   });
   public recipeId = {
     breakfastIds: [],
@@ -52,25 +55,34 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
     },
   };
   //declar o variabila care sa retina retetele afisate.
-  public recipesMenu: RecipeItem[] = []
+  public recipesMenu: RecipeItem[] = [];
   public kcal: number;
   private subscriptionButton: Subscription = new Subscription();
-
+  public types: TypeItem[];
 
   public constructor(
     private recipesService: RecipesService,
     private recipesServices: RecipesService,
+    private typeService: TypeService,
     private _snackBar: MatSnackBar,
     private eventBus: EventBusService
   ) {}
 
   public ngOnInit(): void {
+    //Get type
+    this.typeService.findType().subscribe((types) => {
+      this.types = types;
+    });
     //setez kcal pe 0 initial
     this.kcal = 0;
     //aduc sesiunea daca exista pentru ca intial this.sesionMenu = [-1, -1, -1];
-    this.getSession(); 
+    this.getSession();
     //verific daca a fost populata sesiunea si s-au schimbat valorile initiale
-    if (this.sesionMenu[0] != -1 && this.sesionMenu[1] != -1 && this.sesionMenu[2] != -1) {
+    if (
+      this.sesionMenu[0] != -1 &&
+      this.sesionMenu[1] != -1 &&
+      this.sesionMenu[2] != -1
+    ) {
       //daca s-au schimbat, trimit id-ul pentru ca aduca inapoi reteta si a o afisa
       this.getRecipeById(this.sesionMenu[0], 'mic dejun');
       this.recipeId.breakfastIds.push(this.sesionMenu[0]);
@@ -78,8 +90,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
       this.recipeId.lunchId.push(this.sesionMenu[1]);
       this.getRecipeById(this.sesionMenu[2], 'cina');
       this.recipeId.dinnerId.push(this.sesionMenu[2]);
-    }
-    else {
+    } else {
       this.recipeId.dinnerId = [];
     }
     //aici fac un subscribe pentru afisarea retetelor
@@ -115,11 +126,18 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
       if (data == 'mic dejun') {
         //verifica daca lungimea array-ului care retine id-urile folosite este egal cu lungimea array-ului intors acum
         if (recipesArray.length == this.recipeId.breakfastIds.length)
-          //daca sunt egale, inseamana ca au fost folosite toate retetele disponibile, deci trebuie resetat, dar pastram ultima valoare 
+          //daca sunt egale, inseamana ca au fost folosite toate retetele disponibile, deci trebuie resetat, dar pastram ultima valoare
           //prntu a fi siguri ca nu exista sansa de a se repeta
-          this.recipeId.breakfastIds = [this.recipeId.breakfastIds[this.recipeId.breakfastIds.length - 1]];
+          this.recipeId.breakfastIds = [
+            this.recipeId.breakfastIds[this.recipeId.breakfastIds.length - 1],
+          ];
         //verifica pe ce ramura pornim. cu sau fara numar de kcal.
-        if (this.smartForm.value['kcal'] == '' || this.smartForm.value['kcal'] == ' ' || this.smartForm.value['kcal'] == 0 || this.smartForm.value['kcal'] == null) {
+        if (
+          this.smartForm.value['kcal'] == '' ||
+          this.smartForm.value['kcal'] == ' ' ||
+          this.smartForm.value['kcal'] == 0 ||
+          this.smartForm.value['kcal'] == null
+        ) {
           //parcurg array-ul
           for (var element of recipesArray) {
             //daca nu regasesc id-ul retetei respective in array-ul de id-uri folosite
@@ -135,8 +153,9 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
               break;
             }
           }
-        } else
-          //atata timp cat nu a fost gasita nici-o reteta si avem numar si kcal si inca nu am trecut de 2 ori prin sirul de retete
+        }
+        //atata timp cat nu a fost gasita nici-o reteta si avem numar si kcal si inca nu am trecut de 2 ori prin sirul de retete
+        else
           while (!found && times != 2) {
             //trec prin toate elementele din reteta
             for (var element of recipesArray) {
@@ -170,8 +189,16 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         if (found == true) {
           this.recipeId.breakfastIds.push(this.recip.breakfastRecipe.id);
           this.kcal += this.recip.breakfastRecipe.recipe.kcal;
-          if(this.smartForm.value['kcal'] == '' || this.smartForm.value['kcal'] == ' ' || this.smartForm.value['kcal'] == 0 || this.smartForm.value['kcal'] == null)
-          this.eventBus.emit({ name: 'recipe', value: this.recip.breakfastRecipe});
+          if (
+            this.smartForm.value['kcal'] == '' ||
+            this.smartForm.value['kcal'] == ' ' ||
+            this.smartForm.value['kcal'] == 0 ||
+            this.smartForm.value['kcal'] == null
+          )
+            this.eventBus.emit({
+              name: 'recipe',
+              value: this.recip.breakfastRecipe,
+            });
           this.menu.next(this.recip.breakfastRecipe);
           this.sesionMenu[0] = this.recip.breakfastRecipe.recipe.id;
         } else {
@@ -183,7 +210,12 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
       if (data == 'pranz') {
         if (recipesArray.length == this.recipeId.lunchId.length)
           this.recipeId.lunchId = [];
-        if (this.smartForm.value['kcal'] == '' || this.smartForm.value['kcal'] == ' ' || this.smartForm.value['kcal'] == 0 || this.smartForm.value['kcal'] == null) {
+        if (
+          this.smartForm.value['kcal'] == '' ||
+          this.smartForm.value['kcal'] == ' ' ||
+          this.smartForm.value['kcal'] == 0 ||
+          this.smartForm.value['kcal'] == null
+        ) {
           for (var element of recipesArray) {
             if (this.recipeId.lunchId.indexOf(element.id) == -1) {
               var found = true;
@@ -226,8 +258,11 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
           this.recipeId.dinnerId.push(this.recip.lunchRecipe.id);
 
           this.kcal += this.recip.lunchRecipe.recipe.kcal;
-          if(this.smartForm.value['kcal'] == '')
-          this.eventBus.emit({ name: 'recipe', value: this.recip.lunchRecipe});
+          if (this.smartForm.value['kcal'] == '')
+            this.eventBus.emit({
+              name: 'recipe',
+              value: this.recip.lunchRecipe,
+            });
           this.menu.next(this.recip.lunchRecipe);
           this.sesionMenu[1] = this.recip.lunchRecipe.recipe.id;
         } else {
@@ -239,11 +274,16 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
       if (data == 'cina') {
         if (recipesArray.length <= this.recipeId.dinnerId.length)
           this.recipeId.dinnerId = [];
-        if (this.smartForm.value['kcal'] == '' || this.smartForm.value['kcal'] == ' ' || this.smartForm.value['kcal'] == 0 || this.smartForm.value['kcal'] == null) {
+        if (
+          this.smartForm.value['kcal'] == '' ||
+          this.smartForm.value['kcal'] == ' ' ||
+          this.smartForm.value['kcal'] == 0 ||
+          this.smartForm.value['kcal'] == null
+        ) {
           console.log('buna');
           console.log(recipesArray.length);
           console.log(this.recipeId.dinnerId.length);
-          console.log(recipesArray)
+          console.log(recipesArray);
 
           for (var element of recipesArray) {
             if (this.recipeId.dinnerId.indexOf(element.id) == -1) {
@@ -284,14 +324,16 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
 
         //cleanup
         if (found == true) {
-          debugger
           console.log(this.recip.dinnerRecipe.id);
           this.recipeId.dinnerId.push(this.recip.dinnerRecipe.id);
 
           console.log(this.recip.dinnerRecipe);
           this.kcal += this.recip.dinnerRecipe.recipe.kcal;
-          if(this.smartForm.value['kcal'] == '')
-          this.eventBus.emit({ name: 'recipe', value: this.recip.dinnerRecipe});
+          if (this.smartForm.value['kcal'] == '')
+            this.eventBus.emit({
+              name: 'recipe',
+              value: this.recip.dinnerRecipe,
+            });
           this.menu.next(this.recip.dinnerRecipe);
           this.sesionMenu[2] = this.recip.dinnerRecipe.recipe.id;
         } else {
@@ -322,15 +364,18 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
   }
 
   public async resetMenu(): Promise<void> {
-    if (this.smartForm.value['kcal'] == '' || this.smartForm.value['kcal'] == null || this.smartForm.value['kcal'] == 0 || this.smartForm.value['kcal'] == ' ') {
+    if (
+      this.smartForm.value['kcal'] == '' ||
+      this.smartForm.value['kcal'] == null ||
+      this.smartForm.value['kcal'] == 0 ||
+      this.smartForm.value['kcal'] == ' '
+    ) {
       this.kcal = 0;
       this.buttonPressed = true;
       this.getRecipes('mic dejun');
       this.getRecipes('pranz');
       this.getRecipes('cina');
-    } else if (
-      this.smartForm.value['kcal'] < 400
-    ) {
+    } else if (this.smartForm.value['kcal'] < 400) {
       this.openSnackBar(
         'Introduceti va rog valoare pentru calorii intre 400 si 3000.'
       );
@@ -444,7 +489,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
     if (this.recipeId.dinnerId.length == this.fullRecipes.dinnerRecipes.length)
       this.recipeId.dinnerId = [];
 
-    //parcurg pe rand cele 3 arrayuri  
+    //parcurg pe rand cele 3 arrayuri
     for (var element of shuffledBreakfast) {
       if (found == true) break;
       if (this.recipeId.breakfastIds.indexOf(element.id) == -1) {
@@ -458,8 +503,8 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         for (var element of shuffledLunch) {
           if (found == true) break;
           if (this.recipeId.lunchId.indexOf(element.id) == -1) {
-            if(shuffledLunch[shuffledLunch.indexOf(element)-1])
-            provKcal -= shuffledLunch[shuffledLunch.indexOf(element)-1]
+            if (shuffledLunch[shuffledLunch.indexOf(element) - 1])
+              provKcal -= shuffledLunch[shuffledLunch.indexOf(element) - 1];
             provKcal += element.kcal;
             temporarRecip.lunchRecipe = {
               recipe: element,
@@ -486,10 +531,14 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         }
       }
     }
-    if(found == false){
-      this.getSession(); 
+    if (found == false) {
+      this.getSession();
       //verific daca a fost populata sesiunea si s-au schimbat valorile initiale
-      if (this.sesionMenu[0] != -1 && this.sesionMenu[1] != -1 && this.sesionMenu[2] != -1) {
+      if (
+        this.sesionMenu[0] != -1 &&
+        this.sesionMenu[1] != -1 &&
+        this.sesionMenu[2] != -1
+      ) {
         //daca s-au schimbat, trimit id-ul pentru ca aduca inapoi reteta si a o afisa
         this.getRecipeById(this.sesionMenu[0], 'mic dejun');
         this.recipeId.breakfastIds.push(this.sesionMenu[0]);
@@ -498,17 +547,19 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         this.getRecipeById(this.sesionMenu[2], 'cina');
         this.recipeId.dinnerId.push(this.sesionMenu[2]);
       }
-      debugger
-      this.kcal = this.breakfastRecipe.kcal + this.lunchRecipe.kcal + this.dinnerRecipe.kcal;
+      this.kcal =
+        this.breakfastRecipe.kcal +
+        this.lunchRecipe.kcal +
+        this.dinnerRecipe.kcal;
       console.log(this.kcal);
-    this.openSnackBar(
-      'Nu s-au putut gasi retete pentru acest numar de kcal'
-    );} else {
-    this.kcal = provKcal;
-    this.recip = temporarRecip;
-    this.recipeId.breakfastIds.push(this.recip.breakfastRecipe.id);
-    this.recipeId.lunchId.push(this.recip.lunchRecipe.id);
-    this.recipeId.dinnerId.push(this.recip.dinnerRecipe.id);}
+      this.openSnackBar('Nu s-au putut gasi retete pentru acest numar de kcal');
+    } else {
+      this.kcal = provKcal;
+      this.recip = temporarRecip;
+      this.recipeId.breakfastIds.push(this.recip.breakfastRecipe.id);
+      this.recipeId.lunchId.push(this.recip.lunchRecipe.id);
+      this.recipeId.dinnerId.push(this.recip.dinnerRecipe.id);
+    }
     //sa gasit un meniu random
   }
 

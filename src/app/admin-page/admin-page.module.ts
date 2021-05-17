@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { UsersResource } from '../shared/data/resources/UsersResource';
 import { UsersService } from '../shared/data/UsersService';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [UserPageComponent],
@@ -22,6 +24,8 @@ import { UsersService } from '../shared/data/UsersService';
     ReactiveFormsModule,
     MatRadioModule,
     MatTableModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   providers: [httpInterceptorProviders, UsersResource, UsersService],
 })

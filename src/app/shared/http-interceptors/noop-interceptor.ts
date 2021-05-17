@@ -27,7 +27,6 @@ export class NoopInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    console.log('why');
     let token = this.cookieService.get('authorization');
     const tokenLocal = `authorization=${token}`;
     req = req.clone({ headers: req.headers.set('Set-Cookie', tokenLocal) });
@@ -41,14 +40,14 @@ export class NoopInterceptor implements HttpInterceptor {
             event.statusText == 'Created'
           )
             this.openSnackBar('Utilizator inregistrat cu succes! :)');
-          if ('http://localhost:3000/authentication/log-in' === event.url && event.status == 200
-            &&   event.statusText == 'OK'
-          )
-          {
+          if (
+            'http://localhost:3000/authentication/log-in' === event.url &&
+            event.status == 200 &&
+            event.statusText == 'OK'
+          ) {
             this.openSnackBar('Te-ai logat cu succes! Spor la gatit! :)');
             console.log(event.url);
-        }
-
+          }
         }
         return event;
       }),
@@ -76,10 +75,9 @@ export class NoopInterceptor implements HttpInterceptor {
             }
           }
           if (error.status === 401) {
-            if('http://localhost:3000/authentication/log-in' == error.url)
-            this.openSnackBar('Parola sau email gresit. Incearca din nou.');
-            else
-            this.openSnackBar('Sesiune expirata, logheaza-te din nou!');
+            if ('http://localhost:3000/authentication/log-in' == error.url)
+              this.openSnackBar('Parola sau email gresit. Incearca din nou.');
+            else this.openSnackBar('Sesiune expirata, logheaza-te din nou!');
           }
         }
         return throwError(error);

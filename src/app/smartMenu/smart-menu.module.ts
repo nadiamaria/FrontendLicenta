@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { RandomKcalService } from '../shared/services/random-kcal.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { httpInterceptorProviders } from '../shared/http-interceptors';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [SmartMenuComponent],
@@ -28,6 +29,7 @@ import { httpInterceptorProviders } from '../shared/http-interceptors';
     ReactiveFormsModule,
     MatInputModule,
     MatSnackBarModule,
+    MatRadioModule,
   ],
   providers: [
     AuthService,

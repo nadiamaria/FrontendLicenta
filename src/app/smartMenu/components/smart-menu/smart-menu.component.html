@@ -18,7 +18,22 @@
         step="100"
       />
       <div class="info">Please enter between 500 and 3000 calories.</div>
-      <div>Total calorii ale smart meniului generat: {{ this.kcal }}</div>
+      <div class="radio">
+        Tip:
+        <mat-radio-group
+          [formControlName]="'types'"
+          class="radio-container type"
+        >
+          <span *ngFor="let type of types" class="radio-type">
+            <mat-radio-button value="{{ type.type_name }}">{{
+              type.type_name
+            }}</mat-radio-button>
+          </span>
+        </mat-radio-group>
+      </div>
+      <div class="kcal_number">
+        Total calorii ale smart meniului generat: {{ this.kcal }}
+      </div>
     </form>
     <div class="smart__form__recipes">
       <div class="menu">

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { UserItem } from 'src/app/shared/data/dataModel/UserItem';
 import { UsersService } from 'src/app/shared/data/UsersService';
 
@@ -11,6 +12,8 @@ export class UserPageComponent implements OnInit {
   public users: UserItem[];
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   public dataSource;
+  public adminForm = new FormGroup({});
+  public group = {};
 
   constructor(private usersService: UsersService) {}
 
@@ -21,9 +24,17 @@ export class UserPageComponent implements OnInit {
   public getUsers() {
     this.usersService.findAll().subscribe((users) => {
       this.users = users;
-      console.log(this.users);
       this.dataSource = this.users;
+
+      for (let user of this.users) {
+        this.group['admin_role' + user.id] = new FormControl(user.role);
+      }
+      this.adminForm = new FormGroup(this.group);
     });
+  }
+
+  public saveRole(user: UserItem) {
+    console.log(this.adminForm.value['admin_role' + user.id]);
   }
 }
 
