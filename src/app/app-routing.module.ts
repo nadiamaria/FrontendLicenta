@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './shared/services/auth.guard';
+import { RoleGuardOwnerGuard } from './shared/services/role-guard-owner.guard';
 import { RoleGuardGuard } from './shared/services/role-guard.guard';
 
 const routes: Routes = [
@@ -40,7 +41,7 @@ const routes: Routes = [
     path: 'panel',
     loadChildren: () =>
       import('./admin-page/admin-page.module').then((m) => m.AdminPageModule),
-    canActivate: [RoleGuardGuard],
+    canActivate: [RoleGuardOwnerGuard],
   },
 ];
 

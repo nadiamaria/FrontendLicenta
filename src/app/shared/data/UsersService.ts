@@ -15,4 +15,8 @@ export class UsersService {
   public register(user: UserItem): Observable<UserItem> {
     return this.usersResource.putUser(user);
   }
+
+  public update(user: UserItem): Observable<UserItem> {
+    return this.usersResource.editUser(user);
+  }
 }

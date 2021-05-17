@@ -35,10 +35,15 @@
           <td mat-cell *matCellDef="let element">
             <!-- <div class="role">{{ element.role }}</div> -->
             <mat-radio-group [formControlName]="'admin_role' + element.id">
-              <mat-radio-button value="admin">Admin</mat-radio-button>
-              <mat-radio-button value="user">User</mat-radio-button>
+              <mat-radio-button value="admin" class="role-button"
+                >Admin</mat-radio-button
+              >
+              <mat-radio-button value="user" class="role-button"
+                >User</mat-radio-button
+              >
+              <mat-radio-button value="owner">Owner</mat-radio-button>
             </mat-radio-group>
-            <a mat-icon-button>
+            <a mat-icon-button *ngIf="element.role != 'owner'">
               <mat-icon (click)="saveRole(element)">save</mat-icon>
             </a>
           </td>

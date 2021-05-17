@@ -27,12 +27,15 @@
     <div class="header__icons-profile" *ngIf="logedIn">
       Hello, {{ this.username }}!
     </div>
-    <div class="header__icons-cart" *ngIf="this.showPlus && logedIn">
+    <div class="header__icons-cart" *ngIf="this.showAdmin && logedIn">
       <a mat-icon-button routerLink="/panel/users" routerLinkActive="active">
         <mat-icon class="header__icons-icon">supervised_user_circle</mat-icon>
       </a>
     </div>
-    <div class="header__icons-cart" *ngIf="this.showPlus && logedIn">
+    <div
+      class="header__icons-cart"
+      *ngIf="(this.showPlus && logedIn) || (this.showAdmin && logedIn)"
+    >
       <a mat-icon-button routerLink="/recipe/add" routerLinkActive="active">
         <mat-icon class="header__icons-icon">add</mat-icon>
       </a>

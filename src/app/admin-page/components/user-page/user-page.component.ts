@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserItem } from 'src/app/shared/data/dataModel/UserItem';
 import { UsersService } from 'src/app/shared/data/UsersService';
 
@@ -15,7 +16,10 @@ export class UserPageComponent implements OnInit {
   public adminForm = new FormGroup({});
   public group = {};
 
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.getUsers();
@@ -28,6 +32,7 @@ export class UserPageComponent implements OnInit {
 
       for (let user of this.users) {
         this.group['admin_role' + user.id] = new FormControl(user.role);
+        if (user.role == 'owner') this.group['admin_role' + user.id].disable();
       }
       this.adminForm = new FormGroup(this.group);
     });
@@ -35,6 +40,18 @@ export class UserPageComponent implements OnInit {
 
   public saveRole(user: UserItem) {
     console.log(this.adminForm.value['admin_role' + user.id]);
+    user.role = this.adminForm.value['admin_role' + user.id];
+    this.usersService.update(user).subscribe((users) => {
+      // this.openSnackBar(
+      //   'Utilizatorul ' + user.name + 'a fost editat cu succes!'
+      // );
+    });
+  }
+
+  public openSnackBar(message: string) {
+    this._snackBar.open(message, 'Close', {
+      duration: 5000,
+    });
   }
 }
 

@@ -11,11 +11,11 @@
     // border: 3px solid #ebebeb;
     border-radius: 10px;
     margin: 33px;
-    width: 50%;
+    width: 60%;
     padding: 32px;
 
     .mat-table {
-      width: 100%;
+      width: 60%;
     }
 
     .role {
@@ -27,3 +27,7 @@
     }
 
   }}
+
+  .role-button {
+    padding-right: 8px;
+  }

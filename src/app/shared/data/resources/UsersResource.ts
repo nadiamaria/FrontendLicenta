@@ -18,4 +18,9 @@ export class UsersResource {
     this.URL = ApiConfig.url + '/authentication/' + user.id;
     return this.httpClient.put(this.URL, user) as Observable<UserItem>;
   }
+
+  public editUser(user: UserItem): Observable<UserItem> {
+    this.URL = ApiConfig.url + '/users/' + user.id;
+    return this.httpClient.put(this.URL, user) as Observable<UserItem>;
+  }
 }

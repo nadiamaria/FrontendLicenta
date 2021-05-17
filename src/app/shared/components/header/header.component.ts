@@ -37,6 +37,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public logedIn: boolean = false;
   public showPlus: boolean = false;
+  public showAdmin: boolean = false;
 
   constructor(
     private eventBus: EventBusService,
@@ -60,8 +61,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
       } else {
         this.showPlus = false;
       }
+      if (decoded.role == 'owner') {
+        this.showAdmin = true;
+      } else {
+        this.showAdmin = false;
+      }
     } else {
       this.showPlus = false;
+      this.showAdmin = false;
     }
 
     this.subscription.add(

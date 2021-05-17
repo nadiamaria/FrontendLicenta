@@ -13,6 +13,7 @@ import { UsersResource } from '../shared/data/resources/UsersResource';
 import { UsersService } from '../shared/data/UsersService';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [UserPageComponent],
@@ -26,6 +27,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatTableModule,
     MatIconModule,
     MatButtonModule,
+    MatSnackBarModule,
   ],
   providers: [httpInterceptorProviders, UsersResource, UsersService],
 })
