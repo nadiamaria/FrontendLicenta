@@ -36,7 +36,7 @@ export class RoleGuardGuard implements CanActivate, CanDeactivate<unknown> {
     }
     var decoded: decode = jwt_decode(token);
 
-    if (decoded.role == 'admin') {
+    if (decoded.role == 'admin' || decoded.role == 'owner') {
       return true;
     } else {
       this.router.navigateByUrl('/recipes/home');

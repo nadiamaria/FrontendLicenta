@@ -12,7 +12,7 @@ import { UsersService } from 'src/app/shared/data/UsersService';
 export class UserPageComponent implements OnInit {
   public users: UserItem[];
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  public dataSource;
+  public dataSource: UserItem[];
   public adminForm = new FormGroup({});
   public group = {};
 

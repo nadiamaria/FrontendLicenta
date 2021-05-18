@@ -1,10 +1,10 @@
 <div class="page">
   <div class="page__card">
     <div class="page__card__title">Management useri</div>
-    <form [formGroup]="adminForm" class="form">
+    <form [formGroup]="adminForm" class="form" *ngIf="dataSource != null">
       <table
         mat-table
-        [dataSource]="dataSource"
+        [dataSource]="users"
         class="mat-elevation-z8"
         *ngIf="this.users"
       >
