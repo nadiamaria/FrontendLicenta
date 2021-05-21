@@ -11,9 +11,10 @@ export class RecipesService {
 
   public getAllRecipes(
     values?: formInterface,
-    category?: string
+    category?: string,
+    type?: string
   ): Observable<RecipeItem[]> {
-    return this.recipesResource.findAll(values, category);
+    return this.recipesResource.findAll(values, category, type);
   }
 
   public getRecipeById(id: number): Observable<RecipeItem> {

@@ -30,6 +30,9 @@
             }}</mat-radio-button>
           </span>
         </mat-radio-group>
+        <a mat-icon-button class="close-button">
+          <mat-icon (click)="clearFilter()">close</mat-icon></a
+        >
       </div>
       <div class="kcal_number">
         Total calorii ale smart meniului generat: {{ this.kcal }}

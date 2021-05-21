@@ -1,3 +1,4 @@
+import { typeofExpr } from '@angular/compiler/src/output/output_ast';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -112,10 +113,14 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
 
   //functie pentru cautarea unei retete dintr-o anumita categorie
   public getRecipes(data: string): void {
+    var type;
     //declar array-ul in care se introduc retetele din tipul respectiv de categorie
     let recipesArray: RecipeItem[];
     //fac o cerere pentru acea categorie de retete
-    this.recipesService.getAllRecipes(null, data).subscribe((recipes) => {
+    if (this.smartForm.value['types'] != '')
+      type = this.smartForm.value['types'];
+    else type = null;
+    this.recipesService.getAllRecipes(null, data, type).subscribe((recipes) => {
       //declar o variabila care ma ajuta pentru a vedea daca a fost gasita o retetea specifica sau nu
       var found = false;
       //declar o variabila pentru ca tine minte de cate ori am parcurs un array
@@ -491,6 +496,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
 
     //parcurg pe rand cele 3 arrayuri
     for (var element of shuffledBreakfast) {
+      debugger;
       if (found == true) break;
       if (this.recipeId.breakfastIds.indexOf(element.id) == -1) {
         provKcal = 0;
@@ -597,6 +603,10 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
     this._snackBar.open(message, 'Close', {
       duration: 10000,
     });
+  }
+
+  public clearFilter() {
+    this.smartForm.controls['types'].setValue('');
   }
 }
 

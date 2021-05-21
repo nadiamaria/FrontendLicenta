@@ -13,7 +13,8 @@ export class RecipesResource {
 
   public findAll(
     values?: formInterface,
-    category?: string
+    category?: string,
+    type?: string
   ): Observable<RecipeItem[]> {
     this.URL = ApiConfig.url + '/recipes';
     if (values)
@@ -27,6 +28,9 @@ export class RecipesResource {
         values.type;
     if (category) {
       this.URL = this.URL + '?categorys=' + category;
+    }
+    if (type) {
+      this.URL = this.URL + '?types=' + type;
     }
     return this.httpClient.get(this.URL) as Observable<RecipeItem[]>;
   }
