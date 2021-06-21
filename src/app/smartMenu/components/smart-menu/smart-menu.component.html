@@ -19,13 +19,14 @@
       />
       <div class="info">Please enter between 500 and 3000 calories.</div>
       <div class="radio">
-        Tip:
+        <span class="tip">Tip:</span>
+        
         <mat-radio-group
           [formControlName]="'types'"
           class="radio-container type"
         >
-          <span *ngFor="let type of types" class="radio-type">
-            <mat-radio-button value="{{ type.type_name }}">{{
+          <span *ngFor="let type of types" class="radio-type" >
+            <mat-radio-button value="{{ type.type_name }}" *ngIf="type.type_name != 'high proteins' && type.type_name !='high fiber' && type.type_name !='altele'">{{
               type.type_name
             }}</mat-radio-button>
           </span>

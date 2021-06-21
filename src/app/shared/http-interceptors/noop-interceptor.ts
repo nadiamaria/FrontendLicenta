@@ -56,18 +56,16 @@ export class NoopInterceptor implements HttpInterceptor {
         if (error.error instanceof ErrorEvent) {
           // client-side error or network error
         } else {
-          // TODO: Clean up following by introducing method
           if (error.status === 400) {
             if ('Wrong credentials provided' == error.error.message)
-              this.openSnackBar('Parola sau email gresit. Incearca din nou.');
-            // TODO: Destroy local session; redirect to /login
+              this.openSnackBar('Parola sau email greșit. Încearcă din nou.');
           }
           if (error.status === 500) {
             if ('http://localhost:3000/authentication/register' == error.url)
-              this.openSnackBar('Email deja folosit. Incearca din nou.');
+              this.openSnackBar('Email deja folosit. Încearcă din nou.');
             if ('http://localhost:3000/recipes' == error.url)
               this.openSnackBar(
-                'Nu ai completat toate campurile, incearca din nou!'
+                'Nu ai completat toate câmpurile, încearcă din nou!'
               );
             if ('http://localhost:3000/authentication' == error.url) {
               this.openSnackBar('Sesiunea a expirat, logheaza-te din nou!');
@@ -76,8 +74,8 @@ export class NoopInterceptor implements HttpInterceptor {
           }
           if (error.status === 401) {
             if ('http://localhost:3000/authentication/log-in' == error.url)
-              this.openSnackBar('Parola sau email gresit. Incearca din nou.');
-            else this.openSnackBar('Sesiune expirata, logheaza-te din nou!');
+              this.openSnackBar('Parola sau email greșit. Încearcă din nou.');
+            else this.openSnackBar('Sesiunea a expirat, logheaza-te din nou!');
           }
         }
         return throwError(error);

@@ -92,6 +92,8 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
       this.getRecipeById(this.sesionMenu[2], 'cina');
       this.recipeId.dinnerId.push(this.sesionMenu[2]);
     } else {
+      this.recipeId.breakfastIds = [];
+      this.recipeId.lunchId = [];
       this.recipeId.dinnerId = [];
     }
     //aici fac un subscribe pentru afisarea retetelor
@@ -169,7 +171,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
               if (
                 this.recipeId.breakfastIds.indexOf(element.id) == -1 &&
                 this.kcal + element.kcal >=
-                  this.smartForm.value['kcal'] - 300 &&
+                  this.smartForm.value['kcal'] - 400 &&
                 this.kcal + element.kcal <= this.smartForm.value['kcal']
               ) {
                 //daca a fost gasita o reteta potrivita
@@ -380,9 +382,9 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
       this.getRecipes('mic dejun');
       this.getRecipes('pranz');
       this.getRecipes('cina');
-    } else if (this.smartForm.value['kcal'] < 400) {
+    } else if (this.smartForm.value['kcal'] < 1000) {
       this.openSnackBar(
-        'Introduceti va rog valoare pentru calorii intre 400 si 3000.'
+        'Introduceti va rog valoare pentru calorii intre 1000 si 3000.'
       );
     } else {
       //buttonul de restMenu a fost apasat
@@ -520,7 +522,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
             for (var element of shuffledDinner)
               if (this.recipeId.dinnerId.indexOf(element.id) == -1) {
                 if (
-                  provKcal + element.kcal >= formKcal - 400 &&
+                  provKcal + element.kcal >= formKcal - 500 &&
                   provKcal + element.kcal <= formKcal
                 ) {
                   provKcal += element.kcal;

@@ -30,15 +30,10 @@ export class AuthGuard
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    //verf expiration?
     let token = this.cookieService.get('authorization');
     if (token == ' ' || !this.cookieService.get('authorization')) {
       return true;
     }
-    // if (!this.auth.isAuth()) {
-    //   // redirect the user
-    //   return true;
-    // }
     this.router.navigateByUrl('/recipes/home');
     return false;
   }

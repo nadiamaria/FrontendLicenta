@@ -47,12 +47,12 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  max-height: 200px;
+  max-height: 700px;
 }
 
 .type {
   max-height: 100px;
-  flex-direction: column;
+  flex-direction: row;
 
 }
 .radio-type {

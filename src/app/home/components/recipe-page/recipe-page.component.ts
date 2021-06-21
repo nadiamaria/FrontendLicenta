@@ -73,6 +73,7 @@ export class RecipePageComponent implements OnInit {
       .findIngredientsByRecipe(id)
       .subscribe((data) => {
         this.recipeIngred = data;
+        console.log(data);
       });
   }
 

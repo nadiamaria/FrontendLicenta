@@ -167,8 +167,9 @@ export class AddPageComponent implements OnInit {
         for (let index in this.myRecipeGroup.value)
           if (index.includes('ingredient_name')) {
             let found = false;
+            let ingredientTrim = this.myRecipeGroup.value[index].trim();
             for (let ingredient of this.ingredients) {
-              if (ingredient.name == this.myRecipeGroup.value[index])
+              if (ingredient.name == ingredientTrim)
                 found = true;
             }
             if (found == false) this.postIngredient(index);
