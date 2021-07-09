@@ -120,9 +120,10 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
     let recipesArray: RecipeItem[];
     //fac o cerere pentru acea categorie de retete
     if (this.smartForm.value['types'] != '')
-      type = this.smartForm.value['types'];
+    type = this.smartForm.value['types'];
     else type = null;
     this.recipesService.getAllRecipes(null, data, type).subscribe((recipes) => {
+      debugger
       //declar o variabila care ma ajuta pentru a vedea daca a fost gasita o retetea specifica sau nu
       var found = false;
       //declar o variabila pentru ca tine minte de cate ori am parcurs un array
@@ -132,12 +133,11 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
       //verific categoria in care ma aflu
       if (data == 'mic dejun') {
         //verifica daca lungimea array-ului care retine id-urile folosite este egal cu lungimea array-ului intors acum
-        if (recipesArray.length == this.recipeId.breakfastIds.length)
+        if (recipesArray.length/2 >= this.recipeId.breakfastIds.length)
           //daca sunt egale, inseamana ca au fost folosite toate retetele disponibile, deci trebuie resetat, dar pastram ultima valoare
           //prntu a fi siguri ca nu exista sansa de a se repeta
-          this.recipeId.breakfastIds = [
-            this.recipeId.breakfastIds[this.recipeId.breakfastIds.length - 1],
-          ];
+          this.recipeId.breakfastIds = [];
+          times = 0;
         //verifica pe ce ramura pornim. cu sau fara numar de kcal.
         if (
           this.smartForm.value['kcal'] == '' ||
@@ -163,16 +163,20 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         }
         //atata timp cat nu a fost gasita nici-o reteta si avem numar si kcal si inca nu am trecut de 2 ori prin sirul de retete
         else
-          while (!found && times != 2) {
+          while (!found && times < 2) {
+            
+            this.recipeId.breakfastIds = [this.sesionMenu[0]];
             //trec prin toate elementele din reteta
             for (var element of recipesArray) {
+              if(found)
+              break;
               //si verific daca, reteta nu a mai fost afisata de la ultima golire si daca kcal adunate sunt mai mari decat nr de kcal -300
               //si daca sunt mai mici totusi decat kcal impuse
               if (
                 this.recipeId.breakfastIds.indexOf(element.id) == -1 &&
                 this.kcal + element.kcal >=
                   this.smartForm.value['kcal'] - 400 &&
-                this.kcal + element.kcal <= this.smartForm.value['kcal']
+                this.kcal + element.kcal <= this.smartForm.value['kcal'] + 400
               ) {
                 //daca a fost gasita o reteta potrivita
                 found = true;
@@ -188,7 +192,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
                 //golesc array-ul
                 this.recipeId.breakfastIds = [];
                 //si maresc timpul
-                times += 1;
+                times ++;
               }
             }
           }
@@ -215,7 +219,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         }
       }
       if (data == 'pranz') {
-        if (recipesArray.length == this.recipeId.lunchId.length)
+        if (recipesArray.length/2 >= this.recipeId.lunchId.length)
           this.recipeId.lunchId = [];
         if (
           this.smartForm.value['kcal'] == '' ||
@@ -239,6 +243,8 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
             //verific daca arrayul de id-uri folosite era gold deja ca nu faca de 2 ori iteratia
 
             for (var element of recipesArray) {
+              if(found)
+              break;
               if (
                 this.recipeId.lunchId.indexOf(element.id) == -1 &&
                 this.kcal + element.kcal >=
@@ -279,7 +285,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         }
       }
       if (data == 'cina') {
-        if (recipesArray.length <= this.recipeId.dinnerId.length)
+        if (recipesArray.length/2 >= this.recipeId.dinnerId.length)
           this.recipeId.dinnerId = [];
         if (
           this.smartForm.value['kcal'] == '' ||
@@ -308,6 +314,8 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
             //verific daca arrayul de id-uri folosite era gold deja ca nu faca de 2 ori iteratia
 
             for (var element of recipesArray) {
+              if(found)
+              break;
               if (
                 this.recipeId.dinnerId.indexOf(element.id) == -1 &&
                 this.kcal + element.kcal >=
@@ -387,6 +395,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
         'Introduceti va rog valoare pentru calorii intre 1000 si 3000.'
       );
     } else {
+      this.kcal = 0;
       //buttonul de restMenu a fost apasat
       this.buttonPressed = true;
       //aduc toate retetele disponibile
@@ -479,6 +488,7 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
     };
     //initial nu am retete gasite
     var found = false;
+    var time = 0;
     var provKcal = 0;
     //fac shuffle la retete
     const shuffledBreakfast = this.shuffle(this.fullRecipes.breakfastRecipes);
@@ -487,58 +497,74 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
 
     //verific sa golesc array-urile pline
     if (
-      this.recipeId.breakfastIds.length ==
-      this.fullRecipes.breakfastRecipes.length
+      this.recipeId.breakfastIds.length/2 >=
+      this.fullRecipes.breakfastRecipes.length-1
     )
       this.recipeId.breakfastIds = [];
-    if (this.recipeId.lunchId.length == this.fullRecipes.lunchRecipes.length)
+    if (this.recipeId.lunchId.length/2 >= this.fullRecipes.lunchRecipes.length-1)
       this.recipeId.lunchId = [];
-    if (this.recipeId.dinnerId.length == this.fullRecipes.dinnerRecipes.length)
+    if (this.recipeId.dinnerId.length/2 >= this.fullRecipes.dinnerRecipes.length-1)
       this.recipeId.dinnerId = [];
 
     //parcurg pe rand cele 3 arrayuri
-    for (var element of shuffledBreakfast) {
+    while(time<2){
       debugger;
       if (found == true) break;
-      if (this.recipeId.breakfastIds.indexOf(element.id) == -1) {
-        provKcal = 0;
-        provKcal += element.kcal;
-        temporarRecip.breakfastRecipe = {
-          recipe: element,
-          category: 'mic dejun',
-          id: element.id,
-        };
-        for (var element of shuffledLunch) {
-          if (found == true) break;
-          if (this.recipeId.lunchId.indexOf(element.id) == -1) {
-            if (shuffledLunch[shuffledLunch.indexOf(element) - 1])
-              provKcal -= shuffledLunch[shuffledLunch.indexOf(element) - 1];
-            provKcal += element.kcal;
-            temporarRecip.lunchRecipe = {
-              recipe: element,
-              category: 'pranz',
-              id: element.id,
-            };
-            for (var element of shuffledDinner)
-              if (this.recipeId.dinnerId.indexOf(element.id) == -1) {
-                if (
-                  provKcal + element.kcal >= formKcal - 500 &&
-                  provKcal + element.kcal <= formKcal
-                ) {
-                  provKcal += element.kcal;
-                  temporarRecip.dinnerRecipe = {
-                    recipe: element,
-                    category: 'cina',
-                    id: element.id,
-                  };
-                  found = true;
-                  break;
-                }
-              }
+      for (var element of shuffledBreakfast) {
+        if (found == true) break;
+        if (this.recipeId.breakfastIds.indexOf(element.id) == -1) {
+          provKcal = 0;
+          provKcal += element.kcal;
+          temporarRecip.breakfastRecipe = {
+            recipe: element,
+            category: 'mic dejun',
+            id: element.id,
+          };
+          for (var element of shuffledLunch) {
+            if (found == true) break;
+            if (this.recipeId.lunchId.indexOf(element.id) == -1) {
+              if (shuffledLunch[shuffledLunch.indexOf(element) - 1])
+                provKcal -= shuffledLunch[shuffledLunch.indexOf(element) - 1];
+              provKcal += element.kcal;
+              temporarRecip.lunchRecipe = {
+                recipe: element,
+                category: 'pranz',
+                id: element.id,
+              };
+              for (var element of shuffledDinner){
+                if (this.recipeId.dinnerId.indexOf(element.id) == -1) {
+                  if (
+                    provKcal + element.kcal >= formKcal - 500 &&
+                    provKcal + element.kcal <= formKcal + 300
+                  ) {
+                    provKcal += element.kcal;
+                    temporarRecip.dinnerRecipe = {
+                      recipe: element,
+                      category: 'cina',
+                      id: element.id,
+                    };
+                    found = true;
+                    break;
+                  }
+                }}
+            }
           }
+        }
+        if(found == false && element==shuffledBreakfast[shuffledBreakfast.length-1])
+        {
+          time++;
+          this.recipeId.breakfastIds = [];
+          this.recipeId.lunchId = [];
+          this.recipeId.dinnerId = [];
+          if(this.sesionMenu[0] != -1){
+          // this.recipeId.breakfastIds.push(this.sesionMenu[0]);
+          // this.recipeId.lunchId.push(this.sesionMenu[1]);
+          // this.recipeId.dinnerId.push(this.sesionMenu[2]);
+        }
         }
       }
     }
+
     if (found == false) {
       this.getSession();
       //verific daca a fost populata sesiunea si s-au schimbat valorile initiale
@@ -564,9 +590,9 @@ export class SmartMenuComponent implements OnInit, OnDestroy {
     } else {
       this.kcal = provKcal;
       this.recip = temporarRecip;
-      this.recipeId.breakfastIds.push(this.recip.breakfastRecipe.id);
-      this.recipeId.lunchId.push(this.recip.lunchRecipe.id);
-      this.recipeId.dinnerId.push(this.recip.dinnerRecipe.id);
+      // this.recipeId.breakfastIds.push(this.recip.breakfastRecipe.id);
+      // this.recipeId.lunchId.push(this.recip.lunchRecipe.id);
+      // this.recipeId.dinnerId.push(this.recip.dinnerRecipe.id);
     }
     //sa gasit un meniu random
   }

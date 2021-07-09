@@ -26,10 +26,12 @@ export class RecipesResource {
         values.category +
         '&types=' +
         values.type;
-    if (category) {
+    else if (category) {
       this.URL = this.URL + '?categorys=' + category;
+      if (type) 
+        this.URL = this.URL + '&types=' + type;
     }
-    if (type) {
+    else if (type) {
       this.URL = this.URL + '?types=' + type;
     }
     return this.httpClient.get(this.URL) as Observable<RecipeItem[]>;

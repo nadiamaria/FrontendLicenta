@@ -107,6 +107,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public async getAuth(): Promise<void> {
     var token = this.cookieService.get('authorization');
     var decoded: decode = jwt_decode(token);
+    console.log(decoded)
     this.username = decoded.name;
     // await this.auth.add(
     //   this.authService.auth().subscribe((x) => {
